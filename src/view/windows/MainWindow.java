@@ -1,4 +1,4 @@
-package view.Windows;
+package view.windows;
 
 import javax.swing.*;
 
