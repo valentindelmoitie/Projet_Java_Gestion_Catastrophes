@@ -1,8 +1,12 @@
 package view.windows;
 
+import view.frames.WelcomePanel;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class MainWindow extends JFrame {
+    private Container frameContainer;
     private JMenuBar menuBar;
     private JMenu disasterMenu;
     private JMenuItem add, modification, removal, listing, search, businessTask, search1, search2, search3; // RENOMMER
@@ -12,6 +16,11 @@ public class MainWindow extends JFrame {
         setBounds(200, 100, 1000, 500);
 
         menuBarCreation();
+
+        frameContainer = getContentPane();
+        frameContainer.setLayout(new BorderLayout());
+
+        frameContainer.add(new WelcomePanel(), BorderLayout.CENTER);
 
         setVisible(true);
     }
