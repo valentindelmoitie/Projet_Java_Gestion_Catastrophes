@@ -1,4 +1,4 @@
-package Datas;
+package model;
 
 public class DangerousSite {
     private int id;
