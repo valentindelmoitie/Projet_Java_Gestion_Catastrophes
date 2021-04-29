@@ -6,45 +6,45 @@ import java.awt.*;
 public class Search2Panel extends JPanel {
     private JLabel descriptionLabel, disasterLabel;
     private JComboBox disasterCb;
-    private JPanel topPanel, centerPanel, southPanel;
+    private JPanel titlePanel, formPanel, buttonPanel;
     private JButton sendButton;
 
     public Search2Panel() {
         this.setLayout(new BorderLayout());
 
-        topPanelCreation();
-        this.add(topPanel, BorderLayout.NORTH);
+        titlePanelCreation();
+        this.add(titlePanel, BorderLayout.NORTH);
 
-        centerPanelCreation();
-        this.add(centerPanel, BorderLayout.CENTER);
+        formPanelCreation();
+        this.add(formPanel, BorderLayout.CENTER);
 
-        southPanelCreation();
-        this.add(southPanel, BorderLayout.SOUTH);
+        buttonPanelCreation();
+        this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void topPanelCreation() {
-        topPanel = new JPanel();
+    private void titlePanelCreation() {
+        titlePanel = new JPanel();
         descriptionLabel = new JLabel("<html><h3>Rechercher les pays et régions impactés par une catastrophe</h3></html>");
-        topPanel.add(descriptionLabel);
+        titlePanel.add(descriptionLabel);
     }
 
-    private void centerPanelCreation() {
-        centerPanel = new JPanel();
-        centerPanel.setLayout(new GridLayout(1, 2, 5, 5));
+    private void formPanelCreation() {
+        formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(1, 2, 5, 5));
 
         disasterLabel = new JLabel("Catastrophe : ");
-        centerPanel.add(disasterLabel);
+        formPanel.add(disasterLabel);
 
         disasterCb = new JComboBox();
-        centerPanel.add(disasterCb);
+        formPanel.add(disasterCb);
     }
 
-    private void southPanelCreation() {
-        southPanel = new JPanel();
+    private void buttonPanelCreation() {
+        buttonPanel = new JPanel();
 
         sendButton = new JButton("Envoyer !");
         sendButton.setHorizontalAlignment(JButton.CENTER);
 
-        southPanel.add(sendButton);
+        buttonPanel.add(sendButton);
     }
 }

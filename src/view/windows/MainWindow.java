@@ -1,9 +1,6 @@
 package view.windows;
 
-import view.panels.Search1Panel;
-import view.panels.Search2Panel;
-import view.panels.Search3Panel;
-import view.panels.WelcomePanel;
+import view.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,14 +49,17 @@ public class MainWindow extends JFrame {
 
         addMenuItem = new JMenuItem("Ajout");
         addMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
+        addMenuItem.addActionListener(new AddListener());
         disasterMenu.add(addMenuItem);
 
         modificationMenuItem = new JMenuItem("Modification");
         modificationMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK));
+        modificationMenuItem.addActionListener(new ModifyListener());
         disasterMenu.add(modificationMenuItem);
 
         removeMenuItem = new JMenuItem("Suppression");
         removeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+        removeMenuItem.addActionListener(new RemoveListener());
         disasterMenu.add(removeMenuItem);
 
         listingMenuItem = new JMenuItem("Listing");
@@ -98,11 +98,39 @@ public class MainWindow extends JFrame {
 
     // Inner classes
 
+    private class AddListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new AddPanel());
+            container.repaint();
+            container.validate();
+        }
+    }
+
+    private class ModifyListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new ModifyPanel());
+            container.repaint();
+            container.validate();
+        }
+    }
+
+    private class RemoveListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            container.removeAll();
+            container.add(new RemovePanel());
+            container.repaint();
+            container.validate();
+        }
+    }
+
     private class Search1Listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
             container.add(new Search1Panel());
             container.repaint();
+            container.validate();
         }
     }
 
@@ -111,6 +139,7 @@ public class MainWindow extends JFrame {
             container.removeAll();
             container.add(new Search2Panel());
             container.repaint();
+            container.validate();
         }
     }
 
@@ -119,6 +148,7 @@ public class MainWindow extends JFrame {
             container.removeAll();
             container.add(new Search3Panel());
             container.repaint();
+            container.validate();
         }
     }
 }
