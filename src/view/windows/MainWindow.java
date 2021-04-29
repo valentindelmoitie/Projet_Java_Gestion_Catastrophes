@@ -1,71 +1,124 @@
 package view.windows;
 
-import view.frames.WelcomePanel;
+import view.panels.Search1Panel;
+import view.panels.Search2Panel;
+import view.panels.Search3Panel;
+import view.panels.WelcomePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 public class MainWindow extends JFrame {
-    private Container frameContainer;
+    private Container container;
     private JMenuBar menuBar;
-    private JMenu disasterMenu;
-    private JMenuItem add, modification, removal, listing, search, businessTask, search1, search2, search3; // RENOMMER
+    private JMenu disasterMenu, searchMenu;
+    private JMenuItem addMenuItem, modificationMenuItem, removeMenuItem, listingMenuItem, search1MenuItem, search2MenuItem, search3MenuItem, taskMenuItem;
+    private WelcomePanel welcomePanel;
+    private Search1Panel search1Panel;
 
     public MainWindow() {
-        super("Catastrophe Gesture");
-        setBounds(200, 100, 1000, 500);
+        super("Gestion de catastrophes");
 
-        menuBarCreation();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setSize(800, 600);
+        this.setLocationRelativeTo(null);
 
-        frameContainer = getContentPane();
-        frameContainer.setLayout(new BorderLayout());
+        container = this.getContentPane();
+        container.setLayout(new FlowLayout());
 
-        frameContainer.add(new WelcomePanel(), BorderLayout.CENTER);
+        createMenuBar();
 
-        setVisible(true);
+        welcomePanel = new WelcomePanel();
+        container.add(welcomePanel, BorderLayout.CENTER);
+
+        this.setVisible(true);
     }
 
-    // Menu
-
-    private void menuBarCreation() {
+    private void createMenuBar() {
         menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
 
         disasterMenuCreation();
+
+        this.setJMenuBar(menuBar);
     }
 
     private void disasterMenuCreation() {
-        disasterMenu = new JMenu("Disaster");
+        disasterMenu = new JMenu("Catastrophe");
+        disasterMenu.setMnemonic('C');
+
+        addMenuItem = new JMenuItem("Ajout");
+        addMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
+        disasterMenu.add(addMenuItem);
+
+        modificationMenuItem = new JMenuItem("Modification");
+        modificationMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK));
+        disasterMenu.add(modificationMenuItem);
+
+        removeMenuItem = new JMenuItem("Suppression");
+        removeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+        disasterMenu.add(removeMenuItem);
+
+        listingMenuItem = new JMenuItem("Listing");
+        listingMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
+        disasterMenu.add(listingMenuItem);
+
+        searchMenuCreation();
+
+        taskMenuItem = new JMenuItem("Tâche métier");
+        taskMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
+        disasterMenu.add(taskMenuItem);
+
         menuBar.add(disasterMenu);
-
-        add = new JMenuItem("Ajouter");
-        disasterMenu.add(add);
-
-        removal = new JMenuItem("Supprimer");
-        disasterMenu.add(removal);
-
-        modification = new JMenuItem("Modifier");
-        disasterMenu.add(modification);
-
-        listing = new JMenuItem("Lister");
-        disasterMenu.add(listing);
-
-        search = new JMenu("Chercher");
-        disasterMenu.add(search);
-        searchItemSubMenuCreation();
-
-        businessTask = new JMenuItem("Tâche métier");
-        disasterMenu.add(businessTask);
     }
 
-    private void searchItemSubMenuCreation() { // RENAME
-        search1 = new JMenuItem("Recheche 1");
-        search.add(search1);
+    private void searchMenuCreation() {
+        searchMenu = new JMenu("Recherches");
+        searchMenu.setMnemonic('R');
+        disasterMenu.add(searchMenu);
 
-        search2 = new JMenuItem("Recheche 2");
-        search.add(search2);
+        search1MenuItem = new JMenuItem("Recherche 1");
+        search1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_DOWN_MASK));
+        search1MenuItem.addActionListener(new Search1Listener());
+        searchMenu.add(search1MenuItem);
 
-        search3 = new JMenuItem("Recheche 3");
-        search.add(search3);
+        search2MenuItem = new JMenuItem("Recherche 2");
+        search2MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_DOWN_MASK));
+        search2MenuItem.addActionListener(new Search2Listener());
+        searchMenu.add(search2MenuItem);
+
+        search3MenuItem = new JMenuItem("Recherche 3");
+        search3MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_DOWN_MASK));
+        search3MenuItem.addActionListener(new Search3Listener());
+        searchMenu.add(search3MenuItem);
+    }
+
+    // Inner classes
+
+    private class Search1Listener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new Search1Panel());
+            container.repaint();
+        }
+    }
+
+    private class Search2Listener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new Search2Panel());
+            container.repaint();
+        }
+    }
+
+    private class Search3Listener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new Search3Panel());
+            container.repaint();
+        }
     }
 }
