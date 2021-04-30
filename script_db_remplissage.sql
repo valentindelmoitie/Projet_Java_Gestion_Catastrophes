@@ -47,7 +47,7 @@ insert into hospital (`name`, maximum_capacity,address,specialization, region) v
 insert into hospital (`name`, maximum_capacity,address,specialization, region) values('Hopital de Bubanza',150,'RN9, Bubanza, Burundi','Soins intensifs','Rutana');
 
 insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
-values('catastrophe nucléaire de Tchernobyl','Nucléaire','Accident nucléaire majeur', str_to_date ('26-apr-1986','%e-%b-%Y'),null,14,200000,50,4000,false);
+values('catastrophe nucléaire de Tchernobyl','Nucléaire','Accident nucléaire majeur', str_to_date ('26-apr-1986','%e-%b-%Y'),null,7,200000,50,4000,false);
 insert into dangerous_site (`type`,`description`,manager,region) 
 values ('Nucléaire','Centrale nucléaire de Tchernobyl','Gouvernement Ukrainien','Kiev');
 insert into danger(dangerous_site,disaster) values (1, 1);
@@ -61,6 +61,44 @@ insert into `help` (disaster, hospital) values(1, 13);
 insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
 values('Feux de fôret Tchernobyl','Incendie','Incendie de forêt autour de la centrale nucléaire de Tchernobyl', str_to_date ('04-apr-2020','%e-%b-%Y'),str_to_date ('14-apr-2020','%e-%b-%Y'),null,20,0,0,false);
 insert into danger(dangerous_site,disaster) values (1, 2);
+insert into impact_location (disaster, region) values (2,'Kiev');
 
+insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
+values('Naufrage du Herald of Free Enterprise','Naufrage','Navire chavire au large du port de Zeebruges',str_to_date ('06-mar-1987','%e-%b-%Y'),null,null,1000,193,0,false);
+insert into dangerous_site (`type`,`description`,manager,region) 
+values ('Naturel','Mer du nord',null,'Flandre');
+insert into danger(dangerous_site,disaster) values (2,3);
+insert into impact_location (disaster, region) values (3,'Flandre');
+insert into `help` (disaster, hospital) values(3, 4);
 
+insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
+values('Naufrage lac Tanganyika','Naufrage','Naufrage en raison du bureau temps et surcharge importante',str_to_date ('24-mar-2003','%e-%b-%Y'),null, null,150,109,0,false);
+insert into dangerous_site (`type`,`description`,manager,region) 
+values ('Naturel','Lac Tanganyika',null,'Bururi');
+insert into danger(dangerous_site,disaster) values (3, 4);
+insert into impact_location (disaster, region) values (4,'Bururi');
+insert into `help` (disaster, hospital) values(4, 14);
+insert into `help` (disaster, hospital) values(4, 16);
 
+insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
+values('Tempête de 1987','Ouragan','Tempête synoptique automnale',str_to_date ('15-oct-1987','%e-%b-%Y'),null, 3,1250000,15,0,true);
+insert into dangerous_site (`type`,`description`,manager,region) 
+values ('Nucléaire','Usine de retraitement de la Hague','Orano','Haut de france');
+insert into dangerous_site (`type`,`description`,manager,region) 
+values ('Nucléaire','Centrale nucléaire de Doel','Engie','Flandre');
+insert into dangerous_site (`type`,`description`,manager,region) 
+values ('Industriel','Usine de traitement chimique',null,'Flandre');
+insert into danger(dangerous_site,disaster) values(3,5);
+insert into danger(dangerous_site,disaster) values(4,5);
+insert into danger(dangerous_site,disaster) values(5,5);
+insert into danger(dangerous_site,disaster) values(6,5);
+insert into impact_location (disaster, region) values (5,'Haut de france');
+insert into impact_location (disaster, region) values (5,'Bretagne');
+insert into impact_location (disaster, region) values (5,'Ile de france');
+insert into impact_location (disaster, region) values (5,'Flandre');
+insert into impact_location (disaster, region) values (5,'Bruxelles');
+insert into impact_location (disaster, region) values (5,'Wallonie');
+insert into `help` (disaster, hospital) values(5, 2);
+insert into `help` (disaster, hospital) values(5, 3);
+insert into `help` (disaster, hospital) values(5, 5);
+insert into `help` (disaster, hospital) values(5, 7);

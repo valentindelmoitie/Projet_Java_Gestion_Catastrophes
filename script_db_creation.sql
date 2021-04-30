@@ -11,7 +11,7 @@ create table disaster
         indirect_casualties  int not null check(indirect_casualties >= 0),
         is_natural           bit not null,
         constraint disaster_id_pk primary key(id),
-        constraint disaster_type_list check(`type` in('Ouragan','Tremblement de terre','Tsunami','Incendie','Nucléaire','Industriel','Humanitaire')),
+        constraint disaster_type_list check(`type` in('Ouragan','Tremblement de terre','Tsunami','Naufrage','Incendie','Nucléaire','Industriel','Humanitaire')),
         constraint disaster_intensity_limits check(intensity >= 0 and intensity <= 20),
         constraint disaster_name_uk unique(`name`)
     )   ENGINE = InnoDB
