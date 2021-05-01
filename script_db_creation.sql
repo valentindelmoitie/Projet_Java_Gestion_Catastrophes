@@ -12,7 +12,7 @@ create table disaster
         is_natural           bit not null,
         constraint disaster_id_pk primary key(id),
         constraint disaster_type_list check(`type` in('Ouragan','Tremblement de terre','Tsunami','Naufrage','Incendie','Nucléaire','Industriel','Humanitaire')),
-        constraint disaster_intensity_limits check(intensity >= 0 and intensity <= 20),
+        constraint disaster_intensity_limits check(intensity > 0 and intensity <= 20),
         constraint disaster_name_uk unique(`name`)
     )   ENGINE = InnoDB
         DEFAULT CHARACTER SET = utf8;
@@ -35,14 +35,15 @@ create table hospital
         constraint hospital_id_pk primary key(id),
 		constraint hospital_region_fk foreign key(region) references region(`name`),
         constraint hospital_specialization_list check(specialization in ('Cardiologie','Urgences','Imagerie','Soins intensifs')),
-        constraint hospital_name_uk unique(`name`)
+        constraint hospital_name_uk unique(`name`),
+        constraint hospital_address_uk unique(address)
     )   ENGINE = InnoDB
         DEFAULT CHARACTER SET = utf8;
 
 create table dangerous_site
     (   id                  int AUTO_INCREMENT,
-        `type`                varchar(25)  CHARACTER SET utf8 not null,
-        `description`         varchar(200) CHARACTER SET utf8 not null,
+        `type`              varchar(25)  CHARACTER SET utf8 not null,
+        `description`       varchar(200) CHARACTER SET utf8 not null,
         manager             varchar(60)  CHARACTER SET utf8,
         region              varchar(30)  CHARACTER SET utf8 not null,
         constraint dangerous_site_pk primary key(id),
