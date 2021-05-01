@@ -1,20 +1,20 @@
 create table disaster
     (   id                   int check(id > 0),
-        name                 varchar(50),
-        type                 varchar(25) not null constraint disaster_type_list check(type in('Hurricane','Earthquake','Tsunami','Fire')),
+        name                 varchar(50), 
+        type                 varchar(25) not null constraint disaster_type_list check(type in('Hurricane','Earthquake','Tsunami','Fire')), -- Pourquoi une restriction sur le type ? Pourquoi constraint ici ? --
         description          varchar(400) not null,
         date                 date not null,
         end_date             date,
-        intensity            int constraint disaster_intensity_limits check(intensity > 0 and intensity <= 20),
+        intensity            int constraint disaster_intensity_limits check(intensity > 0 and intensity <= 20), -- Pourquoi constraint ici aussi ?  --
         impacted_people      int not null check(impacted_people >= 0),
         direct_casualties    int not null check(direct_casualties >=0),
         indirect_casualties  int not null check(indirect_casualties >= 0),
         is_natural           bit not null,
         constraint disaster_id_pk primary key(id)
-    ) engine = INNODB;
+    ) engine = INNODB; -- Je me demande si engine = INNODB ne doit être mis si il n'y a pas de FK dans la table --
 
 create table region
-    (   name                 varchar(30),
+    (   name                 varchar(30), 
         population           int not null check(population >= 0),
         is_warzone           bit not null,
         constraint region_name_pk primary key(name)
@@ -25,7 +25,7 @@ create table hospital
         name                varchar(50) not null,
         maximum_capacity    int not null check(maximum_capacity >= 0),
         address             varchar(80) not null,
-        specialization      varchar(50) constraint hospital_specialization_list check(specialization in ('Cardiologie','Urgences','Imagerie','Soins intensifs')),
+        specialization      varchar(50) constraint hospital_specialization_list check(specialization in ('Cardiologie','Urgences','Imagerie','Soins intensifs')), -- Pourquoi une restriction ? Pourquoi constraint ? --
         region              varchar(30),
         constraint hospital_id_pk primary key(id),
 		constraint hospital_region_fk foreign key(region) references region(name)
@@ -33,7 +33,7 @@ create table hospital
 
 create table dangerous_site
     (   id                  int check(id > 0),
-        type                varchar(25) not null constraint dangerous_site_type_list check(type in('Nucleaire','Industriel','Naturel')),
+        type                varchar(25) not null constraint dangerous_site_type_list check(type in('Nucleaire','Industriel','Naturel')), -- Idem du coup --
         description         varchar(200) not null,
         manager             varchar(60),
         region              varchar(30),
@@ -57,16 +57,16 @@ create table impact_location
     ) engine = INNODB;
     
 create table help
-    (   disaster            int,
-        hospital            int,
+    (   disaster            int, -- Faudrait pas mettre également le check que tu avais mis dans disaster ? --
+        hospital            int, -- Idem --
         constraint help_pk primary key (disaster,hospital),
         constraint help_fk_disaster foreign key(disaster) references disaster(id),
         constraint help_fk_hospital foreign key(hospital) references hospital(id)
     ) engine = INNODB;
 
 create table danger
-    (   disaster            int,
-        region              varchar(30),
+    (   disaster            int, -- Idem --
+        region              varchar(30), 
         constraint danger_pk primary key (disaster, region),
         constraint danger_fk_disaster foreign key(disaster) references disaster(id),
         constraint danger_fk_region foreign key(region) references region(name)
@@ -74,8 +74,8 @@ create table danger
     
 
 create table location
-    (   region              varchar(30),
-        country             varchar(30),
+    (   region              varchar(30), -- Idem --
+        country             varchar(30), 
         constraint location_pk primary key (region, country),
         constraint location_fk_region foreign key(region) references region(name),
         constraint location_fk_country foreign key(country) references country(name)
