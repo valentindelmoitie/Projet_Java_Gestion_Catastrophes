@@ -97,3 +97,4 @@ create table location
     )   ENGINE = InnoDB
         DEFAULT CHARACTER SET = utf8;
 
+commit;

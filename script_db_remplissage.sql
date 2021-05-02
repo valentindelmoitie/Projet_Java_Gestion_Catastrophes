@@ -102,3 +102,5 @@ insert into `help` (disaster, hospital) values(5, 2);
 insert into `help` (disaster, hospital) values(5, 3);
 insert into `help` (disaster, hospital) values(5, 5);
 insert into `help` (disaster, hospital) values(5, 7);
+
+commit;
