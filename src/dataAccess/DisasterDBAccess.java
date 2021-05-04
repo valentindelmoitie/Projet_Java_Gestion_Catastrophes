@@ -17,10 +17,9 @@ public class DisasterDBAccess {
        Connection connection = SingletonConnection.getInstance();
 
        String sqlInstruction =
-               "SELECT d.*, l.region\n" +
-               "FROM disaster d\n" +
-               "JOIN impact_location l\n" +
-               "ON (d.id = l.disaster)"; // StringBuilder ??
+               "select d.id, d.impacted_people, d.direct_casualties, d.indirect_casualties, d.type, d.description, d.date, d.is_natural, d.end_date, d.name,d.intensity, l.Region" +
+               "from disaster d join impact_location l " +
+               "on d.id = l.disaster";
 
        try {
            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -31,9 +30,26 @@ public class DisasterDBAccess {
            allDisasters = new ArrayList<>();
 
            while(data.next()) {
-               //disaster = new Disaster(data.getInt("id"), data.getInt("impacted_people"), data.getInt("direct_casualties"), data.getInt("indirect_casualties"), data.getString("type"), data.getString("description"), new GregorianCalendar().setTime(data.getDate("date")), data.getBoolean("is_natural"), new ArrayList<Region>());
-               //Disaster disaster = new Disaster(1, 200000, 50, 4000, "Nucléaire", "Accident nucléaire majeur", new GregorianCalendar(), false, new ArrayList<Region>());
+               // /!\ gregorian calendar pas encore bon.
+               disaster = new Disaster(data.getInt("id"), data.getInt("impacted_people"), data.getInt("direct_casualties"), data.getInt("indirect_casualties"), data.getString("type"), data.getString("description"), data.getDate("date"), data.getBoolean("is_natural"), new ArrayList<Region>());
 
+               if (!data.wasNull()) {
+                   // /!\ à modifier !!
+                   disaster.setEndDate(data.getDate("end_date"));
+               }
+
+               if (!data.wasNull()) {
+                   disaster.setName(data.getString("name"));
+               }
+
+               if (!data.wasNull()) {
+                   disaster.setIntensity(data.getInt("intensity"));
+               }
+
+               // Ajout des régions dans l'arrayList
+               //...
+
+               allDisasters.add(disaster);
            }
 
 

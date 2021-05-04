@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Disaster {
@@ -12,12 +13,12 @@ public class Disaster {
     private String name;
     private String type;
     private String description;
-    private GregorianCalendar date;
-    private GregorianCalendar endDate;
+    private Date date;
+    private Date endDate;
     private Boolean isNatural;
     private ArrayList<Region> regions;
 
-    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) {
+    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, Date date, Boolean isNatural, ArrayList<Region> regions) {
         this.id = id;
         this.impactedPeople = impactedPeople;
         this.directCasualties = directCasualties;
@@ -29,7 +30,16 @@ public class Disaster {
         this.regions = regions;
     }
 
-    public Disaster(int id, int impacted_people, int direct_casualties, int indirect_casualties, String type, String description, GregorianCalendar date, boolean is_natural, ArrayList<Region> regions) {
+    public void setIntensity(Integer intensity) {
+        this.intensity = intensity;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getName() {
