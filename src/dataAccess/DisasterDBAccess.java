@@ -8,6 +8,7 @@ import java.sql.*;
 
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class DisasterDBAccess {
    public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
@@ -30,7 +31,9 @@ public class DisasterDBAccess {
            allDisasters = new ArrayList<>();
 
            while(data.next()) {
-                disaster = new Disaster(data.getInt("id"), );
+               //disaster = new Disaster(data.getInt("id"), data.getInt("impacted_people"), data.getInt("direct_casualties"), data.getInt("indirect_casualties"), data.getString("type"), data.getString("description"), new GregorianCalendar().setTime(data.getDate("date")), data.getBoolean("is_natural"), new ArrayList<Region>());
+               //Disaster disaster = new Disaster(1, 200000, 50, 4000, "Nucléaire", "Accident nucléaire majeur", new GregorianCalendar(), false, new ArrayList<Region>());
+
            }
 
 
@@ -38,7 +41,6 @@ public class DisasterDBAccess {
             throw new ReadingException(exception.getMessage());
        }
 
-
-       ResultSet data = preparedStatement.executeQuery();
+       return allDisasters;
    }
 }

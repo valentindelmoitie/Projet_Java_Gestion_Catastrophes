@@ -17,22 +17,26 @@ public class Disaster {
     private Boolean isNatural;
     private ArrayList<Region> regions;
 
-    public Disaster(Integer id, Integer intensity, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String name, String type, String description, GregorianCalendar date, GregorianCalendar endDate, Boolean isNatural, ArrayList<Region> regions) {
+    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) {
         this.id = id;
-        this.intensity = intensity;
         this.impactedPeople = impactedPeople;
         this.directCasualties = directCasualties;
         this.indirectCasualties = indirectCasualties;
-        this.name = name;
         this.type = type;
         this.description = description;
         this.date = date;
-        this.endDate = endDate;
         this.isNatural = isNatural;
         this.regions = regions;
     }
 
-    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) {
+    public Disaster(int id, int impacted_people, int direct_casualties, int indirect_casualties, String type, String description, GregorianCalendar date, boolean is_natural, ArrayList<Region> regions) {
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public Integer getIntensity() {
+        return intensity;
     }
 }
