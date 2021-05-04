@@ -1,24 +1,29 @@
 package dataAccess;
 
+import exception.ConnectionException;
+
 import java.util.*;
 import java.sql.*;
 
 
 public class SingletonConnection {
-    private static Connection connection;
+    private static Connection uniqueConnection;
 
-    private SingletonConnection(){
+    private SingletonConnection() throws SQLException {
+
     }
 
-    public static Connection getInstance(){
-        if(connection == null) {
-            try{
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_project","root","premier");
+    public static Connection getInstance() throws ConnectionException {
+        if(uniqueConnection == null) {
+            try {
+                uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_disasters_project","root","premier");
             }
-            catch(SQLException exception){ //SQLException ?
-                //do something with exception.getMessage()
+            catch (SQLException exception) {
+                throw new ConnectionException(exception.getMessage());
             }
+
         }
-        return connection;
+
+        return uniqueConnection;
     }
 }
