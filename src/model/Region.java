@@ -16,4 +16,8 @@ public class Region {
     public Region(String name) {
         this(null, name, null);
     }
+
+    public String getName() {
+        return name;
+    }
 }

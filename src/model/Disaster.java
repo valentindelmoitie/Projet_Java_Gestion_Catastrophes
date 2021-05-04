@@ -42,11 +42,55 @@ public class Disaster {
         this.endDate = endDate;
     }
 
-    public String getName() {
-        return name;
+    public Integer getId() {
+        return id;
     }
 
     public Integer getIntensity() {
         return intensity;
+    }
+
+    public Integer getImpactedPeople() {
+        return impactedPeople;
+    }
+
+    public Integer getDirectCasualties() {
+        return directCasualties;
+    }
+
+    public Integer getIndirectCasualties() {
+        return indirectCasualties;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Boolean getNatural() {
+        return isNatural;
+    }
+
+    public ArrayList<Region> getRegions() {
+        return regions;
+    }
+
+    public void addRegion(Region region) {
+        this.regions.add(region);
     }
 }
