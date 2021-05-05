@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class DisasterDBAccess {
-   public static ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
+   public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
        ArrayList<Disaster> allDisasters;
 
        Connection connection = SingletonConnection.getInstance();
@@ -29,6 +29,7 @@ public class DisasterDBAccess {
            allDisasters = new ArrayList<>();
 
            while(data.next()) {
+               // MODIFIER EN GREGORIAN CALENDAR
                Disaster disaster = null;
                int disasterId = data.getInt("id");
 
