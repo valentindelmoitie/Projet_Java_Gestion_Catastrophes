@@ -1,6 +1,7 @@
 package view.panels;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class AddPanel extends JPanel {
@@ -35,25 +36,30 @@ public class AddPanel extends JPanel {
         formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(11, 2));
 
+        
         idLbl = new JLabel("Id de la catastrophe : ");
         idTF = new JTextField();
         formPanel.add(idLbl);
         formPanel.add(idTF);
+
 
         nameLbl = new JLabel("Nom de la catastrophe (facultatif) : ");
         nameTF = new JTextField();
         formPanel.add(nameLbl);
         formPanel.add(nameTF);
 
+
         descriptionLbl = new JLabel("Description de la catastrophe : ");
         descriptionTF = new JTextField();
         formPanel.add(descriptionLbl);
         formPanel.add(descriptionTF);
 
+
         typeLbl = new JLabel("Type de la catastrophe : ");
         typeTF = new JTextField();
         formPanel.add(typeLbl);
         formPanel.add(typeTF);
+
 
         dateLbl = new JLabel("Date de début : ");
         dateSpinner = new JSpinner(new SpinnerDateModel());
@@ -61,42 +67,51 @@ public class AddPanel extends JPanel {
         formPanel.add(dateLbl);
         formPanel.add(dateSpinner);
 
+
         endDateLbl = new JLabel("Date de fin : ");
         endDateSpinner = new JSpinner(new SpinnerDateModel());
         endDateSpinner.setEditor(new JSpinner.DateEditor(endDateSpinner, "dd.MM.yyyy"));
         formPanel.add(endDateLbl);
         formPanel.add(endDateSpinner);
 
+
         intensityLbl = new JLabel("Intensité de la catastrophe (0 si pas nécessaire) : ");
         intensitySpinner = new JSpinner();
         formPanel.add(intensityLbl);
         formPanel.add(intensitySpinner);
+
 
         impactedPeopleLbl = new JLabel("Nombre de personnes touchées : ");
         impactedPeopleTF = new JTextField();
         formPanel.add(impactedPeopleLbl);
         formPanel.add(impactedPeopleTF);
 
+
         directCasualtiesLbl = new JLabel("Nombre de personnes directement touchées : ");
         directCasualtiesTF = new JTextField();
         formPanel.add(directCasualtiesLbl);
         formPanel.add(directCasualtiesTF);
+
 
         indirectCasualtiesLbl = new JLabel("Nombre de personnes indirectement touchées : ");
         indirectCasualtiesTF = new JTextField();
         formPanel.add(indirectCasualtiesLbl);
         formPanel.add(indirectCasualtiesTF);
 
+
         isNaturalLbl = new JLabel("La catastrophe est-elle naturelle ? ");
-        //formPanel.add(isNaturalLbl);    //Problème au niveau du layout ?
         isNaturalJRBYes = new JRadioButton("Oui",true);
         isNaturalJRBNo = new JRadioButton("Non",false);
-        formPanel.add(isNaturalJRBYes);
-        formPanel.add(isNaturalJRBNo);
-
         buttonGroupIsNatural = new ButtonGroup();
         buttonGroupIsNatural.add(isNaturalJRBNo);
         buttonGroupIsNatural.add(isNaturalJRBYes);
+
+        JPanel jPanelRadioButton = new JPanel();
+        jPanelRadioButton.add(isNaturalJRBYes);
+        jPanelRadioButton.add(isNaturalJRBNo);
+
+        formPanel.add(isNaturalLbl);
+        formPanel.add(jPanelRadioButton);
 
 
 
