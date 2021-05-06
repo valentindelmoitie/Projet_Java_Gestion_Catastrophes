@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+// Attention à retirer les static et mettre en place le DAO.
 public class DisasterDBAccess {
    public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
        ArrayList<Disaster> allDisasters;
@@ -56,12 +57,6 @@ public class DisasterDBAccess {
                else {
                    allDisasters.get(allDisasters.size() - 1).addRegion(new Region(data.getString("region")));
                }
-
-
-
-               // Ajout des régions dans l'arrayList
-               //...
-
 
                if (disaster != null)
                    allDisasters.add(disaster);

@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
         super("Gestion de catastrophes");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(1200, 600);
         this.setLocationRelativeTo(null);
 
         container = this.getContentPane();
@@ -61,6 +61,7 @@ public class MainWindow extends JFrame {
 
         listingMenuItem = new JMenuItem("Listing");
         listingMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
+        listingMenuItem.addActionListener(new MenuListener());
         disasterMenu.add(listingMenuItem);
 
         searchMenuCreation();
@@ -110,6 +111,9 @@ public class MainWindow extends JFrame {
                     break;
                 case "Recherche 1" :
                     container.add(new Search1Panel());
+                    break;
+                case "Listing" :
+                    container.add(new ListingPanel());
                     break;
                 case "Recherche 2" :
                     container.add(new Search2Panel());
