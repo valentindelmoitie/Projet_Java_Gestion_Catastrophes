@@ -49,7 +49,7 @@ public class ModifyPanel extends JPanel {
         formPanel.add(descriptionLbl);
         formPanel.add(descriptionTF);
 
-        typeLbl = new JLabel("Description de la catastrophe : ");
+        typeLbl = new JLabel("Type de la catastrophe : ");
         typeTF = new JTextField();
         formPanel.add(typeLbl);
         formPanel.add(typeTF);

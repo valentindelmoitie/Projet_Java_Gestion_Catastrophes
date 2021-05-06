@@ -24,7 +24,7 @@ public class Main {
 
         ArrayList<Disaster> allDisasters = new ArrayList<Disaster>();
 
-        allDisasters = DisasterDBAccess.getAllDisaster();
+        // allDisasters = DisasterDBAccess.getAllDisaster();
 
         for (Disaster disaster : allDisasters) {
             System.out.println("Région numéro : " + disaster.getId());

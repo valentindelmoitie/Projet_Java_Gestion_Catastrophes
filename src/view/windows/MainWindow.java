@@ -4,10 +4,7 @@ import view.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class MainWindow extends JFrame {
     private Container container;
@@ -20,7 +17,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         super("Gestion de catastrophes");
 
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
 
@@ -49,17 +46,17 @@ public class MainWindow extends JFrame {
 
         addMenuItem = new JMenuItem("Ajout");
         addMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
-        addMenuItem.addActionListener(new AddListener());
+        addMenuItem.addActionListener(new MenuListener());
         disasterMenu.add(addMenuItem);
 
         modificationMenuItem = new JMenuItem("Modification");
         modificationMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK));
-        modificationMenuItem.addActionListener(new ModifyListener());
+        modificationMenuItem.addActionListener(new MenuListener());
         disasterMenu.add(modificationMenuItem);
 
         removeMenuItem = new JMenuItem("Suppression");
         removeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
-        removeMenuItem.addActionListener(new RemoveListener());
+        removeMenuItem.addActionListener(new MenuListener());
         disasterMenu.add(removeMenuItem);
 
         listingMenuItem = new JMenuItem("Listing");
@@ -82,71 +79,45 @@ public class MainWindow extends JFrame {
 
         search1MenuItem = new JMenuItem("Recherche 1");
         search1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_DOWN_MASK));
-        search1MenuItem.addActionListener(new Search1Listener());
+        search1MenuItem.addActionListener(new MenuListener());
         searchMenu.add(search1MenuItem);
 
         search2MenuItem = new JMenuItem("Recherche 2");
         search2MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_DOWN_MASK));
-        search2MenuItem.addActionListener(new Search2Listener());
+        search2MenuItem.addActionListener(new MenuListener());
         searchMenu.add(search2MenuItem);
 
         search3MenuItem = new JMenuItem("Recherche 3");
         search3MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_DOWN_MASK));
-        search3MenuItem.addActionListener(new Search3Listener());
+        search3MenuItem.addActionListener(new MenuListener());
         searchMenu.add(search3MenuItem);
     }
 
     // Inner classes
-
-    private class AddListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
+    //Remplace les anciens listeners
+    private class MenuListener implements ActionListener {
+        public void actionPerformed(ActionEvent event){
             container.removeAll();
-            container.add(new AddPanel());
-            container.repaint();
-            container.validate();
-        }
-    }
-
-    private class ModifyListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            container.removeAll();
-            container.add(new ModifyPanel());
-            container.repaint();
-            container.validate();
-        }
-    }
-
-    private class RemoveListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            container.removeAll();
-            container.add(new RemovePanel());
-            container.repaint();
-            container.validate();
-        }
-    }
-
-    private class Search1Listener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            container.removeAll();
-            container.add(new Search1Panel());
-            container.repaint();
-            container.validate();
-        }
-    }
-
-    private class Search2Listener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            container.removeAll();
-            container.add(new Search2Panel());
-            container.repaint();
-            container.validate();
-        }
-    }
-
-    private class Search3Listener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            container.removeAll();
-            container.add(new Search3Panel());
+            switch(event.getActionCommand()){
+                case "Ajout" :
+                    container.add(new AddPanel());
+                    break;
+                case "Suppression" :
+                    container.add(new RemovePanel());
+                    break;
+                case "Modification" :
+                    container.add(new ModifyPanel());
+                    break;
+                case "Recherche 1" :
+                    container.add(new Search1Panel());
+                    break;
+                case "Recherche 2" :
+                    container.add(new Search2Panel());
+                    break;
+                case "Recherche 3" :
+                    container.add(new Search3Panel());
+                    break;
+            }
             container.repaint();
             container.validate();
         }

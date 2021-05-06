@@ -6,9 +6,12 @@ import java.awt.*;
 public class AddPanel extends JPanel {
     private JPanel titlePanel, formPanel, buttonsPanel;
     private JLabel titleLbl, idLbl, nameLbl, descriptionLbl, typeLbl, dateLbl, endDateLbl, intensityLbl, impactedPeopleLbl, directCasualtiesLbl, indirectCasualtiesLbl, isNaturalLbl;
-    private JTextField idTF, nameTF, descriptionTF, typeTF, impactedPeopleTF, directCasualtiesTF, indirectCasualtiesTF, isNaturalTF;
+    private JTextField idTF, nameTF, descriptionTF, typeTF, impactedPeopleTF, directCasualtiesTF, indirectCasualtiesTF;
     private JSpinner dateSpinner, endDateSpinner, intensitySpinner;
     private JButton sendBtn;
+
+    private JRadioButton isNaturalJRBYes, isNaturalJRBNo;
+    private ButtonGroup buttonGroupIsNatural;
 
     public AddPanel() {
         this.setLayout(new BorderLayout());
@@ -47,7 +50,7 @@ public class AddPanel extends JPanel {
         formPanel.add(descriptionLbl);
         formPanel.add(descriptionTF);
 
-        typeLbl = new JLabel("Description de la catastrophe : ");
+        typeLbl = new JLabel("Type de la catastrophe : ");
         typeTF = new JTextField();
         formPanel.add(typeLbl);
         formPanel.add(typeTF);
@@ -84,10 +87,18 @@ public class AddPanel extends JPanel {
         formPanel.add(indirectCasualtiesLbl);
         formPanel.add(indirectCasualtiesTF);
 
-        isNaturalLbl = new JLabel("La catastrophe est-elle naturelle (oui/non) : ");
-        isNaturalTF = new JTextField();
-        formPanel.add(isNaturalLbl);
-        formPanel.add(isNaturalTF);
+        isNaturalLbl = new JLabel("La catastrophe est-elle naturelle ? ");
+        //formPanel.add(isNaturalLbl);    //Problème au niveau du layout ?
+        isNaturalJRBYes = new JRadioButton("Oui",true);
+        isNaturalJRBNo = new JRadioButton("Non",false);
+        formPanel.add(isNaturalJRBYes);
+        formPanel.add(isNaturalJRBNo);
+
+        buttonGroupIsNatural = new ButtonGroup();
+        buttonGroupIsNatural.add(isNaturalJRBNo);
+        buttonGroupIsNatural.add(isNaturalJRBYes);
+
+
 
         this.add(formPanel, BorderLayout.CENTER);
     }
