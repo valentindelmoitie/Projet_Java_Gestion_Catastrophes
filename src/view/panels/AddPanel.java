@@ -3,16 +3,18 @@ package view.panels;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class AddPanel extends JPanel {
     private JPanel titlePanel, formPanel, buttonsPanel;
     private JLabel titleLbl, idLbl, nameLbl, descriptionLbl, typeLbl, dateLbl, endDateLbl, intensityLbl, impactedPeopleLbl, directCasualtiesLbl, indirectCasualtiesLbl, isNaturalLbl;
-    private JTextField idTF, nameTF, descriptionTF, typeTF, impactedPeopleTF, directCasualtiesTF, indirectCasualtiesTF;
+    private JTextField idTF, nameTF, descriptionTF, typeTF, impactedPeopleTF, directCasualtiesTF, indirectCasualtiesTF, endDateTF;
     private JSpinner dateSpinner, endDateSpinner, intensitySpinner;
     private JButton sendBtn;
-
     private JRadioButton isNaturalJRBYes, isNaturalJRBNo;
     private ButtonGroup buttonGroupIsNatural;
+    private DateFormat dateFormat;
 
     public AddPanel() {
         this.setLayout(new BorderLayout());
@@ -36,30 +38,26 @@ public class AddPanel extends JPanel {
         formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(11, 2));
 
-        
+
         idLbl = new JLabel("Id de la catastrophe : ");
         idTF = new JTextField();
         formPanel.add(idLbl);
         formPanel.add(idTF);
-
 
         nameLbl = new JLabel("Nom de la catastrophe (facultatif) : ");
         nameTF = new JTextField();
         formPanel.add(nameLbl);
         formPanel.add(nameTF);
 
-
         descriptionLbl = new JLabel("Description de la catastrophe : ");
         descriptionTF = new JTextField();
         formPanel.add(descriptionLbl);
         formPanel.add(descriptionTF);
 
-
         typeLbl = new JLabel("Type de la catastrophe : ");
         typeTF = new JTextField();
         formPanel.add(typeLbl);
         formPanel.add(typeTF);
-
 
         dateLbl = new JLabel("Date de début : ");
         dateSpinner = new JSpinner(new SpinnerDateModel());
@@ -67,37 +65,31 @@ public class AddPanel extends JPanel {
         formPanel.add(dateLbl);
         formPanel.add(dateSpinner);
 
-
-        endDateLbl = new JLabel("Date de fin : ");
-        endDateSpinner = new JSpinner(new SpinnerDateModel());
-        endDateSpinner.setEditor(new JSpinner.DateEditor(endDateSpinner, "dd.MM.yyyy"));
+        endDateLbl = new JLabel("Date de fin (dd/mm/yyyy): ");
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        endDateTF= new JFormattedTextField(dateFormat);
         formPanel.add(endDateLbl);
-        formPanel.add(endDateSpinner);
-
+        formPanel.add(endDateTF);
 
         intensityLbl = new JLabel("Intensité de la catastrophe (0 si pas nécessaire) : ");
-        intensitySpinner = new JSpinner();
+        intensitySpinner = new JSpinner(new SpinnerNumberModel(0,0,7,1));  // ADDED
         formPanel.add(intensityLbl);
         formPanel.add(intensitySpinner);
-
 
         impactedPeopleLbl = new JLabel("Nombre de personnes touchées : ");
         impactedPeopleTF = new JTextField();
         formPanel.add(impactedPeopleLbl);
         formPanel.add(impactedPeopleTF);
 
-
         directCasualtiesLbl = new JLabel("Nombre de personnes directement touchées : ");
         directCasualtiesTF = new JTextField();
         formPanel.add(directCasualtiesLbl);
         formPanel.add(directCasualtiesTF);
 
-
         indirectCasualtiesLbl = new JLabel("Nombre de personnes indirectement touchées : ");
         indirectCasualtiesTF = new JTextField();
         formPanel.add(indirectCasualtiesLbl);
         formPanel.add(indirectCasualtiesTF);
-
 
         isNaturalLbl = new JLabel("La catastrophe est-elle naturelle ? ");
         isNaturalJRBYes = new JRadioButton("Oui",true);
@@ -105,11 +97,9 @@ public class AddPanel extends JPanel {
         buttonGroupIsNatural = new ButtonGroup();
         buttonGroupIsNatural.add(isNaturalJRBNo);
         buttonGroupIsNatural.add(isNaturalJRBYes);
-
         JPanel jPanelRadioButton = new JPanel();
         jPanelRadioButton.add(isNaturalJRBYes);
         jPanelRadioButton.add(isNaturalJRBNo);
-
         formPanel.add(isNaturalLbl);
         formPanel.add(jPanelRadioButton);
 
