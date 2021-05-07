@@ -116,4 +116,6 @@ public class AddPanel extends JPanel {
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }
+
+    //Créer un objet Disaster
 }
