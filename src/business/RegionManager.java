@@ -4,21 +4,20 @@ import dataAccess.DisasterDBAccess;
 import exception.ConnectionException;
 import exception.ReadingException;
 import model.Disaster;
+import model.Region;
 
 import java.util.ArrayList;
 
-public class DisasterManager {
-    //TACHE CRUD
-    //VERIFICATION DONNEES FORMULAIRES CRUD ICI
+public class RegionManager {
 
     private DisasterDBAccess dao;
 
-    public DisasterManager() {
+    public RegionManager() {
         setDao(new DisasterDBAccess());
     }
 
-    public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException{
-        return dao.getAllDisaster();
+    public ArrayList<Region> getAllRegion() throws ConnectionException, ReadingException {
+        return dao.getAllRegion();
     }
 
     public void setDao(DisasterDBAccess dao) {

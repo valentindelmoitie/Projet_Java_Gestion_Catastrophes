@@ -1,27 +1,46 @@
 package view.panels;
 
+import controller.ApplicationController;
+import exception.ConnectionException;
+import exception.ReadingException;
+import model.Disaster;
+import model.Region;
+
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class AddPanel extends JPanel {
+    // ajouter constante valeur min spinner + spinner intensity + starting value
+    private ApplicationController controller;
     private JPanel titlePanel, formPanel, buttonsPanel;
-    private JLabel titleLbl, idLbl, nameLbl, descriptionLbl, typeLbl, dateLbl, endDateLbl, intensityLbl, impactedPeopleLbl, directCasualtiesLbl, indirectCasualtiesLbl, isNaturalLbl;
-    private JTextField idTF, nameTF, descriptionTF, typeTF, impactedPeopleTF, directCasualtiesTF, indirectCasualtiesTF, endDateTF;
-    private JSpinner dateSpinner, endDateSpinner, intensitySpinner;
-    private JButton sendBtn;
-    private JRadioButton isNaturalJRBYes, isNaturalJRBNo;
-    private ButtonGroup buttonGroupIsNatural;
+    private JLabel titleLbl, nameLbl, descriptionLbl, typeLbl, dateLbl, endDateLbl, intensityLbl,
+                   impactedPeopleLbl, directCasualtiesLbl, indirectCasualtiesLbl, isNaturalLbl, regionbl;
+    private JTextField nameTF, descriptionTF, endDateTF;
+    private JSpinner dateSpinner, intensitySpinner, impactedPeopleSpinner, directCasualtiesSpinner, indirectCasualtiesSpinner;
+    private JButton sendBtn, selectionnerBtn;
     private DateFormat dateFormat;
+    private JComboBox typeComboBox, isNaturalComboBox;
+    private JList regions, chosenRegions;
+    private JPanel regionPanel;
 
     public AddPanel() {
         this.setLayout(new BorderLayout());
-
+        setController(new ApplicationController());
         titlePanelCreation();
         formPanelCreation();
         buttonsPanelCreation();
+    }
+
+    public void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     private void titlePanelCreation() {
@@ -36,30 +55,31 @@ public class AddPanel extends JPanel {
 
     private void formPanelCreation() {
         formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(11, 2));
+        formPanel.setLayout(new GridLayout(12, 2));
 
 
-        idLbl = new JLabel("Id de la catastrophe : ");
-        idTF = new JTextField();
-        formPanel.add(idLbl);
-        formPanel.add(idTF);
+        // On ne doit pas demander l'ID, il est incrémenté auto dans la BDD
 
-        nameLbl = new JLabel("Nom de la catastrophe (facultatif) : ");
+        nameLbl = new JLabel("Nom de la catastrophe : ");
         nameTF = new JTextField();
         formPanel.add(nameLbl);
         formPanel.add(nameTF);
 
-        descriptionLbl = new JLabel("Description de la catastrophe : ");
+        descriptionLbl = new JLabel("Description de la catastrophe* : ");
         descriptionTF = new JTextField();
         formPanel.add(descriptionLbl);
         formPanel.add(descriptionTF);
 
-        typeLbl = new JLabel("Type de la catastrophe : ");
-        typeTF = new JTextField();
+        typeLbl = new JLabel("Type de la catastrophe* : ");
+        String[] types = {"Humanitaire","Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"};
+        typeComboBox = new JComboBox(types);
+        typeComboBox.setSelectedItem("Humanitaire");
+        typeComboBox.setMaximumRowCount(4);
         formPanel.add(typeLbl);
-        formPanel.add(typeTF);
+        formPanel.add(typeComboBox);
 
-        dateLbl = new JLabel("Date de début : ");
+
+        dateLbl = new JLabel("Date de début* : ");
         dateSpinner = new JSpinner(new SpinnerDateModel());
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "dd.MM.yyyy"));
         formPanel.add(dateLbl);
@@ -76,32 +96,62 @@ public class AddPanel extends JPanel {
         formPanel.add(intensityLbl);
         formPanel.add(intensitySpinner);
 
-        impactedPeopleLbl = new JLabel("Nombre de personnes touchées : ");
-        impactedPeopleTF = new JTextField();
+        impactedPeopleLbl = new JLabel("Nombre de personnes touchées* : ");
+        impactedPeopleSpinner = new JSpinner(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
         formPanel.add(impactedPeopleLbl);
-        formPanel.add(impactedPeopleTF);
+        formPanel.add(impactedPeopleSpinner);
 
-        directCasualtiesLbl = new JLabel("Nombre de personnes directement touchées : ");
-        directCasualtiesTF = new JTextField();
+
+        directCasualtiesLbl = new JLabel("Nombre de victimes directes* : ");
+        directCasualtiesSpinner = new JSpinner(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
         formPanel.add(directCasualtiesLbl);
-        formPanel.add(directCasualtiesTF);
+        formPanel.add(directCasualtiesSpinner);
 
-        indirectCasualtiesLbl = new JLabel("Nombre de personnes indirectement touchées : ");
-        indirectCasualtiesTF = new JTextField();
+        indirectCasualtiesLbl = new JLabel("Nombre de victimes indirectes* : ");
+        indirectCasualtiesSpinner = new JSpinner(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
         formPanel.add(indirectCasualtiesLbl);
-        formPanel.add(indirectCasualtiesTF);
+        formPanel.add(indirectCasualtiesSpinner);
 
-        isNaturalLbl = new JLabel("La catastrophe est-elle naturelle ? ");
-        isNaturalJRBYes = new JRadioButton("Oui",true);
-        isNaturalJRBNo = new JRadioButton("Non",false);
-        buttonGroupIsNatural = new ButtonGroup();
-        buttonGroupIsNatural.add(isNaturalJRBNo);
-        buttonGroupIsNatural.add(isNaturalJRBYes);
-        JPanel jPanelRadioButton = new JPanel();
-        jPanelRadioButton.add(isNaturalJRBYes);
-        jPanelRadioButton.add(isNaturalJRBNo);
+        isNaturalLbl = new JLabel("La catastrophe est-elle naturelle* ? ");
+        String[] isNaturalValues = {"Oui","Non"};
+        isNaturalComboBox = new JComboBox(isNaturalValues);
+        isNaturalComboBox.setSelectedItem("Oui");
+        isNaturalComboBox.setMaximumRowCount(2);
         formPanel.add(isNaturalLbl);
-        formPanel.add(jPanelRadioButton);
+        formPanel.add(isNaturalComboBox);
+
+        regionbl = new JLabel("Région(s) impactée(s)* : ");
+        regionPanel = new JPanel();
+        regionPanel.add(regionbl);
+
+        try {
+            ArrayList<String> regionsNames = new ArrayList<>();
+            for (Region region : controller.getAllRegion()){
+                regionsNames.add(region.getName());
+            }
+
+            regions = new JList(regionsNames.toArray());
+            regions.setVisibleRowCount(5);
+            regions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            regionPanel.add(new JScrollPane(regions));
+
+            selectionnerBtn = new JButton("Selectionner");
+            selectionnerBtn.addActionListener(new SelectButtonListener());
+            regionPanel.add(selectionnerBtn);
+
+            chosenRegions = new JList();
+            chosenRegions.setVisibleRowCount(5);
+            //chosenRegions.setFixedCellHeight(30);
+            //chosenRegions.setFixedCellWidth(75);
+            chosenRegions.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            regionPanel.add(new JScrollPane(chosenRegions));
+
+
+        }catch(Exception e){ //Change this
+            e.printStackTrace();
+        }
+        formPanel.add(regionPanel);
+
 
 
 
@@ -115,7 +165,35 @@ public class AddPanel extends JPanel {
         buttonsPanel.add(sendBtn);
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
+        sendBtn.addActionListener(new InsertButtonListener());
     }
 
-    //Créer un objet Disaster
+    private class InsertButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
+            Integer directCasualties    = (Integer) directCasualtiesSpinner.getValue();
+            Integer indirectCasualties  = (Integer) indirectCasualtiesSpinner.getValue();
+            Integer intensity           = (Integer) intensitySpinner.getValue();
+            String type = (String) typeComboBox.getSelectedItem();
+            String description = descriptionTF.getText();
+            Boolean isNatural = (isNaturalComboBox.getSelectedItem() == "Oui");
+            // date a faire
+            ArrayList<Region> regions = new ArrayList<>();
+            // Comment retouver la valeur des régions selectionnées ?
+
+          //  Disaster disaster = new Disaster(null,);
+        }
+    }
+
+    private class SelectButtonListener implements ActionListener{ // ???????????????
+        public void actionPerformed(ActionEvent event){
+            ArrayList<Object> selectedRegions = new ArrayList();
+            for(Object region : regions.getSelectedValuesList()){
+                selectedRegions.add(region);
+            }
+            chosenRegions.setListData(selectedRegions.toArray());
+            AddPanel.this.repaint();
+        }
+    }
+
 }

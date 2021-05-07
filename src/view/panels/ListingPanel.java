@@ -1,6 +1,6 @@
 package view.panels;
 
-import dataAccess.DisasterDBAccess;
+import controller.ApplicationController;
 import exception.ConnectionException;
 import exception.ReadingException;
 import view.AllDisastersModel;
@@ -12,12 +12,14 @@ public class ListingPanel extends JPanel {
     AllDisastersModel model;
     JScrollPane scrollPane;
     JTable disasterTable;
+    private ApplicationController controller;
 
     public ListingPanel() {
+        setController(new ApplicationController());
         this.setLayout(new BorderLayout());
 
         try {
-            model = new AllDisastersModel(new DisasterDBAccess().getAllDisaster()); // À adapter au DAO, ceci a été fait en guise de test.
+            model = new AllDisastersModel(controller.getAllDisaster());
         } catch (ConnectionException e) {
             e.printStackTrace();
         } catch (ReadingException e) {
@@ -35,5 +37,9 @@ public class ListingPanel extends JPanel {
 
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(new JButton("test"), BorderLayout.SOUTH); // Boutton de test pour voir comment ça fit avec la table
+    }
+
+    public void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 }
