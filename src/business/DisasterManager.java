@@ -1,6 +1,7 @@
 package business;
 
 public class DisasterManager {
-    //TACHE METIER
-    //VERIFICATION DONNEES FORMULAIRE ICI
+    //TACHE CRUD
+    //VERIFICATION DONNEES FORMULAIRES CRUD ICI
+    //délégation
 }
