@@ -54,7 +54,7 @@ public class AddPanel extends JPanel {
 
     private void formPanelCreation() {
         formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(2, 1));
+        formPanel.setLayout(new BorderLayout());
 
         subFormPanelCreation();
         regionPanelCreation();
@@ -128,12 +128,11 @@ public class AddPanel extends JPanel {
         formSubPanel.add(isNaturalLbl);
         formSubPanel.add(isNaturalComboBox);
 
-        formPanel.add(formSubPanel);
+        formPanel.add(formSubPanel, BorderLayout.CENTER);
     }
 
     private void regionPanelCreation() {
         regionPanel = new JPanel();
-        regionPanel.setBackground(Color.RED);
 
         regionbl = new JLabel("Région(s) impactée(s)* : ");
         regionPanel.add(regionbl);
@@ -164,7 +163,7 @@ public class AddPanel extends JPanel {
             e.printStackTrace();
         }
 
-        formPanel.add(regionPanel);
+        formPanel.add(regionPanel, BorderLayout.SOUTH);
     }
 
 
