@@ -11,5 +11,10 @@
     - Changement des dates vers GregorianCalendar dans DisasterDBAccess
     - Le listing fonctionne avec l'update vers les GregorianCalendar !
 
+-- Commit de Valentin du 8/05 22:12 --
+    - Ajout des bouttons "Modifier" et "Supprimer" dans le listing.
+      Ces boutons seront retirés et le clic sur le "Modifier" du menu entraînera l'affichage du listing avec UNIQUEMENT le menu modifier.
+      Il faut que l'on puisse supprimer PLUSIEURS catastrophes EN MÊME TEMPS
+    - La classe de gestion d'évènement "ButtonListener" fonctionne et crée et remplis une classe Disaster.
 
 
