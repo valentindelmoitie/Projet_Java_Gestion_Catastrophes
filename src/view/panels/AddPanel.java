@@ -56,6 +56,13 @@ public class AddPanel extends JPanel {
         formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(2, 1));
 
+        subFormPanelCreation();
+        regionPanelCreation();
+
+        this.add(formPanel, BorderLayout.CENTER);
+    }
+
+    private void subFormPanelCreation() {
         formSubPanel = new JPanel();
         formSubPanel.setLayout(new GridLayout(10, 2));
 
@@ -122,9 +129,13 @@ public class AddPanel extends JPanel {
         formSubPanel.add(isNaturalComboBox);
 
         formPanel.add(formSubPanel);
+    }
+
+    private void regionPanelCreation() {
+        regionPanel = new JPanel();
+        regionPanel.setBackground(Color.RED);
 
         regionbl = new JLabel("Région(s) impactée(s)* : ");
-        regionPanel = new JPanel();
         regionPanel.add(regionbl);
 
         try {
@@ -148,14 +159,15 @@ public class AddPanel extends JPanel {
             //chosenRegions.setFixedCellWidth(75);
             chosenRegions.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
             regionPanel.add(new JScrollPane(chosenRegions));
+
         }catch(Exception e){ //Change this
             e.printStackTrace();
         }
 
         formPanel.add(regionPanel);
-
-        this.add(formPanel, BorderLayout.CENTER);
     }
+
+
 
     private void buttonsPanelCreation() {
         buttonsPanel = new JPanel();
