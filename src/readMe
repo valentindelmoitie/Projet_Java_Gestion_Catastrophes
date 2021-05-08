@@ -4,4 +4,3 @@
     - Fix du panel "Add"
     - Création de la classe "FormPanel" qui reprend le formulaire à utiliser dans "AddPanel" et "ModifyPanel".
       La classe 'OldAddPanel' est juste l'ancienne version de AddPanel en sauvegarde au cas où la nouvelle version n'est pas optimale.
-
