@@ -28,15 +28,12 @@ public class ListingPanel extends JPanel {
         disasterTable = new JTable(model);
         scrollPane = new JScrollPane(disasterTable);
 
-        scrollPane.setPreferredSize(new Dimension(1150, 600));
+        scrollPane.setPreferredSize(new Dimension(1150, 400));
 
         disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
         disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
         disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
         disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
-
-        this.add(scrollPane, BorderLayout.CENTER);
-        this.add(new JButton("test"), BorderLayout.SOUTH); // Boutton de test pour voir comment ça fit avec la table
     }
 
     public void setController(ApplicationController controller) {

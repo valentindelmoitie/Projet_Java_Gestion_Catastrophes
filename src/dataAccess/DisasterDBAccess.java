@@ -8,8 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-// Attention à retirer les static et mettre en place le DAO.
-public class DisasterDBAccess {
+public class DisasterDBAccess implements  DisasterDataAccess {
     public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
         ArrayList<Disaster> allDisasters;
 
@@ -66,7 +65,6 @@ public class DisasterDBAccess {
         return allDisasters;
     }
 
-
     public ArrayList<Region> getAllRegion() throws ConnectionException, ReadingException {
         ArrayList<Region> regions;
 
@@ -92,7 +90,4 @@ public class DisasterDBAccess {
         }
         return regions;
     }
-
-
-
 }
