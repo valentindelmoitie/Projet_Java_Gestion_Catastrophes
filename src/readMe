@@ -1,4 +1,4 @@
--- Commit du 8/05 à 00:00 --
+-- Commit du 8/05 à 14:00 --
     - Création de l'interface DisasterDataAccess.
     - Update de la classe business>DisasterManager pour qu'elle utilise l'interface crée précédement.
     - Fix du panel "Add"
