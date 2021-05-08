@@ -5,6 +5,7 @@ import model.Disaster;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AllDisastersModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
@@ -85,7 +86,7 @@ public class AllDisastersModel extends AbstractTableModel {
                 c = String.class;
 
             case 4 : case 5 :
-                c = Date.class;
+                c = GregorianCalendar.class;
 
             case 10 :
                 c = Boolean.class;

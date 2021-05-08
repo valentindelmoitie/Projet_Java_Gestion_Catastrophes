@@ -4,3 +4,12 @@
     - Fix de l'affichage du formulaire
     - Création de la classe "FormPanel" qui reprend le formulaire à utiliser dans "AddPanel" et "ModifyPanel".
       La classe 'OldAddPanel' est juste l'ancienne version de AddPanel en sauvegarde au cas où la nouvelle version n'est pas optimale.
+
+
+-- Commit de Valentin du 8/05 à 21:O3 --
+    - Changement des dates de Date à GregorianCalendar dans Disaster
+    - Changement des dates vers GregorianCalendar dans DisasterDBAccess
+    - Le listing fonctionne avec l'update vers les GregorianCalendar !
+
+
+

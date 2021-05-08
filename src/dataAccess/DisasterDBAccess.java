@@ -32,11 +32,16 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                 int disasterId = data.getInt("id");
 
                 if (allDisasters.size() == 0 || disasterId != allDisasters.get(allDisasters.size() - 1).getId()) {
-                    disaster = new Disaster(disasterId, data.getInt("impacted_people"), data.getInt("direct_casualties"), data.getInt("indirect_casualties"), data.getString("type"), data.getString("description"), data.getDate("date"), data.getBoolean("is_natural"), new ArrayList<Region>());
 
-                    Date endDate = data.getDate("end_date");
+                    GregorianCalendar date = new GregorianCalendar();
+                    date.setTime(data.getDate("date"));
+                    disaster = new Disaster(disasterId, data.getInt("impacted_people"), data.getInt("direct_casualties"), data.getInt("indirect_casualties"), data.getString("type"), data.getString("description"), date, data.getBoolean("is_natural"), new ArrayList<Region>());
+
+                    Date endDateSQL = data.getDate("end_date");
                     if (!data.wasNull()) {
-                        disaster.setEndDate(endDate);
+                        GregorianCalendar endDateGregorian = new GregorianCalendar();
+                        endDateGregorian.setTime(endDateSQL);
+                        disaster.setEndDate(endDateGregorian);
                     }
 
                     String name = data.getString("name");

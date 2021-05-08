@@ -13,12 +13,12 @@ public class Disaster {
     private String name;
     private String type;
     private String description;
-    private Date date;
-    private Date endDate;
+    private GregorianCalendar date;
+    private GregorianCalendar endDate;
     private Boolean isNatural;
     private ArrayList<Region> regions;
 
-    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, Date date, Boolean isNatural, ArrayList<Region> regions) {
+    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) {
         this.id = id;
         this.impactedPeople = impactedPeople;
         this.directCasualties = directCasualties;
@@ -38,7 +38,7 @@ public class Disaster {
         this.name = name;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(GregorianCalendar endDate) {
         this.endDate = endDate;
     }
 
@@ -74,12 +74,15 @@ public class Disaster {
         return description;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(GregorianCalendar.MONTH) + "/" +date.get(GregorianCalendar.YEAR);
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getEndDate() {
+        if (endDate != null)
+            return endDate.get(GregorianCalendar.DAY_OF_MONTH) + "/" + endDate.get(GregorianCalendar.MONTH) + "/" + endDate.get(GregorianCalendar.YEAR);
+
+        return "";
     }
 
     public Boolean getNatural() {

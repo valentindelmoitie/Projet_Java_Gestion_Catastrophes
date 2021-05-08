@@ -34,6 +34,8 @@ public class ListingPanel extends JPanel {
         disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
         disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
         disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
+
+        this.add(scrollPane);
     }
 
     public void setController(ApplicationController controller) {
