@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class Disaster {
     private Integer id;
@@ -17,13 +15,17 @@ public class Disaster {
     private GregorianCalendar endDate;
     private Boolean isNatural;
     private ArrayList<Region> regions;
+    private static final List<String> allowedTypes = Collections.unmodifiableList(Arrays.asList("Humanitaire",
+            "Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"));
 
-    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) {
+    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
+                    String type, String description, GregorianCalendar date, Boolean isNatural,
+                    ArrayList<Region> regions) {
         this.id = id;
-        this.impactedPeople = impactedPeople;
-        this.directCasualties = directCasualties;
-        this.indirectCasualties = indirectCasualties;
-        this.type = type;
+        setImpactedPeople(impactedPeople);
+        setDirectCasualties(directCasualties);
+        setIndirectCasualties(indirectCasualties);
+        setType(type);
         this.description = description;
         this.date = date;
         this.isNatural = isNatural;
@@ -31,6 +33,7 @@ public class Disaster {
     }
 
     public void setIntensity(Integer intensity) {
+        //if(intensity < 0 || intensity > 7) throw new IntensityException;
         this.intensity = intensity;
     }
 
@@ -40,6 +43,27 @@ public class Disaster {
 
     public void setEndDate(GregorianCalendar endDate) {
         this.endDate = endDate;
+    }
+
+    public void setImpactedPeople(Integer impactedPeople) {
+        //if(impactedPeople < 0) throw new NumberOfPeopleException(population);
+        //if(impactedPeople < directCasualties + indirectCasualties) throw new ImpactedPeopleException(impactedPeople,directCasualties,indirectCasualties);
+        this.impactedPeople = impactedPeople;
+    }
+
+    public void setDirectCasualties(Integer directCasualties) {
+        //throw new NumberOfPeopleException(directCasualties);
+        this.directCasualties = directCasualties;
+    }
+
+    public void setIndirectCasualties(Integer indirectCasualties) {
+        //throw new NumberOfPeopleException(indirectCasualties);
+        this.indirectCasualties = indirectCasualties;
+    }
+
+    public void setType(String type) {
+        //if (!allowedTypes.contains(type)) throw new DisasterTypeException;
+        this.type = type;
     }
 
     public Integer getId() {

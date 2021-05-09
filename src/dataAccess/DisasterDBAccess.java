@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class DisasterDBAccess implements  DisasterDataAccess {
-    public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
+    public ArrayList<Disaster> getAllDisasters() throws ConnectionException, ReadingException {
         ArrayList<Disaster> allDisasters;
 
         Connection connection = SingletonConnection.getInstance();
 
         String sqlInstruction =
-                "select d.id, d.impacted_people, d.direct_casualties, d.indirect_casualties, d.type, d.description, d.date, d.is_natural, d.end_date, d.name,d.intensity, l.Region " +
+                "select d.id, d.impacted_people, d.direct_casualties, d.indirect_casualties, d.type, " +
+                        "d.description, d.date, d.is_natural, d.end_date, d.name,d.intensity, l.Region " +
                         "from disaster d join impact_location l " +
                         "on d.id = l.disaster";
 
@@ -35,7 +36,10 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
                     GregorianCalendar date = new GregorianCalendar();
                     date.setTime(data.getDate("date"));
-                    disaster = new Disaster(disasterId, data.getInt("impacted_people"), data.getInt("direct_casualties"), data.getInt("indirect_casualties"), data.getString("type"), data.getString("description"), date, data.getBoolean("is_natural"), new ArrayList<Region>());
+                    disaster = new Disaster(disasterId, data.getInt("impacted_people"),
+                            data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
+                            data.getString("type"), data.getString("description"), date,
+                            data.getBoolean("is_natural"), new ArrayList<Region>());
 
                     Date endDateSQL = data.getDate("end_date");
                     if (!data.wasNull()) {
@@ -68,31 +72,5 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             throw new ReadingException(exception.getMessage());
         }
         return allDisasters;
-    }
-
-    public ArrayList<Region> getAllRegion() throws ConnectionException, ReadingException {
-        ArrayList<Region> regions;
-
-        Connection connection = SingletonConnection.getInstance();
-
-        String sqlInstruction = "select * from region;";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-
-            ResultSet data = preparedStatement.executeQuery();
-
-            regions = new ArrayList<>();
-
-            while(data.next()){
-                Region region = new Region(data.getInt("population"),
-                        data.getString("name"),data.getBoolean("is_warzone"));
-                regions.add(region);
-            }
-
-        } catch (SQLException exception) {
-            throw new ReadingException(exception.getMessage());
-        }
-        return regions;
     }
 }

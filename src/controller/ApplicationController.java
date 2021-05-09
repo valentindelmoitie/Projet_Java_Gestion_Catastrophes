@@ -10,12 +10,6 @@ import java.util.ArrayList;
 
 public class ApplicationController {
 
-    // Lien entre interface et le reste
-    // Redirige les requetes venant de view (objet book) vers les autres méthodes dans Business
-    //Securité en plus mais rien cette année dans ce projet
-
-    // BEaucoup de délégation ici (appel vers des méthodes business)
-
     private DisasterManager disasterManager;
     private RegionManager regionManager;
 
@@ -25,11 +19,11 @@ public class ApplicationController {
     }
 
     public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
-        return disasterManager.getAllDisaster();
+        return disasterManager.getAllDisasters();
    }
 
    public ArrayList<Region> getAllRegion() throws ConnectionException, ReadingException{
-        return regionManager.getAllRegion();
+        return regionManager.getAllRegions();
    }
 
     public void setDisasterManager(DisasterManager disasterManager) {

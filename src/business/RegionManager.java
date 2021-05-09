@@ -1,6 +1,8 @@
 package business;
 
 import dataAccess.DisasterDBAccess;
+import dataAccess.RegionDBAccess;
+import dataAccess.RegionDataAccess;
 import exception.ConnectionException;
 import exception.ReadingException;
 import model.Disaster;
@@ -10,17 +12,17 @@ import java.util.ArrayList;
 
 public class RegionManager {
 
-    private DisasterDBAccess dao;
+    private RegionDataAccess dao;
 
     public RegionManager() {
-        setDao(new DisasterDBAccess());
+        setDao(new RegionDBAccess());
     }
 
-    public ArrayList<Region> getAllRegion() throws ConnectionException, ReadingException {
-        return dao.getAllRegion();
+    public ArrayList<Region> getAllRegions() throws ConnectionException, ReadingException {
+        return dao.getAllRegions();
     }
 
-    public void setDao(DisasterDBAccess dao) {
+    public void setDao(RegionDataAccess dao) {
         this.dao = dao;
     }
 }

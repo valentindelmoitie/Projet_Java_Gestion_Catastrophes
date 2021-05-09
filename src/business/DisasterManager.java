@@ -9,8 +9,6 @@ import model.Disaster;
 import java.util.ArrayList;
 
 public class DisasterManager {
-    //TACHE CRUD
-    //VERIFICATION DONNEES FORMULAIRES CRUD ICI
 
     private DisasterDataAccess dao;
 
@@ -18,11 +16,11 @@ public class DisasterManager {
         setDao(new DisasterDBAccess());
     }
 
-    public void setDao(DisasterDBAccess dao) {
+    public void setDao(DisasterDataAccess dao) {
         this.dao = dao;
     }
 
-    public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException{
-        return dao.getAllDisaster();
+    public ArrayList<Disaster> getAllDisasters() throws ConnectionException, ReadingException{
+        return dao.getAllDisasters();
     }
 }
