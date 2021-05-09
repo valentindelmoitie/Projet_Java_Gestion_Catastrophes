@@ -153,7 +153,7 @@ public class FormPanel extends JPanel {
         }
     }
 
-    private class SelectButtonListener implements ActionListener{ // ???????????????
+    private class SelectButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             ArrayList<Object> selectedRegions = new ArrayList();
             for(Object region : regions.getSelectedValuesList()){

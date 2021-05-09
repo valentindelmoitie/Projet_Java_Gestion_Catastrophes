@@ -1,5 +1,6 @@
 package dataAccess;
 
+import exception.AddDisasterException;
 import exception.ConnectionException;
 import exception.ReadingException;
 import model.*;
@@ -72,5 +73,56 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             throw new ReadingException(exception.getMessage());
         }
         return allDisasters;
+    }
+
+    public int addDisaster(Disaster disaster)  throws ConnectionException, AddDisasterException {
+        Connection connection = SingletonConnection.getInstance();
+
+        String sqlInstructionDisaster = "insert into disaster (`type`,`description`,`date`, impacted_people," +
+                "direct_casualties,indirect_casualties,is_natural, id) values(?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionDisaster);
+
+            preparedStatement.setString(1,disaster.getType());
+            preparedStatement.setString(2,disaster.getDescription());
+            java.sql.Date sqlDate = new Date(disaster.getDate().getTimeInMillis());
+            preparedStatement.setDate(3,sqlDate);
+            preparedStatement.setInt(4,disaster.getImpactedPeople());
+            preparedStatement.setInt(5,disaster.getDirectCasualties());
+            preparedStatement.setInt(6,disaster.getIndirectCasualties());
+            preparedStatement.setBoolean(7, disaster.getNatural());
+            preparedStatement.setInt(8, disaster.getId());
+
+            int nbInsert = preparedStatement.executeUpdate();
+
+            if(disaster.getName() != null){
+                String sqlStatement = "update disaster set name = ? where id = ?";
+                PreparedStatement statement = connection.prepareStatement(sqlStatement);
+                statement.setString(1,disaster.getName());
+                statement.setInt(2,disaster.getId());
+                statement.executeUpdate();
+            }
+
+            if(disaster.getIntensity() != null){
+                String sqlStatement = "update disaster set intensity = ? where id = ?";
+                PreparedStatement statement = connection.prepareStatement(sqlStatement);
+                statement.setInt(1,disaster.getIntensity());
+                statement.setInt(2,disaster.getId());
+                statement.executeUpdate();
+            }
+
+            if(disaster.getEndDate() != null){
+                String sqlStatement = "update disaster set end_Date = ? where id = ?";
+                PreparedStatement statement = connection.prepareStatement(sqlStatement);
+                java.sql.Date sqlEndDate = new Date(disaster.getEndDate().getTimeInMillis());
+                statement.setDate(1, sqlEndDate);
+                statement.setInt(2,disaster.getId());
+                statement.executeUpdate();
+            }
+            return nbInsert;
+        }catch (SQLException exception){
+            throw new AddDisasterException(exception.getMessage());
+        }
     }
 }

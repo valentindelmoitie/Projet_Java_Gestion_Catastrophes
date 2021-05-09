@@ -1,6 +1,7 @@
 package view.panels;
 
 import controller.ApplicationController;
+import model.Disaster;
 import model.Region;
 
 import javax.swing.*;
@@ -9,20 +10,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
+import java.util.*;
 
 public class OldAddPanel extends JPanel {
     // ajouter constante valeur min spinner + spinner intensity + starting value
     private ApplicationController controller;
     private JPanel titlePanel, formPanel, formSubPanel, regionPanel,  buttonsPanel;
-    private JLabel titleLbl, nameLbl, descriptionLbl, typeLbl, dateLbl, endDateLbl, intensityLbl,
+    private JLabel idLbl, titleLbl, nameLbl, descriptionLbl, typeLbl, dateLbl, endDateLbl, intensityLbl,
                    impactedPeopleLbl, directCasualtiesLbl, indirectCasualtiesLbl, isNaturalLbl, regionbl;
-    private JTextField nameTF, descriptionTF, endDateTF;
-    private JSpinner dateSpinner, intensitySpinner, impactedPeopleSpinner, directCasualtiesSpinner, indirectCasualtiesSpinner;
+    private JTextField idTF, nameTF, descriptionTF, startDateTF, endDateTF;
+    private JSpinner idSpinner, intensitySpinner, impactedPeopleSpinner, directCasualtiesSpinner, indirectCasualtiesSpinner;
     private JButton sendBtn, selectionnerBtn;
     private DateFormat dateFormat;
     private JComboBox typeComboBox, isNaturalComboBox;
     private JList regions, chosenRegions;
+    private Calendar startDate, endDate;
 
     public OldAddPanel() {
         this.setLayout(new BorderLayout());
@@ -30,6 +37,8 @@ public class OldAddPanel extends JPanel {
         titlePanelCreation();
         formPanelCreation();
         buttonsPanelCreation();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
     }
 
     public void setController(ApplicationController controller) {
@@ -58,9 +67,13 @@ public class OldAddPanel extends JPanel {
 
     private void subFormPanelCreation() {
         formSubPanel = new JPanel();
-        formSubPanel.setLayout(new GridLayout(10, 2));
+        formSubPanel.setLayout(new GridLayout(11, 2));
 
-        // On ne doit pas demander l'ID, il est incrémenté auto dans la BDD
+
+        idLbl = new JLabel("ID de la catastrophe :* : ");
+        idSpinner = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));  // Si le temps, chercher la valeur de l'auto incr dans la bdd et le remonter ici
+        formSubPanel.add(idLbl);
+        formSubPanel.add(idSpinner);
 
         nameLbl = new JLabel("Nom de la catastrophe : ");
         nameTF = new JTextField();
@@ -80,16 +93,20 @@ public class OldAddPanel extends JPanel {
         formSubPanel.add(typeLbl);
         formSubPanel.add(typeComboBox);
 
-
-        dateLbl = new JLabel("Date de début* : ");
-        dateSpinner = new JSpinner(new SpinnerDateModel());
-        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "dd.MM.yyyy"));
+        //dateLbl = new JLabel("Date de début* : ");
+        //dateSpinner = new JSpinner(new SpinnerDateModel());
+        //dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "dd.MM.yyyy"));
+        //formSubPanel.add(dateLbl);
+        //formSubPanel.add(dateSpinner);
+        dateLbl = new JLabel("Date de début (dd/mm/yyyy)* : ");
+        startDateTF = new JTextField();
         formSubPanel.add(dateLbl);
-        formSubPanel.add(dateSpinner);
+        formSubPanel.add(startDateTF);
 
         endDateLbl = new JLabel("Date de fin (dd/mm/yyyy): ");
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        endDateTF = new JFormattedTextField(dateFormat);
+        //dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        //endDateTF = new JFormattedTextField(dateFormat);
+        endDateTF = new JTextField();
         formSubPanel.add(endDateLbl);
         formSubPanel.add(endDateTF);
 
@@ -160,8 +177,6 @@ public class OldAddPanel extends JPanel {
         formPanel.add(regionPanel, BorderLayout.SOUTH);
     }
 
-
-
     private void buttonsPanelCreation() {
         buttonsPanel = new JPanel();
 
@@ -174,30 +189,64 @@ public class OldAddPanel extends JPanel {
 
     private class InsertButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
+            Integer id                  = (Integer) idSpinner.getValue();
             Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
             Integer directCasualties    = (Integer) directCasualtiesSpinner.getValue();
             Integer indirectCasualties  = (Integer) indirectCasualtiesSpinner.getValue();
-            Integer intensity           = (Integer) intensitySpinner.getValue();
             String type = (String) typeComboBox.getSelectedItem();
             String description = descriptionTF.getText();
-            Boolean isNatural = (isNaturalComboBox.getSelectedItem() == "Oui");
-            // date a faire
-            ArrayList<Region> regions = new ArrayList<>();
-            // Comment retouver la valeur des régions selectionnées ?
 
-          //  Disaster disaster = new Disaster(null,);
+            String name = (String) nameTF.getText();
+            Integer intensity           = (Integer) intensitySpinner.getValue();
+
+            try {
+                Date date = dateFormat.parse(startDateTF.getText());
+                if(!startDateTF.getText().isEmpty()){
+                    startDate = new GregorianCalendar();
+                    startDate.setTime(date);
+                }
+                if(!endDateTF.getText().isEmpty()) {
+                    endDate = new GregorianCalendar();
+                    date = dateFormat.parse(endDateTF.getText());
+                    endDate.setTime(date);
+                }
+
+                Boolean isNatural = (isNaturalComboBox.getSelectedItem() == "Oui");
+
+                ArrayList<Region> disasterRegions = new ArrayList<>();
+                ListModel model = chosenRegions.getModel();
+                int i = 0;
+                while(i < model.getSize() && model.getElementAt(i) != null){
+                    disasterRegions.add(new Region((String)model.getElementAt(i)));
+                    i++;
+                }
+
+                Disaster disaster = new Disaster(id,impactedPeople,directCasualties,indirectCasualties,type,description, (GregorianCalendar) startDate,isNatural,disasterRegions);
+                if(!nameTF.getText().isEmpty())
+                    disaster.setName(name);
+                if(intensity > 0)
+                    disaster.setIntensity(intensity);
+               // if(endDate != null)
+                if(!endDateTF.getText().isEmpty())
+                    disaster.setEndDate((GregorianCalendar)endDate);
+
+                int nbLigne = controller.addDisaster(disaster);
+                System.out.println(nbLigne + "ligne ajoutée");   //Pour test
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 
-    private class SelectButtonListener implements ActionListener{ // ???????????????
+    private class SelectButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            ArrayList<Object> selectedRegions = new ArrayList();
-            for(Object region : regions.getSelectedValuesList()){
+            ArrayList<Object> selectedRegions = new ArrayList<>();
+            for (Object region : regions.getSelectedValuesList()){
                 selectedRegions.add(region);
             }
             chosenRegions.setListData(selectedRegions.toArray());
             OldAddPanel.this.repaint();
         }
     }
-
 }

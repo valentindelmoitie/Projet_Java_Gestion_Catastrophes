@@ -101,7 +101,7 @@ public class MainWindow extends JFrame {
             container.removeAll();
             switch(event.getActionCommand()){
                 case "Ajout" :
-                    container.add(new AddPanel());
+                    container.add(new OldAddPanel());         //EDIT AFTER TEST
                     break;
                 case "Suppression" :
                     container.add(new RemovePanel());

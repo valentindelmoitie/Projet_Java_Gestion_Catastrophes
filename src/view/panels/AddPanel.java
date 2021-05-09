@@ -55,6 +55,4 @@ public class AddPanel extends JPanel {
         this.add(buttonsPanel, BorderLayout.SOUTH);
         //sendBtn.addActionListener(new InsertButtonListener());
     }
-
-
 }

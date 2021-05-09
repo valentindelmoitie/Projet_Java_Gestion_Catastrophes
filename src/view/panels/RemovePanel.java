@@ -21,7 +21,7 @@ public class RemovePanel extends JPanel {
         titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout());
 
-        titleLbl = new JLabel("<html><h3>Suppression d'une catastrophe de la baese de données</h3></html>");
+        titleLbl = new JLabel("<html><h3>Suppression d'une catastrophe de la base de données</h3></html>");
         titlePanel.add(titleLbl);
 
         this.add(titlePanel, BorderLayout.NORTH);

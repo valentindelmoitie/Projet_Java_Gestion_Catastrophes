@@ -19,6 +19,10 @@ public class Region {
         return name;
     }
 
+    public Integer getPopulation() {
+        return population;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

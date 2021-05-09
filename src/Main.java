@@ -4,7 +4,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 
 public class Main {
-    public static void main(String[] args) throws UnsupportedLookAndFeelException {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException { // On peut pas throws ici je pense
         System.out.println("Hello world");
         UIManager.setLookAndFeel(new NimbusLookAndFeel());
         MainWindow mainWindow = new MainWindow();

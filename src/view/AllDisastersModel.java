@@ -57,9 +57,9 @@ public class AllDisastersModel extends AbstractTableModel {
             case 3 :
                 return disaster.getDescription();
             case 4 :
-                return disaster.getDate(); // À modifier : il faut ajouter du code pour convertir la date.
+                return disaster.getDateString(); // À modifier : il faut ajouter du code pour convertir la date.
             case 5 :
-                return disaster.getEndDate(); // Idem
+                return disaster.getEndDateString(); // Idem
             case 6 :
                 return disaster.getIntensity();
             case 7 :

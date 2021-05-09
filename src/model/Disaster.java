@@ -32,8 +32,13 @@ public class Disaster {
         this.regions = regions;
     }
 
+    public void setId(Integer id) {
+        //if(id < 1 ) throw new IdException;
+        this.id = id;
+    }
+
     public void setIntensity(Integer intensity) {
-        //if(intensity < 0 || intensity > 7) throw new IntensityException;
+        //if(intensity <= 0 || intensity > 7) throw new IntensityException;
         this.intensity = intensity;
     }
 
@@ -98,11 +103,19 @@ public class Disaster {
         return description;
     }
 
-    public String getDate() {
+    public String getDateString() {
         return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(GregorianCalendar.MONTH) + "/" +date.get(GregorianCalendar.YEAR);
     }
 
-    public String getEndDate() {
+    public GregorianCalendar getDate(){
+        return date;
+    }
+
+    public GregorianCalendar getEndDate(){
+        return endDate;
+    }
+
+    public String getEndDateString() {
         if (endDate != null)
             return endDate.get(GregorianCalendar.DAY_OF_MONTH) + "/" + endDate.get(GregorianCalendar.MONTH) + "/" + endDate.get(GregorianCalendar.YEAR);
 

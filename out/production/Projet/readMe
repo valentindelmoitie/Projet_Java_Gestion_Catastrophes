@@ -27,9 +27,9 @@
       (regarde pour voir si tu valides)
     - NB : Les exceptions sont prévues mais mise en commentaires car il faut prévoir les blocs try/catch adéquats
 
--- Commit de Mathieu du 09/05 20:15
+-- Commit de Mathieu du 09/05 xx:xx
     - L'option ajout renvoie vers OldAddPanel le temps de finaliser le formulaire
     - L'obtention des régions choisies par l'utilisateur dans OldAddPanel fonctionne
     - Obtention date fonctionne dans OldAddPanell
-    - Insertion dans la BDD fonctionne (pour les toutes les valeurs sauf région)
+    - Insertion dans la BDD fonctionne (pour les valeurs obligatoires)
 
