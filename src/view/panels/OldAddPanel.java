@@ -226,12 +226,12 @@ public class OldAddPanel extends JPanel {
                     disaster.setName(name);
                 if(intensity > 0)
                     disaster.setIntensity(intensity);
-               // if(endDate != null)
+
                 if(!endDateTF.getText().isEmpty())
                     disaster.setEndDate((GregorianCalendar)endDate);
 
-                int nbLigne = controller.addDisaster(disaster);
-                System.out.println(nbLigne + "ligne ajoutée");   //Pour test
+                controller.addDisaster(disaster); // Possible de récupérer un int ici indiquant le nombre de ligne ajouté
+
             }
             catch (Exception e){
                 System.out.println(e.getMessage());

@@ -81,6 +81,8 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         String sqlInstructionDisaster = "insert into disaster (`type`,`description`,`date`, impacted_people," +
                 "direct_casualties,indirect_casualties,is_natural, id) values(?, ?, ?, ?, ?, ?, ?, ?)";
 
+        String sqlImpactLocation = "insert into impact_location (disaster, region) values(?, ?)";
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionDisaster);
 
@@ -93,8 +95,15 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             preparedStatement.setInt(6,disaster.getIndirectCasualties());
             preparedStatement.setBoolean(7, disaster.getNatural());
             preparedStatement.setInt(8, disaster.getId());
-
             int nbInsert = preparedStatement.executeUpdate();
+
+            preparedStatement = connection.prepareStatement(sqlImpactLocation);
+            preparedStatement.setInt(1,disaster.getId());
+            for (Region region : disaster.getRegions()) {
+                preparedStatement.setString(2, region.getName());
+                preparedStatement.executeUpdate();
+            }
+
 
             if(disaster.getName() != null){
                 String sqlStatement = "update disaster set name = ? where id = ?";
