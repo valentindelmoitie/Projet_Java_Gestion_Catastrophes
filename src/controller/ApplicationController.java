@@ -2,7 +2,7 @@ package controller;
 
 import business.*;
 import exception.AddDisasterException;
-import exception.ConnectionException;
+import exception.CommunicationException;
 import exception.ReadingException;
 import model.Disaster;
 import model.Region;
@@ -19,15 +19,15 @@ public class ApplicationController {
         setRegionManager(new RegionManager());
     }
 
-    public ArrayList<Disaster> getAllDisaster() throws ConnectionException, ReadingException {
+    public ArrayList<Disaster> getAllDisaster() throws CommunicationException, ReadingException {
         return disasterManager.getAllDisasters();
    }
 
-   public ArrayList<Region> getAllRegion() throws ConnectionException, ReadingException{
+   public ArrayList<Region> getAllRegion() throws CommunicationException, ReadingException{
         return regionManager.getAllRegions();
    }
 
-   public int addDisaster(Disaster disaster) throws ConnectionException, AddDisasterException {
+   public int addDisaster(Disaster disaster) throws CommunicationException, AddDisasterException {
         return disasterManager.addDisaster(disaster);
    }
 

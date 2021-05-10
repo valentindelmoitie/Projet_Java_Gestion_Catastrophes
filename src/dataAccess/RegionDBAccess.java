@@ -1,6 +1,6 @@
 package dataAccess;
 
-import exception.ConnectionException;
+import exception.CommunicationException;
 import exception.ReadingException;
 import model.Region;
 
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RegionDBAccess implements RegionDataAccess {
-    public ArrayList<Region> getAllRegions() throws ConnectionException, ReadingException {
+    public ArrayList<Region> getAllRegions() throws CommunicationException, ReadingException {
         ArrayList<Region> regions;
 
         Connection connection = SingletonConnection.getInstance();

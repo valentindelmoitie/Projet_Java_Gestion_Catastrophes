@@ -1,9 +1,14 @@
 package exception;
 
 public class ReadingException extends Exception {
-    public ReadingException(String message) {
-        super(message);
-    }
 
-    //Dire qu'il y a eu une erreur lors de la lecture + message => + clean code ? /!\ Pas de référence à bdd
+    private String errorMessage;
+
+    public ReadingException(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+    public String getMessage(){
+        return "Il y a eu une erreur lors de l'accès en lecture aux données\nMessage d'erreur complet : " +
+                errorMessage;
+    }
 }

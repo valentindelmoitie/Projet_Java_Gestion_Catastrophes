@@ -1,13 +1,12 @@
 package view.panels;
 
 import controller.ApplicationController;
-import exception.ConnectionException;
+import exception.CommunicationException;
 import exception.ReadingException;
 import model.Disaster;
 import view.AllDisastersModel;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +32,7 @@ public class ListingPanel extends JPanel {
 
         try {
             model = new AllDisastersModel(controller.getAllDisaster());
-        } catch (ConnectionException e) {
+        } catch (CommunicationException e) {
             e.printStackTrace();
         } catch (ReadingException e) {
             e.printStackTrace();

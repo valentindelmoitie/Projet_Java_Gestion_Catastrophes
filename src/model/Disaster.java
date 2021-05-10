@@ -17,11 +17,13 @@ public class Disaster {
     private ArrayList<Region> regions;
     private static final List<String> allowedTypes = Collections.unmodifiableList(Arrays.asList("Humanitaire",
             "Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"));
+    //Si on déclarait la variable en final simplement, on pourrait toujours y ajouter/retirer du contenu, juste
+    // ne pas la réassigner via un allowedTypes = new List<String>();
 
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural,
                     ArrayList<Region> regions) {
-        this.id = id;
+        setId(id);
         setImpactedPeople(impactedPeople);
         setDirectCasualties(directCasualties);
         setIndirectCasualties(indirectCasualties);
@@ -47,6 +49,7 @@ public class Disaster {
     }
 
     public void setEndDate(GregorianCalendar endDate) {
+        //if(endDate.compareTo(date) < 0) throws new EndDateException(endDate,date)
         this.endDate = endDate;
     }
 
@@ -57,12 +60,12 @@ public class Disaster {
     }
 
     public void setDirectCasualties(Integer directCasualties) {
-        //throw new NumberOfPeopleException(directCasualties);
+        //if(directCasualties < 0) throw new NumberOfPeopleException(directCasualties);
         this.directCasualties = directCasualties;
     }
 
     public void setIndirectCasualties(Integer indirectCasualties) {
-        //throw new NumberOfPeopleException(indirectCasualties);
+        //if (indirectCasualties < 0) throw new NumberOfPeopleException(indirectCasualties);
         this.indirectCasualties = indirectCasualties;
     }
 
@@ -103,16 +106,16 @@ public class Disaster {
         return description;
     }
 
-    public String getDateString() {
-        return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(GregorianCalendar.MONTH) + "/" +date.get(GregorianCalendar.YEAR);
-    }
-
     public GregorianCalendar getDate(){
         return date;
     }
 
     public GregorianCalendar getEndDate(){
         return endDate;
+    }
+
+    public String getDateString() {
+        return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(GregorianCalendar.MONTH) + "/" +date.get(GregorianCalendar.YEAR);
     }
 
     public String getEndDateString() {
@@ -133,4 +136,5 @@ public class Disaster {
     public void addRegion(Region region) {
         this.regions.add(region);
     }
+
 }

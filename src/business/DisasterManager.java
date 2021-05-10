@@ -3,7 +3,7 @@ package business;
 import dataAccess.DisasterDBAccess;
 import dataAccess.DisasterDataAccess;
 import exception.AddDisasterException;
-import exception.ConnectionException;
+import exception.CommunicationException;
 import exception.ReadingException;
 import model.Disaster;
 
@@ -21,11 +21,11 @@ public class DisasterManager {
         this.dao = dao;
     }
 
-    public ArrayList<Disaster> getAllDisasters() throws ConnectionException, ReadingException{
+    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException{
         return dao.getAllDisasters();
     }
 
-    public int addDisaster(Disaster disaster) throws ConnectionException, AddDisasterException {
+    public int addDisaster(Disaster disaster) throws CommunicationException, AddDisasterException {
         return dao.addDisaster(disaster);
     }
 }

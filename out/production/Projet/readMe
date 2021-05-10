@@ -33,3 +33,5 @@
     - Obtention date fonctionne dans OldAddPanell
     - Insertion dans la BDD fonctionne (pour les toutes les valeurs sauf région)
 
+-- Commit de Mathieu du 10/05 09:50
+    - Ajout de region(s) fonctionne

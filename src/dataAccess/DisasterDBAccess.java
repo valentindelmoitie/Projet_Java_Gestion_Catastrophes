@@ -1,7 +1,7 @@
 package dataAccess;
 
 import exception.AddDisasterException;
-import exception.ConnectionException;
+import exception.CommunicationException;
 import exception.ReadingException;
 import model.*;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class DisasterDBAccess implements  DisasterDataAccess {
-    public ArrayList<Disaster> getAllDisasters() throws ConnectionException, ReadingException {
+    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException {
         ArrayList<Disaster> allDisasters;
 
         Connection connection = SingletonConnection.getInstance();
@@ -19,7 +19,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                 "select d.id, d.impacted_people, d.direct_casualties, d.indirect_casualties, d.type, " +
                         "d.description, d.date, d.is_natural, d.end_date, d.name,d.intensity, l.Region " +
                         "from disaster d join impact_location l " +
-                        "on d.id = l.disaster";
+                        "on d.id = l.disaster;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -75,13 +75,13 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return allDisasters;
     }
 
-    public int addDisaster(Disaster disaster)  throws ConnectionException, AddDisasterException {
+    public int addDisaster(Disaster disaster)  throws CommunicationException, AddDisasterException {
         Connection connection = SingletonConnection.getInstance();
 
         String sqlInstructionDisaster = "insert into disaster (`type`,`description`,`date`, impacted_people," +
-                "direct_casualties,indirect_casualties,is_natural, id) values(?, ?, ?, ?, ?, ?, ?, ?)";
+                "direct_casualties,indirect_casualties,is_natural, id) values(?, ?, ?, ?, ?, ?, ?, ?);";
 
-        String sqlImpactLocation = "insert into impact_location (disaster, region) values(?, ?)";
+        String sqlImpactLocation = "insert into impact_location (disaster, region) values(?, ?);";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionDisaster);

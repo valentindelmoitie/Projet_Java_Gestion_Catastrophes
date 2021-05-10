@@ -4,7 +4,6 @@ import model.Disaster;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AllDisastersModel extends AbstractTableModel {

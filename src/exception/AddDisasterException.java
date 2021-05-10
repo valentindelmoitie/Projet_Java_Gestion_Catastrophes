@@ -1,7 +1,15 @@
 package exception;
 
 public class AddDisasterException extends Exception{
-    public AddDisasterException(String message) {
-        super(message);
+
+    private String errorMessage;
+
+    public AddDisasterException(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getMessage(){
+        return "Une erreur est survenue en tentant d'ajouter le désastre\nMessage d'erreur complet : "
+                + errorMessage ;
     }
 }
