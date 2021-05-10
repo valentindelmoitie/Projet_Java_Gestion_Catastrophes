@@ -34,6 +34,14 @@ public class Disaster {
         this.regions = regions;
     }
 
+    public Disaster(Integer id){  //On peut l'utiliser pour les suppressions, plus simple que de tout récupérer.
+        this(id,null,null, null, null,null,
+                null, null, null);
+    }
+
+
+
+
     public void setId(Integer id) {
         //if(id < 1 ) throw new IdException;
         this.id = id;

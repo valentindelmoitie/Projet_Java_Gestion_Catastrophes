@@ -41,5 +41,12 @@
     - Fix instructions SQL (; oubliés à la fin de certaines instructions
       le listing s'affiche désormais correctement après des ajouts dans la DB via le formulaire
 
--- Commit de Mathieu du 10/05 xx:xx
-    - Ajout deleteDisasters(non testé)
+-- Commit de Mathieu du 10/05 16:35
+    - Ajout deleteDisasters;
+    - JOptionPane en cas d'ajout/erreur sur AddOldPanel
+
+-- Commit de Mathieu du 10/05 18:00
+    - Surcharge constructeur Disaster
+    - getAllCountries() (recherche 1)
+    - Ajout classe SearchDisasterByCountryAndDates pour reprednre les valeurs du formulaires recherche 1
+    - getDisastersByCountryBetweenDates() (recherche 1) (non testé)
