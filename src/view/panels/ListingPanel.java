@@ -3,6 +3,7 @@ package view.panels;
 import controller.ApplicationController;
 import exception.CommunicationException;
 import exception.ReadingException;
+import exception.SelectionException;
 import model.Disaster;
 import view.AllDisastersModel;
 
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class ListingPanel extends JPanel {
+    private int selectionType;
     private AllDisastersModel model;
     private JScrollPane scrollPane;
     private JTable disasterTable;
@@ -26,7 +28,9 @@ public class ListingPanel extends JPanel {
     private JButton modifyButton, deleteButton;
     ListSelectionModel listSelect;
 
-    public ListingPanel() {
+    public ListingPanel(int selectionType) {
+        this.selectionType = selectionType;
+
         setController(new ApplicationController());
         this.setLayout(new BorderLayout());
 
@@ -39,7 +43,12 @@ public class ListingPanel extends JPanel {
         }
 
         disasterTable = new JTable(model);
-        disasterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        if (selectionType == ListSelectionModel.SINGLE_SELECTION)
+            disasterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        else
+            disasterTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
         listSelect = disasterTable.getSelectionModel();
 
         scrollPane = new JScrollPane(disasterTable);
@@ -51,26 +60,72 @@ public class ListingPanel extends JPanel {
         disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
 
         this.add(scrollPane);
-
-        createButtons();
     }
 
     public void setController(ApplicationController controller) {
         this.controller = controller;
     }
 
-    private void createButtons() {
-        buttonsFrame = new JPanel();
+    public ArrayList<Disaster> getSelectedDisasters() throws SelectionException { // Il faut ajouter une esception si aucune ligne n'est sélectionnée.
+        if (selectionType != ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
+            throw new SelectionException(selectionType);
 
-        modifyButton = new JButton("Modifier");
-        modifyButton.addActionListener(new ButtonListener());
+        ArrayList<Disaster> disasters = new ArrayList<>();
 
-        deleteButton = new JButton("Supprimer");
+        int selectedRows[] = listSelect.getSelectedIndices();
+        for (int i : selectedRows) {
+            int id = (Integer) disasterTable.getModel().getValueAt(i, 0);
+            disasters.add(new Disaster(id));
+        }
 
-        buttonsFrame.add(modifyButton);
-        buttonsFrame.add(deleteButton);
+        return disasters;
+    }
 
-        this.add(buttonsFrame, BorderLayout.SOUTH);
+    public Disaster getSelectedDisaster() throws SelectionException {
+        if (selectionType != ListSelectionModel.SINGLE_SELECTION)
+            throw new SelectionException(selectionType);
+
+        int selectedRow = listSelect.getMinSelectionIndex();
+
+        Integer id = (Integer) disasterTable.getModel().getValueAt(selectedRow, 0);
+        String name = (String) disasterTable.getModel().getValueAt(selectedRow, 1);
+        String type = (String) disasterTable.getModel().getValueAt(selectedRow, 2);
+        String description = (String) disasterTable.getModel().getValueAt(selectedRow, 3);
+        String dateString = (String) disasterTable.getModel().getValueAt(selectedRow, 4);
+        String endDateString = (String) disasterTable.getModel().getValueAt(selectedRow, 5);
+        Integer intensity = (Integer) disasterTable.getModel().getValueAt(selectedRow, 6);
+        Integer impactedPeople = (Integer) disasterTable.getModel().getValueAt(selectedRow, 7);
+        Integer directCasualties = (Integer) disasterTable.getModel().getValueAt(selectedRow, 8);
+        Integer indirectCasualties = (Integer) disasterTable.getModel().getValueAt(selectedRow, 9);
+        Boolean isNatural = (Boolean)  disasterTable.getModel().getValueAt(selectedRow, 10);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+
+        try {
+            Date date = dateFormat.parse(dateString);
+            GregorianCalendar dateGregorian = new GregorianCalendar();
+            dateGregorian.setTime(date);
+
+            GregorianCalendar endDateGregorian = null;
+            if (endDateString != "") {
+                Date endDate = dateFormat.parse(endDateString);
+                endDateGregorian = new GregorianCalendar();
+                endDateGregorian.setTime(date);
+            }
+
+            Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural, new ArrayList<>());
+
+            disaster.setName(name);
+            disaster.setIntensity(intensity);
+            disaster.setEndDate(endDateGregorian);
+
+            return  disaster;
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return new Disaster(1);
     }
 
     private class ButtonListener implements ActionListener {
@@ -105,4 +160,6 @@ public class ListingPanel extends JPanel {
 
         }
     }
+
+
 }

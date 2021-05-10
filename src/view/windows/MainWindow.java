@@ -113,7 +113,7 @@ public class MainWindow extends JFrame {
                     container.add(new Search1Panel());
                     break;
                 case "Listing" :
-                    container.add(new ListingPanel());
+                    container.add(new ListingPanel(ListSelectionModel.SINGLE_SELECTION));
                     break;
                 case "Recherche 2" :
                     container.add(new Search2Panel());

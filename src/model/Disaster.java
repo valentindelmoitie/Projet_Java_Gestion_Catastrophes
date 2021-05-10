@@ -22,7 +22,7 @@ public class Disaster {
 
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural,
-                    ArrayList<Region> regions) {
+                    ArrayList<Region> regions) { // Le dernier argument est peut-être à retirer.
         setId(id);
         setImpactedPeople(impactedPeople);
         setDirectCasualties(directCasualties);
@@ -38,9 +38,6 @@ public class Disaster {
         this(id,null,null, null, null,null,
                 null, null, null);
     }
-
-
-
 
     public void setId(Integer id) {
         //if(id < 1 ) throw new IdException;

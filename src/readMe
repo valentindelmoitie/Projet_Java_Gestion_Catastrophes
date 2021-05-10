@@ -57,5 +57,6 @@
     - Ajout classe SearchDisasterByCountryAndDates pour reprendre les valeurs du formulaires recherche 1
     - getDisastersByCountryBetweenDates() (recherche 1)
 
--- Commit de Mathieu du 10/05 18:50
-    - Debut Listener recherche 1 (par pays et dates)
+-- Commit de Valentin du 11/05 à xx:xx
+    - La suppression est 100% fonctionelle.
+    - Commencement de la modification (pas encore fonctionnel)

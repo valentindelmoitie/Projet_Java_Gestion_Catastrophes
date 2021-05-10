@@ -136,6 +136,8 @@ public class FormPanel extends JPanel {
         this.add(regionPanel, BorderLayout.SOUTH);
     }
 
+
+
     private class InsertButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
