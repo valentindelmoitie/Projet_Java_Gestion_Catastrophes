@@ -41,6 +41,6 @@
     - Fix instructions SQL (; oubliés à la fin de certaines instructions
       le listing s'affiche désormais correctement après des ajouts dans la DB via le formulaire
 
--- Commit de Mathieu du 10/05 xx:xx
+-- Commit de Mathieu du 10/05 16:35
     - Ajout deleteDisasters(non testé)
     - JOptionPane en cas d'ajout/erreur sur AddOldPanel
