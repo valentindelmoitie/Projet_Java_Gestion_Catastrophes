@@ -35,3 +35,11 @@
 
 -- Commit de Mathieu du 10/05 09:50
     - Ajout de region(s) fonctionne
+
+-- Commit de Mathieu du 10/05 15:00
+    - Ajout classe d'exception (+ Clean code DAO)
+    - Fix instructions SQL (; oubliés à la fin de certaines instructions
+      le listing s'affiche désormais correctement après des ajouts dans la DB via le formulaire
+
+-- Commit de Mathieu du 10/05 xx:xx
+    - Ajout deleteDisasters(non testé)

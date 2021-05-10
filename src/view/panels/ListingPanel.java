@@ -95,7 +95,8 @@ public class ListingPanel extends JPanel {
                 GregorianCalendar date = new GregorianCalendar();
                 date.setTime(dt);
 
-                Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, date, isNatural, new ArrayList<>());
+                Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties,
+                        type, description, date, isNatural, new ArrayList<>());
 
                 System.out.println(disaster.getDescription());
             } catch (ParseException e) { // A modifier

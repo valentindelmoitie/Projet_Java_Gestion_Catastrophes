@@ -4,6 +4,7 @@ import dataAccess.DisasterDBAccess;
 import dataAccess.DisasterDataAccess;
 import exception.AddDisasterException;
 import exception.CommunicationException;
+import exception.DeleteDisasterException;
 import exception.ReadingException;
 import model.Disaster;
 
@@ -27,5 +28,10 @@ public class DisasterManager {
 
     public int addDisaster(Disaster disaster) throws CommunicationException, AddDisasterException {
         return dao.addDisaster(disaster);
+    }
+
+
+    public int deleteDisasters(ArrayList<Disaster> disasters) throws CommunicationException, DeleteDisasterException{
+        return dao.deleteDisasters(disasters);
     }
 }

@@ -2,6 +2,7 @@ package dataAccess;
 
 import exception.AddDisasterException;
 import exception.CommunicationException;
+import exception.DeleteDisasterException;
 import exception.ReadingException;
 import model.*;
 
@@ -78,8 +79,8 @@ public class DisasterDBAccess implements  DisasterDataAccess {
     public int addDisaster(Disaster disaster)  throws CommunicationException, AddDisasterException {
         Connection connection = SingletonConnection.getInstance();
 
-        String sqlInstructionDisaster = "insert into disaster (`type`,`description`,`date`, impacted_people," +
-                "direct_casualties,indirect_casualties,is_natural, id) values(?, ?, ?, ?, ?, ?, ?, ?);";
+        String sqlInstructionDisaster = "insert into disaster (`type`,`description`,`date`, impacted_people,"
+                + "direct_casualties,indirect_casualties,is_natural, id) values(?, ?, ?, ?, ?, ?, ?, ?);";
 
         String sqlImpactLocation = "insert into impact_location (disaster, region) values(?, ?);";
 
@@ -132,6 +133,28 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             return nbInsert;
         }catch (SQLException exception){
             throw new AddDisasterException(exception.getMessage());
+        }
+    }
+
+    public int deleteDisasters(ArrayList<Disaster> disasters) throws CommunicationException, DeleteDisasterException {
+
+        Connection connection = SingletonConnection.getInstance();
+
+        String sqlInstructionImpactLocation = "delete from impact_location where disaster = ?;";
+        String sqlInstructionDisaster = "delete from disaster where id = ?;";
+        int nbDeletion = 0;
+        try{
+            for(Disaster disaster : disasters) {
+                PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
+                preparedStatement.setInt(1, disaster.getId());
+                preparedStatement.executeUpdate();
+                preparedStatement = connection.prepareStatement(sqlInstructionDisaster);
+                preparedStatement.setInt(1,disaster.getId());
+                nbDeletion += preparedStatement.executeUpdate();
+            }
+            return nbDeletion;
+        }catch(SQLException exception){
+            throw new DeleteDisasterException(exception.getMessage());
         }
     }
 }

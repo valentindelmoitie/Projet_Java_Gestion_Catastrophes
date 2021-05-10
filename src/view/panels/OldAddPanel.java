@@ -18,7 +18,7 @@ public class OldAddPanel extends JPanel {
     private JPanel titlePanel, formPanel, formSubPanel, regionPanel,  buttonsPanel;
     private JLabel idLbl, titleLbl, nameLbl, descriptionLbl, typeLbl, dateLbl, endDateLbl, intensityLbl,
                    impactedPeopleLbl, directCasualtiesLbl, indirectCasualtiesLbl, isNaturalLbl, regionbl;
-    private JTextField idTF, nameTF, descriptionTF, startDateTF, endDateTF;
+    private JTextField nameTF, descriptionTF, startDateTF, endDateTF;
     private JSpinner idSpinner, intensitySpinner, impactedPeopleSpinner, directCasualtiesSpinner, indirectCasualtiesSpinner;
     private JButton sendBtn, selectionnerBtn;
     private DateFormat dateFormat;
@@ -88,19 +88,12 @@ public class OldAddPanel extends JPanel {
         formSubPanel.add(typeLbl);
         formSubPanel.add(typeComboBox);
 
-        //dateLbl = new JLabel("Date de début* : ");
-        //dateSpinner = new JSpinner(new SpinnerDateModel());
-        //dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "dd.MM.yyyy"));
-        //formSubPanel.add(dateLbl);
-        //formSubPanel.add(dateSpinner);
         dateLbl = new JLabel("Date de début (dd/mm/yyyy)* : ");
         startDateTF = new JTextField();
         formSubPanel.add(dateLbl);
         formSubPanel.add(startDateTF);
 
         endDateLbl = new JLabel("Date de fin (dd/mm/yyyy): ");
-        //dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        //endDateTF = new JFormattedTextField(dateFormat);
         endDateTF = new JTextField();
         formSubPanel.add(endDateLbl);
         formSubPanel.add(endDateTF);
@@ -184,16 +177,18 @@ public class OldAddPanel extends JPanel {
 
     private class InsertButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
+            //Garnir avec les élements du formulaire
             Integer id                  = (Integer) idSpinner.getValue();
             Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
             Integer directCasualties    = (Integer) directCasualtiesSpinner.getValue();
             Integer indirectCasualties  = (Integer) indirectCasualtiesSpinner.getValue();
-            String type = (String) typeComboBox.getSelectedItem();
-            String description = descriptionTF.getText();
-
-            String name = (String) nameTF.getText();
+            String type                 = (String) typeComboBox.getSelectedItem();
+            String description             = descriptionTF.getText();
+            String name                 = nameTF.getText();
             Integer intensity           = (Integer) intensitySpinner.getValue();
+            Boolean isNatural           = (isNaturalComboBox.getSelectedItem() == "Oui");
 
+            // Verification des dates du formulaire
             try {
                 Date date = dateFormat.parse(startDateTF.getText());
                 if(!startDateTF.getText().isEmpty()){
@@ -205,9 +200,7 @@ public class OldAddPanel extends JPanel {
                     date = dateFormat.parse(endDateTF.getText());
                     endDate.setTime(date);
                 }
-
-                Boolean isNatural = (isNaturalComboBox.getSelectedItem() == "Oui");
-
+                // Garnir avec les regions choisies par l'utilisateur
                 ArrayList<Region> disasterRegions = new ArrayList<>();
                 ListModel model = chosenRegions.getModel();
                 int i = 0;
@@ -216,7 +209,11 @@ public class OldAddPanel extends JPanel {
                     i++;
                 }
 
-                Disaster disaster = new Disaster(id,impactedPeople,directCasualties,indirectCasualties,type,description, (GregorianCalendar) startDate,isNatural,disasterRegions);
+                //Créer l'objet disaster
+                Disaster disaster = new Disaster(id,impactedPeople,directCasualties,indirectCasualties,
+                        type,description, (GregorianCalendar) startDate,isNatural,disasterRegions);
+
+                //Ajouts des attributs facultatifs via les setters
                 if(!nameTF.getText().isEmpty())
                     disaster.setName(name);
                 if(intensity > 0)
@@ -224,12 +221,15 @@ public class OldAddPanel extends JPanel {
 
                 if(!endDateTF.getText().isEmpty())
                     disaster.setEndDate((GregorianCalendar)endDate);
-
-                controller.addDisaster(disaster); // Possible de récupérer un int ici indiquant le nombre de ligne ajouté
-
+                //Envoie vers les couches inférieures
+                int nbInsertedData = controller.addDisaster(disaster); // Possible de récupérer un int ici indiquant le nombre de ligne ajouté
+                if(nbInsertedData == 1)
+                    JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE); // Ne doit jamais apparaitre
             }
-            catch (Exception e){
-                System.out.println(e.getMessage());
+            catch (Exception exception){
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
