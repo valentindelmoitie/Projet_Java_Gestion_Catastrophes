@@ -1,5 +1,7 @@
 package model;
 
+import exception.EndDateException;
+
 import java.util.GregorianCalendar;
 
 public class SearchDisasterByCountryAndDates {
@@ -24,6 +26,7 @@ public class SearchDisasterByCountryAndDates {
     }
 
     public void setEndDate(GregorianCalendar endDate) {
+        //if(endDate.compareTo(startDate) < 0) throw new EndDateException(endDate,startDate);
         this.endDate = endDate;
     }
 

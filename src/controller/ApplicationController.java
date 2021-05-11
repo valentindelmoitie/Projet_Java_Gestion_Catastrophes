@@ -65,4 +65,8 @@ public class ApplicationController {
     public void setDisasterSearchManager(DisasterSearchManager disasterSearchManager) {
         this.disasterSearchManager = disasterSearchManager;
     }
+
+    public void testController(){
+        System.out.println("testing");
+    }
 }

@@ -34,7 +34,7 @@ public class Disaster {
         this.regions = regions;
     }
 
-    public Disaster(Integer id){  //On peut l'utiliser pour les suppressions, plus simple que de tout récupérer.
+    public Disaster(Integer id){
         this(id,null,null, null, null,null,
                 null, null, null);
     }
@@ -54,7 +54,7 @@ public class Disaster {
     }
 
     public void setEndDate(GregorianCalendar endDate) {
-        //if(endDate.compareTo(date) < 0) throws new EndDateException(endDate,date)
+        //if(endDate.compareTo(date) < 0) throw new EndDateException(endDate,date)
         this.endDate = endDate;
     }
 

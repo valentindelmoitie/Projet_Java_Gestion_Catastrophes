@@ -18,21 +18,21 @@ import java.util.GregorianCalendar;
 
 public class Search1Panel extends JPanel {
     private JPanel titlePanel, formPanel, buttonPanel;
-    private JLabel descriptionLabel, countryLabel, beginDateLabel, endDateLabel;
+    private JLabel descriptionLabel, countryLabel, dateLbl, endDateLbl;
     private JComboBox countryComboBox;
-    private JSpinner beginDateSpinner, endDateSpinner;
-    private ApplicationController controller;
+    private JTextField startDateTF, endDateTF;
     private Calendar startDate, endDate;
     private DateFormat dateFormat;
+    private ApplicationController controller;
+
 
 
     public Search1Panel() {
         this.setLayout(new BorderLayout());
-
+        setController(new ApplicationController());
         titlePanelCreation();
         formPanelCreation();
         buttonPanelCreation();
-        setController(new ApplicationController());
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     }
 
@@ -44,30 +44,41 @@ public class Search1Panel extends JPanel {
     }
 
     private void formPanelCreation() {
-        String[] test = {"USA", "Belgique", "France", "Canada"};
+        try {
 
-        formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(3, 2, 5, 5));
+            ArrayList<Country> countriesAL = controller.getAllCountries();
+            String[] countries = new String[controller.getAllCountries().size()];
+            int i = 0;
+            for(Country country : countriesAL) {
+                countries[i] = country.getName();
+                i++;
+            }
+            formPanel = new JPanel();
+            formPanel.setLayout(new GridLayout(3, 2, 5, 5));
 
-        countryLabel = new JLabel("Pays : ");
-        formPanel.add(countryLabel);
+            countryLabel = new JLabel("Pays : ");
+            formPanel.add(countryLabel);
 
-        countryComboBox = new JComboBox(test);
-        formPanel.add(countryComboBox);
+            countryComboBox = new JComboBox(countries);
+            formPanel.add(countryComboBox);
 
-        beginDateLabel = new JLabel("Date de début : ");
-        formPanel.add(beginDateLabel);
+            dateLbl = new JLabel("Date minimum (dd/mm/yyyy)* : ");
+            startDateTF = new JTextField();
+            formPanel.add(dateLbl);
+            formPanel.add(startDateTF);
 
-        beginDateSpinner = new JSpinner(new SpinnerDateModel());
-        beginDateSpinner.setEditor(new JSpinner.DateEditor(beginDateSpinner, "dd.MM.yyyy"));
-        formPanel.add(beginDateSpinner);
+            endDateLbl = new JLabel("Date maximum (dd/mm/yyyy)*: ");
+            endDateTF = new JTextField();
+            formPanel.add(endDateLbl);
+            formPanel.add(endDateTF);
 
-        endDateLabel = new JLabel("Date de fin : ");
-        formPanel.add(endDateLabel);
 
-        endDateSpinner = new JSpinner(new SpinnerDateModel());
-        endDateSpinner.setEditor(new JSpinner.DateEditor(endDateSpinner, "dd.MM.yyyy"));
-        formPanel.add(endDateSpinner);
+
+
+
+        }catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
 
         this.add(formPanel, BorderLayout.CENTER);
     }
@@ -86,19 +97,18 @@ public class Search1Panel extends JPanel {
 
     private class SearchButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
-            //TEST (Faut passupprimer, une partie du code peut être adaptée)
-
             try {
-                Date date = dateFormat.parse("14/03/1960");
-
+                Date date = dateFormat.parse(startDateTF.getText());
+                if(!startDateTF.getText().isEmpty()){
                     startDate = new GregorianCalendar();
                     startDate.setTime(date);
-
+                }
+                if(!endDateTF.getText().isEmpty()) {
                     endDate = new GregorianCalendar();
-                    date = dateFormat.parse("14/03/2020");
+                    date = dateFormat.parse(endDateTF.getText());
                     endDate.setTime(date);
-
-                SearchDisasterByCountryAndDates search = new SearchDisasterByCountryAndDates(new Country("Belgique", true, false), (GregorianCalendar) startDate,(GregorianCalendar) endDate);
+                }
+                SearchDisasterByCountryAndDates search = new SearchDisasterByCountryAndDates(new Country(countryComboBox.getSelectedItem().toString(), null, null), (GregorianCalendar) startDate,(GregorianCalendar) endDate);
                 ArrayList<Disaster> disasters = new ArrayList<>();
 
                 disasters = controller.getDisastersByCountryBetweenDates(search);
@@ -109,7 +119,6 @@ public class Search1Panel extends JPanel {
             }catch (Exception exception){
                 System.out.println(exception.getMessage());
             }
-            //FIN TEST
         }
     }
 }

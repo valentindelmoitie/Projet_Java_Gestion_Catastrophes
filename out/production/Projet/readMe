@@ -51,8 +51,6 @@
     - Ajout classe SearchDisasterByCountryAndDates pour reprendre les valeurs du formulaires recherche 1
     - getDisastersByCountryBetweenDates() (recherche 1)
 
--- Commit de Mathieu du 10/05 18:00
-    - Surcharge constructeur Disaster
-    - getAllCountries() (recherche 1)
-    - Ajout classe SearchDisasterByCountryAndDates pour reprendre les valeurs du formulaires recherche 1
-    - getDisastersByCountryBetweenDates() (recherche 1)
+-- Commit de Valentin du 11/05 à xx:xx
+    - La suppression est 100% fonctionelle.
+    - Commencement de la modification (pas encore fonctionnel)
