@@ -35,10 +35,14 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
                     GregorianCalendar date = new GregorianCalendar();
                     date.setTime(data.getDate("date"));
+
+                    ArrayList<Region> regions = new ArrayList<>();
+                    regions.add(new Region(data.getString("region")));
+
                     disaster = new Disaster(disasterId, data.getInt("impacted_people"),
                             data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
                             data.getString("type"), data.getString("description"), date,
-                            data.getBoolean("is_natural"), new ArrayList<Region>());
+                            data.getBoolean("is_natural"), regions);
 
                     Date endDateSQL = data.getDate("end_date");
                     if (!data.wasNull()) {
@@ -56,8 +60,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     if (!data.wasNull()) {
                         disaster.setIntensity(intensity);
                     }
-
-                    disaster.addRegion(new Region(data.getString("region")));
                 } else {
                     allDisasters.get(allDisasters.size() - 1).addRegion(new Region(data.getString("region")));
                 }
@@ -225,5 +227,40 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             throw new ReadingException(exception.getMessage());
         }
         return disasters;
+    }
+
+    public void modifyDisaster(Disaster disaster) throws CommunicationException {
+        Connection connection = SingletonConnection.getInstance();
+
+        String sqlInstructionImpactLocation =
+                "update disaster" +
+                " set name =  ?, type = ?, description = ?, date = ?, end_date = ?, intensity = ?, impacted_people = ?, direct_casualties = ?," +
+                " indirect_casualties = ?, is_natural = ?" +
+                " where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
+            preparedStatement.setString(1, disaster.getName());
+            preparedStatement.setString(2,disaster.getType());
+            preparedStatement.setString(3, disaster.getDescription());
+
+            java.sql.Date sqlDate = new java.sql.Date(disaster.getDate().getTimeInMillis());
+            preparedStatement.setDate(4, sqlDate);
+
+            java.sql.Date sqlEndDate = new java.sql.Date(disaster.getEndDate().getTimeInMillis());
+            preparedStatement.setDate(5, sqlEndDate);
+
+            preparedStatement.setInt(6, disaster.getIntensity());
+            preparedStatement.setInt(7, disaster.getImpactedPeople());
+            preparedStatement.setInt(8, disaster.getDirectCasualties());
+            preparedStatement.setInt(9, disaster.getIndirectCasualties());
+            preparedStatement.setBoolean(10, disaster.getNatural());
+            preparedStatement.setInt(11, disaster.getId());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.getMessage();
+        }
     }
 }

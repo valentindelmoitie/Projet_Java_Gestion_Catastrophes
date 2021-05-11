@@ -68,7 +68,6 @@
 -- Commit de Valentin du 11/05 14:45
     - Avancement dans la modification.
       On peut cliquer sur la catastrophe à modifier et ça renvoie vers un formulaire avec les données déjà encodées.
-      Rep : https://lolpics.com/wp-content/uploads/2021/03/1616617835000.jpg
 
 -- Commit de Mathieu du 11/05 15:30
     - DisasterMiscException regroupe les anciennes exceptions DisasterType, ImpactedPeople, NumberOfPeople (placées dans unusedExceptionSave au cas où)
@@ -81,3 +80,8 @@
 
 -- Commit de Mathieu du 11/05 20:15
     - Search1Panel suite
+
+-- Commit de Valentin du 11/05 à 23:40
+    - Modifier fonctionel
+    - Régions affichées dans le listing
+    - Fix du problème de listing avec les exceptions

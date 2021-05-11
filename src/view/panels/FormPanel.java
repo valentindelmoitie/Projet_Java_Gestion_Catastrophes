@@ -272,7 +272,7 @@ public class FormPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE); // Ne doit jamais apparaitre
                 }
                 else {
-                    // Plus qu'à demander la modification dans la BDD.
+                    controller.modifyDisaster(disaster);
                 }
 
             }

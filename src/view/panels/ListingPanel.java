@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,8 @@ public class ListingPanel extends JPanel {
     private JScrollPane scrollPane;
     private JTable disasterTable;
     private ApplicationController controller;
+    private JPanel buttonsFrame;
+    private JButton modifyButton, deleteButton;
     ListSelectionModel listSelect;
 
     public ListingPanel(int selectionType) {
@@ -32,9 +35,16 @@ public class ListingPanel extends JPanel {
         this.setLayout(new BorderLayout());
 
         try {
+            ArrayList<Disaster> disasters = controller.getAllDisaster();
             model = new AllDisastersModel(controller.getAllDisaster());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        } catch (ReadingException e) {
+            e.printStackTrace();
+        } catch (DisasterMiscException e) {
+            e.printStackTrace();
+        } catch (EndDateException e) {
+            e.printStackTrace();
         }
 
         disasterTable = new JTable(model);
@@ -47,7 +57,7 @@ public class ListingPanel extends JPanel {
         listSelect = disasterTable.getSelectionModel();
 
         scrollPane = new JScrollPane(disasterTable);
-        scrollPane.setPreferredSize(new Dimension(1300, 400));
+        scrollPane.setPreferredSize(new Dimension(1490, 400));
 
         disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
         disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -76,7 +86,7 @@ public class ListingPanel extends JPanel {
         return disasters;
     }
 
-    public Disaster getSelectedDisaster() throws SelectionException, DisasterMiscException, EndDateException, ParseException {
+    public Disaster getSelectedDisaster() throws SelectionException {
         if (selectionType != ListSelectionModel.SINGLE_SELECTION)
             throw new SelectionException(selectionType);
 
@@ -97,6 +107,7 @@ public class ListingPanel extends JPanel {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
 
+        try {
             Date date = dateFormat.parse(dateString);
             GregorianCalendar dateGregorian = new GregorianCalendar();
             dateGregorian.setTime(date);
@@ -117,9 +128,14 @@ public class ListingPanel extends JPanel {
             disaster.setEndDate(endDateGregorian);
 
             return  disaster;
+        } catch (ParseException | DisasterMiscException | EndDateException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return null;
     }
 
-    private class ButtonListener implements ActionListener {
+/*    private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) { // IL faudrait rajouter une exception si aucune ligne n'est sélectionnée mais je le ferai quand ce ne sera plus au stade expérimental
             int iSelectedRow = listSelect.getMinSelectionIndex();
 
@@ -143,13 +159,12 @@ public class ListingPanel extends JPanel {
 
                 Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties,
                         type, description, date, isNatural, new ArrayList<>());
-
-                System.out.println(disaster.getDescription());
-            } catch (Exception e) { // A modifier
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+            } catch (ParseException e) { // A modifier
+                e.printStackTrace();
             }
 
         }
     }
+*/
 
 }

@@ -1,8 +1,11 @@
 package view;
 
 import model.Disaster;
+import model.Region;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -23,6 +26,7 @@ public class AllDisastersModel extends AbstractTableModel {
         columnNames.add("Victimes directes");
         columnNames.add("Victimes indirectes");
         columnNames.add("Est naturel ?");
+        columnNames.add("Régions");
 
         setContents(disasters);
     }
@@ -69,6 +73,12 @@ public class AllDisastersModel extends AbstractTableModel {
                 return disaster.getIndirectCasualties();
             case 10 :
                 return disaster.getNatural();
+            case 11 :
+                StringBuilder regions = new StringBuilder();
+                for (Region region : disaster.getRegions())
+                    regions.append(region.getName() + " ");
+
+                return regions.toString();
             default :
                 return null;
         }
@@ -89,6 +99,9 @@ public class AllDisastersModel extends AbstractTableModel {
                 break;
             case 10 :
                 c = Boolean.class;
+                break;
+            case 11 :
+                c = String.class;
                 break;
             default :
                 c = String.class;

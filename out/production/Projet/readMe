@@ -68,6 +68,10 @@
 -- Commit de Valentin du 11/05 14:45
     - Avancement dans la modification.
       On peut cliquer sur la catastrophe à modifier et ça renvoie vers un formulaire avec les données déjà encodées.
+
+-- Commit de Valentin du 11/05 à 21:50
+    - Modifier fonctionel
+    - Régions affichées dans le listing (bof)
       Rep : https://lolpics.com/wp-content/uploads/2021/03/1616617835000.jpg
 
 -- Commit de Mathieu du 11/05 15:30
@@ -79,3 +83,5 @@
     Adapatation pour les ParseException dans OldAddPanel
     Celui de region est prêt mais en commentaire en attendant le fix sur le listing
 
+-- Commit de Mathieu du 11/05 20:15
+    - Search1Panel suite

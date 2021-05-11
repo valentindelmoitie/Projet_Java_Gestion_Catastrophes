@@ -31,4 +31,8 @@ public class DisasterManager {
     public int deleteDisasters(ArrayList<Disaster> disasters) throws CommunicationException, DeleteDisasterException{
         return dao.deleteDisasters(disasters);
     }
+
+    public void modifyDisaster(Disaster disaster) throws CommunicationException {
+        dao.modifyDisaster(disaster);
+    }
 }

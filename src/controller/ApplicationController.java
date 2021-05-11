@@ -43,6 +43,10 @@ public class ApplicationController {
         return countryManager.getAllCountries();
     }
 
+    public void modifyDisaster(Disaster disaster) throws CommunicationException {
+        disasterManager.modifyDisaster(disaster);
+    }
+
     public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException{
         return disasterSearchManager.getDisastersByCountryBetweenDates(searchParams);
     }

@@ -96,8 +96,8 @@ public class Disaster {
     }
 
     public void setRegions(ArrayList<Region> regions) throws DisasterMiscException{
-       // if(regions.isEmpty()) throw new DisasterMiscException(regions);  // Quand le listing sera fix
-        this.regions = regions;
+        if(regions.isEmpty()) throw new DisasterMiscException(regions);  // Quand le listing sera fix
+            this.regions = regions;
     }
 
     public Integer getId() {

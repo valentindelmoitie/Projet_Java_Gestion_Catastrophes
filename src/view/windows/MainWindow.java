@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
         super("Gestion de catastrophes");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1350, 600);
+        this.setSize(1500, 600);
         this.setLocationRelativeTo(null);
 
         container = this.getContentPane();
