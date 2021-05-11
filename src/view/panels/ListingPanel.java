@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -106,12 +107,14 @@ public class ListingPanel extends JPanel {
             Date date = dateFormat.parse(dateString);
             GregorianCalendar dateGregorian = new GregorianCalendar();
             dateGregorian.setTime(date);
+            dateGregorian.add(Calendar.MONTH, 1);
 
             GregorianCalendar endDateGregorian = null;
             if (endDateString != "") {
                 Date endDate = dateFormat.parse(endDateString);
                 endDateGregorian = new GregorianCalendar();
-                endDateGregorian.setTime(date);
+                endDateGregorian.setTime(endDate);
+                endDateGregorian.add(Calendar.MONTH, 1);
             }
 
             Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural, new ArrayList<>());

@@ -28,7 +28,7 @@ public class AddPanel extends JPanel {
         this.setLayout(new BorderLayout());
         setController(new ApplicationController());
         titlePanelCreation();
-        this.add(new FormPanel());
+        this.add(new FormPanel(FormPanel.Type.INSERTION));
         buttonsPanelCreation();
     }
 

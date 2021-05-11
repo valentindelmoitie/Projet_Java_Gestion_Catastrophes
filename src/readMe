@@ -1,4 +1,4 @@
--- Commit de Valentin du 8/05 à 14:30 --
+-- Commit de Valentin du 8/05 à 14:30
     - Création de l'interface DisasterDataAccess.
     - Update de la classe business>DisasterManager pour qu'elle utilise l'interface crée précédement.
     - Fix de l'affichage du formulaire
@@ -6,12 +6,12 @@
       La classe 'OldAddPanel' est juste l'ancienne version de AddPanel en sauvegarde au cas où la nouvelle version n'est pas optimale.
 
 
--- Commit de Valentin du 8/05 à 21:O3 --
+-- Commit de Valentin du 8/05 à 21:O3
     - Changement des dates de Date à GregorianCalendar dans Disaster
     - Changement des dates vers GregorianCalendar dans DisasterDBAccess
     - Le listing fonctionne avec l'update vers les GregorianCalendar !
 
--- Commit de Valentin du 8/05 22:12 --
+-- Commit de Valentin du 8/05 22:12
     - Ajout des bouttons "Modifier" et "Supprimer" dans le listing.
       Ces boutons seront retirés et le clic sur le "Modifier" du menu entraînera l'affichage du listing avec UNIQUEMENT le menu modifier.
       Il faut que l'on puisse supprimer PLUSIEURS catastrophes EN MÊME TEMPS
@@ -58,3 +58,7 @@
 -- Commit de Mathieu du 11/05 11:30
     - Correction Country (boolean => Boolean)
     - Formulaire Recherche 1 fonctionne (sans vérifications)
+
+-- Commit de Valentin du 11/05 14:45
+    - Avancement dans la modification.
+      On peut cliquer sur la catastrophe à modifier et ça renvoie vers un formulaire avec les données déjà encodées.

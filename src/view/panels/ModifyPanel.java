@@ -43,9 +43,8 @@ public class ModifyPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 Disaster disaster = listingPanel.getSelectedDisaster();
-
                 removeAll();
-                formPanel = new FormPanel();
+                formPanel = new FormPanel(disaster);
                 add(formPanel);
                 repaint();
                 validate();
