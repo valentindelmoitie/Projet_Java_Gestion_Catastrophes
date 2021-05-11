@@ -36,8 +36,15 @@ public class Disaster {
     }
 
     public Disaster(Integer id) throws DisasterMiscException{
-        this(id,null,null, null, null,null,
-                null, null, null);
+        setId(id);
+        this.impactedPeople = null;
+        this.directCasualties = null;
+        this.indirectCasualties = null;
+        this.type = null;
+        this.description = null;
+        this.date = null;
+        this.isNatural = null;
+        this.regions = null;
     }
 
     public void setId(Integer id) throws DisasterMiscException{
@@ -46,12 +53,13 @@ public class Disaster {
     }
 
     public void setIntensity(Integer intensity) throws DisasterMiscException{
-        if(intensity <= 0 || intensity > 7) throw new DisasterMiscException(intensity);
+        if(intensity !=null)
+            if(intensity <= 0 || intensity > 7) throw new DisasterMiscException(intensity);
         this.intensity = intensity;
     }
 
-    public void setName(String name) throws DisasterMiscException{
-       if(name.isBlank()) throw new DisasterMiscException(name, "nom");
+    public void setName(String name){
+        if(name != null && name.isBlank()) name = null;
         this.name = name;
     }
 
@@ -61,7 +69,8 @@ public class Disaster {
     }
 
     public void setEndDate(GregorianCalendar endDate) throws EndDateException{
-        if(endDate.compareTo(date) < 0) throw new EndDateException(endDate,date);
+        if(endDate != null)
+            if(endDate.compareTo(date) < 0) throw new EndDateException(endDate,date);
         this.endDate = endDate;
     }
 

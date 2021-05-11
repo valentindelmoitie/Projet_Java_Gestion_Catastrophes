@@ -17,7 +17,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                 "select d.id, d.impacted_people, d.direct_casualties, d.indirect_casualties, d.type, " +
                         "d.description, d.date, d.is_natural, d.end_date, d.name,d.intensity, l.Region " +
                         "from disaster d join impact_location l " +
-                        "on d.id = l.disaster;";
+                        "on d.id = l.disaster order by id;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);

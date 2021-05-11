@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import model.Country;
 import model.Disaster;
 import model.SearchDisasterByCountryAndDates;
+import view.AllDisastersModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,10 @@ public class Search1Panel extends JPanel {
     private JTextField startDateTF, endDateTF;
     private Calendar startDate, endDate;
     private DateFormat dateFormat;
+    private JTable disasterTable;
+    private JScrollPane scrollPane;
     private ApplicationController controller;
+    private AllDisastersModel model;
 
 
 
@@ -91,6 +95,24 @@ public class Search1Panel extends JPanel {
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    private void tablePanelCreation(SearchDisasterByCountryAndDates search){
+        try{
+            model = new AllDisastersModel(controller.getDisastersByCountryBetweenDates(search));
+            disasterTable = new JTable(model);
+            scrollPane = new JScrollPane(disasterTable);
+            scrollPane.setPreferredSize(new Dimension(1300, 400));
+
+            disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
+            disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+            disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
+
+            this.add(scrollPane);
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public void setController(ApplicationController controller) {
         this.controller = controller;
     }
@@ -109,12 +131,9 @@ public class Search1Panel extends JPanel {
                     endDate.setTime(date);
                 }
                 SearchDisasterByCountryAndDates search = new SearchDisasterByCountryAndDates(new Country(countryComboBox.getSelectedItem().toString(), null, null), (GregorianCalendar) startDate,(GregorianCalendar) endDate);
-                ArrayList<Disaster> disasters = new ArrayList<>();
-
-                disasters = controller.getDisastersByCountryBetweenDates(search);
-                for (Disaster disaster : disasters){
-                    System.out.println(disaster.getId());
-                }
+                tablePanelCreation(search);
+                repaint();
+                validate();
 
             }catch (Exception exception){
                 System.out.println(exception.getMessage());

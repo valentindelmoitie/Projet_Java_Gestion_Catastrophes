@@ -23,8 +23,6 @@ public class ListingPanel extends JPanel {
     private JScrollPane scrollPane;
     private JTable disasterTable;
     private ApplicationController controller;
-    private JPanel buttonsFrame;
-    private JButton modifyButton, deleteButton;
     ListSelectionModel listSelect;
 
     public ListingPanel(int selectionType) {

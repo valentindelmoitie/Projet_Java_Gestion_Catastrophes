@@ -73,3 +73,9 @@
 -- Commit de Mathieu du 11/05 15:30
     - DisasterMiscException regroupe les anciennes exceptions DisasterType, ImpactedPeople, NumberOfPeople (placées dans unusedExceptionSave au cas où)
     Commit avant d'implémenter les filtres/exceptions au cas où.
+
+-- Commit de Mathieu du 11/05 17:15
+    - Filtres et setters sur Disaster
+    Adapatation pour les ParseException dans OldAddPanel
+    Celui de region est prêt mais en commentaire en attendant le fix sur le listing
+

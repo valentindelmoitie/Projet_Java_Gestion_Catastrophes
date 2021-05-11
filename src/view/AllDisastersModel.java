@@ -80,20 +80,19 @@ public class AllDisastersModel extends AbstractTableModel {
         switch (column) {
             case 0 : case 6 : case 7 : case 8 : case 9 :
                 c = Integer.class;
-
+                break;
             case 1 : case 2 : case 3 :
                 c = String.class;
-
+                break;
             case 4 : case 5 :
                 c = GregorianCalendar.class;
-
+                break;
             case 10 :
                 c = Boolean.class;
-
+                break;
             default :
                 c = String.class;
         }
-
         return c;
     }
 }

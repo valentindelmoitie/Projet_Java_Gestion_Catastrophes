@@ -46,7 +46,9 @@ public class RemovePanel extends JPanel {
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
+
                 ArrayList disasters = listingPanel.getSelectedDisasters();
+
                 controler.deleteDisasters(disasters);
 
                 remove(listingPanel);
