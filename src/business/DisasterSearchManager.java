@@ -3,6 +3,8 @@ package business;
 import dataAccess.DisasterDBAccess;
 import dataAccess.DisasterDataAccess;
 import exception.CommunicationException;
+import exception.DisasterMiscException;
+import exception.EndDateException;
 import exception.ReadingException;
 import model.Disaster;
 import model.SearchDisasterByCountryAndDates;
@@ -17,7 +19,7 @@ public class DisasterSearchManager {
         setDao(new DisasterDBAccess());
     }
 
-    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException{
+    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException {
         return dao.getDisastersByCountryBetweenDates(searchParams);
     }
 

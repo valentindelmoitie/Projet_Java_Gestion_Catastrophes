@@ -1,6 +1,10 @@
 package view.panels;
 
 import controller.ApplicationController;
+import exception.AddDisasterException;
+import exception.CommunicationException;
+import exception.DisasterMiscException;
+import exception.EndDateException;
 import model.Disaster;
 import model.Region;
 
@@ -9,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -177,7 +182,6 @@ public class OldAddPanel extends JPanel {
 
     private class InsertButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            //Garnir avec les élements du formulaire
             Integer id                  = (Integer) idSpinner.getValue();
             Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
             Integer directCasualties    = (Integer) directCasualtiesSpinner.getValue();
@@ -188,7 +192,6 @@ public class OldAddPanel extends JPanel {
             Integer intensity           = (Integer) intensitySpinner.getValue();
             Boolean isNatural           = (isNaturalComboBox.getSelectedItem() == "Oui");
 
-            // Verification des dates du formulaire
             try {
                 Date date = dateFormat.parse(startDateTF.getText());
                 if(!startDateTF.getText().isEmpty()){
@@ -200,7 +203,7 @@ public class OldAddPanel extends JPanel {
                     date = dateFormat.parse(endDateTF.getText());
                     endDate.setTime(date);
                 }
-                // Garnir avec les regions choisies par l'utilisateur
+
                 ArrayList<Region> disasterRegions = new ArrayList<>();
                 ListModel model = chosenRegions.getModel();
                 int i = 0;
@@ -209,11 +212,10 @@ public class OldAddPanel extends JPanel {
                     i++;
                 }
 
-                //Créer l'objet disaster
                 Disaster disaster = new Disaster(id,impactedPeople,directCasualties,indirectCasualties,
                         type,description, (GregorianCalendar) startDate,isNatural,disasterRegions);
 
-                //Ajouts des attributs facultatifs via les setters
+
                 if(!nameTF.getText().isEmpty())
                     disaster.setName(name);
                 if(intensity > 0)
@@ -221,14 +223,15 @@ public class OldAddPanel extends JPanel {
 
                 if(!endDateTF.getText().isEmpty())
                     disaster.setEndDate((GregorianCalendar)endDate);
-                //Envoie vers les couches inférieures
+
                 int nbInsertedData = controller.addDisaster(disaster); // Possible de récupérer un int ici indiquant le nombre de ligne ajouté
                 if(nbInsertedData == 1)
                     JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
                 else
                     JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE); // Ne doit jamais apparaitre
-            }
-            catch (Exception exception){
+            }catch(ParseException exception){
+                JOptionPane.showMessageDialog(null, "Le format de la date n'est pas bon\nMessage complet : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+            }catch (Exception exception){
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
             }
         }

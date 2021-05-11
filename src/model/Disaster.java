@@ -1,5 +1,8 @@
 package model;
 
+import exception.DisasterMiscException;
+import exception.EndDateException;
+
 import java.util.*;
 
 public class Disaster {
@@ -20,61 +23,72 @@ public class Disaster {
 
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural,
-                    ArrayList<Region> regions) {
+                    ArrayList<Region> regions) throws DisasterMiscException{
         setId(id);
-        setImpactedPeople(impactedPeople);
         setDirectCasualties(directCasualties);
         setIndirectCasualties(indirectCasualties);
+        setImpactedPeople(impactedPeople);
         setType(type);
-        this.description = description;
+        setDescription(description);
         this.date = date;
         this.isNatural = isNatural;
-        this.regions = regions;
+        setRegions(regions);
     }
 
-    public Disaster(Integer id){
+    public Disaster(Integer id) throws DisasterMiscException{
         this(id,null,null, null, null,null,
                 null, null, null);
     }
 
-    public void setId(Integer id) {
-        //if(id < 1 ) throw new IdException;
+    public void setId(Integer id) throws DisasterMiscException{
+        if(id < 0 ) throw new DisasterMiscException(id);
         this.id = id;
     }
 
-    public void setIntensity(Integer intensity) {
-        //if(intensity <= 0 || intensity > 7) throw new IntensityException;
+    public void setIntensity(Integer intensity) throws DisasterMiscException{
+        if(intensity <= 0 || intensity > 7) throw new DisasterMiscException(intensity);
         this.intensity = intensity;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws DisasterMiscException{
+       if(name.isBlank()) throw new DisasterMiscException(name, "nom");
         this.name = name;
     }
 
-    public void setEndDate(GregorianCalendar endDate) {
-        //if(endDate.compareTo(date) < 0) throw new EndDateException(endDate,date)
+    public void setDescription(String description) throws DisasterMiscException{
+        if(description.isBlank()) throw new DisasterMiscException(description, "description");
+        this.description = description;
+    }
+
+    public void setEndDate(GregorianCalendar endDate) throws EndDateException{
+        if(endDate.compareTo(date) < 0) throw new EndDateException(endDate,date);
         this.endDate = endDate;
     }
 
-    public void setImpactedPeople(Integer impactedPeople) {
-        //if(impactedPeople < 0) throw new NumberOfPeopleException(population);
-        //if(impactedPeople < directCasualties + indirectCasualties) throw new ImpactedPeopleException(impactedPeople,directCasualties,indirectCasualties);
+    public void setImpactedPeople(Integer impactedPeople) throws DisasterMiscException{
+        if(impactedPeople < 0) throw new DisasterMiscException(impactedPeople);
+        if(impactedPeople < directCasualties + indirectCasualties) throw new DisasterMiscException(impactedPeople,directCasualties + indirectCasualties);
         this.impactedPeople = impactedPeople;
     }
 
-    public void setDirectCasualties(Integer directCasualties) {
-        //if(directCasualties < 0) throw new NumberOfPeopleException(directCasualties);
+    public void setDirectCasualties(Integer directCasualties) throws DisasterMiscException{
+        if(directCasualties < 0) throw new DisasterMiscException(directCasualties);
         this.directCasualties = directCasualties;
     }
 
-    public void setIndirectCasualties(Integer indirectCasualties) {
-        //if (indirectCasualties < 0) throw new NumberOfPeopleException(indirectCasualties);
+    public void setIndirectCasualties(Integer indirectCasualties) throws DisasterMiscException{
+        if (indirectCasualties < 0) throw new DisasterMiscException(indirectCasualties);
         this.indirectCasualties = indirectCasualties;
     }
 
-    public void setType(String type) {
-        //if (!allowedTypes.contains(type)) throw new DisasterTypeException;
+    public void setType(String type) throws DisasterMiscException{
+        if (!allowedTypes.contains(type)) throw new DisasterMiscException(type, "type");
         this.type = type;
+    }
+
+    public void setRegions(ArrayList<Region> regions) throws DisasterMiscException{
+       // if(regions.isEmpty()) throw new DisasterMiscException(regions);  // Quand le listing sera fix
+        this.regions = regions;
     }
 
     public Integer getId() {

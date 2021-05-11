@@ -2,10 +2,7 @@ package business;
 
 import dataAccess.DisasterDBAccess;
 import dataAccess.DisasterDataAccess;
-import exception.AddDisasterException;
-import exception.CommunicationException;
-import exception.DeleteDisasterException;
-import exception.ReadingException;
+import exception.*;
 import model.Disaster;
 
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ public class DisasterManager {
         this.dao = dao;
     }
 
-    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException{
+    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException{
         return dao.getAllDisasters();
     }
 

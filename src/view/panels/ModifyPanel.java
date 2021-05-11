@@ -48,8 +48,8 @@ public class ModifyPanel extends JPanel {
                 add(formPanel);
                 repaint();
                 validate();
-            } catch (SelectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }
 
         }

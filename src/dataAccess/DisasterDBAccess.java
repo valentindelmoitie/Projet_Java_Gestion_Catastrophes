@@ -1,9 +1,6 @@
 package dataAccess;
 
-import exception.AddDisasterException;
-import exception.CommunicationException;
-import exception.DeleteDisasterException;
-import exception.ReadingException;
+import exception.*;
 import model.*;
 
 import java.sql.*;
@@ -11,7 +8,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class DisasterDBAccess implements  DisasterDataAccess {
-    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException {
+    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException {
         ArrayList<Disaster> allDisasters;
 
         Connection connection = SingletonConnection.getInstance();
@@ -158,7 +155,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         }
     }
 
-    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException {
+    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException {
         ArrayList<Disaster> disasters;
 
         Connection connection = SingletonConnection.getInstance();

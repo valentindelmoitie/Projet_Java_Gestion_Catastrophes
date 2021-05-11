@@ -1,10 +1,7 @@
 package controller;
 
 import business.*;
-import exception.AddDisasterException;
-import exception.CommunicationException;
-import exception.DeleteDisasterException;
-import exception.ReadingException;
+import exception.*;
 import model.Country;
 import model.Disaster;
 import model.Region;
@@ -26,7 +23,7 @@ public class ApplicationController {
         setDisasterSearchManager(new DisasterSearchManager());
     }
 
-    public ArrayList<Disaster> getAllDisaster() throws CommunicationException, ReadingException {
+    public ArrayList<Disaster> getAllDisaster() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException {
         return disasterManager.getAllDisasters();
    }
 
@@ -46,7 +43,7 @@ public class ApplicationController {
         return countryManager.getAllCountries();
     }
 
-    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException{
+    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException{
         return disasterSearchManager.getDisastersByCountryBetweenDates(searchParams);
     }
 

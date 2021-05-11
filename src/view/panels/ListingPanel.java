@@ -1,9 +1,7 @@
 package view.panels;
 
 import controller.ApplicationController;
-import exception.CommunicationException;
-import exception.ReadingException;
-import exception.SelectionException;
+import exception.*;
 import model.Disaster;
 import view.AllDisastersModel;
 
@@ -37,10 +35,8 @@ public class ListingPanel extends JPanel {
 
         try {
             model = new AllDisastersModel(controller.getAllDisaster());
-        } catch (CommunicationException e) {
-            e.printStackTrace();
-        } catch (ReadingException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
 
         disasterTable = new JTable(model);
@@ -67,7 +63,7 @@ public class ListingPanel extends JPanel {
         this.controller = controller;
     }
 
-    public ArrayList<Disaster> getSelectedDisasters() throws SelectionException { // Il faut ajouter une esception si aucune ligne n'est sélectionnée.
+    public ArrayList<Disaster> getSelectedDisasters() throws SelectionException, DisasterMiscException { // Il faut ajouter une esception si aucune ligne n'est sélectionnée.
         if (selectionType != ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
             throw new SelectionException(selectionType);
 
@@ -82,7 +78,7 @@ public class ListingPanel extends JPanel {
         return disasters;
     }
 
-    public Disaster getSelectedDisaster() throws SelectionException {
+    public Disaster getSelectedDisaster() throws SelectionException, DisasterMiscException, EndDateException, ParseException {
         if (selectionType != ListSelectionModel.SINGLE_SELECTION)
             throw new SelectionException(selectionType);
 
@@ -103,7 +99,6 @@ public class ListingPanel extends JPanel {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
 
-        try {
             Date date = dateFormat.parse(dateString);
             GregorianCalendar dateGregorian = new GregorianCalendar();
             dateGregorian.setTime(date);
@@ -124,11 +119,6 @@ public class ListingPanel extends JPanel {
             disaster.setEndDate(endDateGregorian);
 
             return  disaster;
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
-        }
-
-        return new Disaster(1);
     }
 
     private class ButtonListener implements ActionListener {
@@ -157,12 +147,11 @@ public class ListingPanel extends JPanel {
                         type, description, date, isNatural, new ArrayList<>());
 
                 System.out.println(disaster.getDescription());
-            } catch (ParseException e) { // A modifier
-                e.printStackTrace();
+            } catch (Exception e) { // A modifier
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }
 
         }
     }
-
 
 }
