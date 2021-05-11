@@ -58,3 +58,11 @@
 -- Commit de Mathieu du 11/05 11:30
     - Correction Country (boolean => Boolean)
     - Formulaire Recherche 1 fonctionne (sans vérifications)
+
+-- Commit de Valentin du 11/05 14:45
+    - Avancement dans la modification.
+      On peut cliquer sur la catastrophe à modifier et ça renvoie vers un formulaire avec les données déjà encodées.
+      Rep : https://lolpics.com/wp-content/uploads/2021/03/1616617835000.jpg
+
+-- Commit de Mathieu du 11/05 15:30
+    - DisasterMiscException regroupe les anciennes exceptions DisasterType, ImpactedPeople, NumberOfPeople (placées dans unusedExceptionSave au cas où)

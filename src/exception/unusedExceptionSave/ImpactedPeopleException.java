@@ -1,4 +1,4 @@
-package exception;
+package exception.unusedExceptionSave;
 
 public class ImpactedPeopleException extends Exception{
 

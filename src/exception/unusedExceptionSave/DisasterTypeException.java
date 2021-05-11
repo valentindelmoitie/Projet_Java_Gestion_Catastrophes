@@ -1,4 +1,4 @@
-package exception;
+package exception.unusedExceptionSave;
 
 import java.util.Arrays;
 import java.util.Collections;

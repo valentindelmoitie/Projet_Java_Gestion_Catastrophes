@@ -9,7 +9,6 @@ public class AddDisasterException extends Exception{
     }
 
     public String getMessage(){
-        return "Une erreur est survenue en tentant d'ajouter le désastre\nMessage d'erreur complet : "
-                + errorMessage ;
+        return "Une erreur est survenue en tentant d'ajouter le désastre\nMessage d'erreur complet : " + errorMessage;
     }
 }

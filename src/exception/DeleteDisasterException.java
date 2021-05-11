@@ -9,7 +9,6 @@ public class DeleteDisasterException extends Exception{
     }
 
     public String getMessage(){
-        return "Une erreur est survenue en tentant de supprimer le(s) désastre(s)\nMessage d'erreur complet :" +
-                errorMessage;
+        return "Une erreur est survenue en tentant de supprimer le(s) désastre(s)\nMessage d'erreur complet :" + errorMessage;
     }
 }

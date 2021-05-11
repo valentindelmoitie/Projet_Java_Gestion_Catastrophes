@@ -17,12 +17,10 @@ public class Disaster {
     private ArrayList<Region> regions;
     private static final List<String> allowedTypes = Collections.unmodifiableList(Arrays.asList("Humanitaire",
             "Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"));
-    //Si on déclarait la variable en final simplement, on pourrait toujours y ajouter/retirer du contenu, juste
-    // ne pas la réassigner via un allowedTypes = new List<String>();
 
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural,
-                    ArrayList<Region> regions) { // Le dernier argument est peut-être à retirer.
+                    ArrayList<Region> regions) {
         setId(id);
         setImpactedPeople(impactedPeople);
         setDirectCasualties(directCasualties);

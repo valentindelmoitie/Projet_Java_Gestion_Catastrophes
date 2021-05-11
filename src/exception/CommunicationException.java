@@ -9,7 +9,6 @@ public class CommunicationException extends Exception {
     }
 
     public String getMessage(){
-        return "Il y a une erreur lors de l'initialisation des communications avec le stockage des données\n" +
-                "Message d'erreur complet : " + errorMessage;
+        return "Il y a une erreur lors de l'initialisation des communications avec le stockage des données\n Message d'erreur complet : " + errorMessage;
     }
 }
