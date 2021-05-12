@@ -85,3 +85,7 @@
     - Modifier fonctionel
     - Régions affichées dans le listing
     - Fix du problème de listing avec les exceptions
+
+-- Commit de Valentin du 11/05 à 15:30
+    - Fix bug formulaire modification
+    - Surcharge constructeur Disaster

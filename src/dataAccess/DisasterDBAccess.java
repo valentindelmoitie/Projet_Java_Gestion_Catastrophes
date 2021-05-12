@@ -246,7 +246,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
             java.sql.Date sqlDate = new java.sql.Date(disaster.getDate().getTimeInMillis());
             preparedStatement.setDate(4, sqlDate);
-
             java.sql.Date sqlEndDate = new java.sql.Date(disaster.getEndDate().getTimeInMillis());
             preparedStatement.setDate(5, sqlEndDate);
 

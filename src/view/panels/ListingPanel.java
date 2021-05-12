@@ -121,7 +121,7 @@ public class ListingPanel extends JPanel {
                 endDateGregorian.add(Calendar.MONTH, 1);
             }
 
-            Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural, new ArrayList<>());
+            Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural);
 
             disaster.setName(name);
             disaster.setIntensity(intensity);

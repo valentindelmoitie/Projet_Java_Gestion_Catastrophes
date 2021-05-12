@@ -21,20 +21,6 @@ public class Disaster {
     private static final List<String> allowedTypes = Collections.unmodifiableList(Arrays.asList("Humanitaire",
             "Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"));
 
-    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
-                    String type, String description, GregorianCalendar date, Boolean isNatural,
-                    ArrayList<Region> regions) throws DisasterMiscException{
-        setId(id);
-        setDirectCasualties(directCasualties);
-        setIndirectCasualties(indirectCasualties);
-        setImpactedPeople(impactedPeople);
-        setType(type);
-        setDescription(description);
-        this.date = date;
-        this.isNatural = isNatural;
-        setRegions(regions);
-    }
-
     public Disaster(Integer id) throws DisasterMiscException{
         setId(id);
         this.impactedPeople = null;
@@ -45,6 +31,26 @@ public class Disaster {
         this.date = null;
         this.isNatural = null;
         this.regions = null;
+    }
+
+    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
+                    String type, String description, GregorianCalendar date, Boolean isNatural) throws DisasterMiscException{
+        this(id);
+        setDirectCasualties(directCasualties);
+        setIndirectCasualties(indirectCasualties);
+        setImpactedPeople(impactedPeople);
+        setType(type);
+        setDescription(description);
+        this.date = date;
+        this.isNatural = isNatural;
+        this.regions = null;
+    }
+
+    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
+                    String type, String description, GregorianCalendar date, Boolean isNatural,
+                    ArrayList<Region> regions) throws DisasterMiscException{
+        this(id,impactedPeople,directCasualties,indirectCasualties,type,description,date,isNatural);
+        setRegions(regions);
     }
 
     public void setId(Integer id) throws DisasterMiscException{
