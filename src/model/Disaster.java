@@ -46,6 +46,17 @@ public class Disaster {
         this.regions = null;
     }
 
+    public Disaster(Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) throws DisasterMiscException{
+        setDirectCasualties(directCasualties);
+        setIndirectCasualties(indirectCasualties);
+        setImpactedPeople(impactedPeople);
+        setType(type);
+        setDescription(description);
+        this.date = date;
+        this.isNatural = isNatural;
+        this.regions = regions;
+    }
+
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural,
                     ArrayList<Region> regions) throws DisasterMiscException{
