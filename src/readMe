@@ -95,4 +95,8 @@
     -
 
     -- Commit de Mathieu du 12/05 17:15
-        - Recherche 1 fonctionnelle
+        - Recherche 1 fonctionnelle (sans filtres)
+
+    -- Commit de Mathieu du 12/05 23:15
+        - Fix bugs suppression
+        - Ajouts de données script SQL

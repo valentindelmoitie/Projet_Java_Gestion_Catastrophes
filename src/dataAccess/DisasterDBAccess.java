@@ -144,11 +144,19 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         Connection connection = SingletonConnection.getInstance();
 
         String sqlInstructionImpactLocation = "delete from impact_location where disaster = ?;";
+        String sqlInstructionDanger = "delete from danger where disaster = ?;";
+        String sqlInstructionHelp = "delete from help where disaster = ?;";
         String sqlInstructionDisaster = "delete from disaster where id = ?;";
         int nbDeletion = 0;
         try{
             for(Disaster disaster : disasters) {
                 PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
+                preparedStatement.setInt(1, disaster.getId());
+                preparedStatement.executeUpdate();
+                preparedStatement = connection.prepareStatement(sqlInstructionDanger);
+                preparedStatement.setInt(1, disaster.getId());
+                preparedStatement.executeUpdate();
+                preparedStatement = connection.prepareStatement(sqlInstructionHelp);
                 preparedStatement.setInt(1, disaster.getId());
                 preparedStatement.executeUpdate();
                 preparedStatement = connection.prepareStatement(sqlInstructionDisaster);
