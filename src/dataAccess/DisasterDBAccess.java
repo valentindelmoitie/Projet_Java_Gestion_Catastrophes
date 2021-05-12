@@ -5,6 +5,7 @@ import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DisasterDBAccess implements  DisasterDataAccess {
@@ -33,21 +34,24 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
                 if (allDisasters.size() == 0 || disasterId != allDisasters.get(allDisasters.size() - 1).getId()) {
 
-                    GregorianCalendar date = new GregorianCalendar();
-                    date.setTime(data.getDate("date"));
+                    Date dateSQL = data.getDate("date");
+                    GregorianCalendar dateGregorian = new GregorianCalendar();
+                    dateGregorian.setTime(dateSQL);
+                    dateGregorian.add(Calendar.MONTH, 1);
 
                     ArrayList<Region> regions = new ArrayList<>();
                     regions.add(new Region(data.getString("region")));
 
                     disaster = new Disaster(disasterId, data.getInt("impacted_people"),
                             data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
-                            data.getString("type"), data.getString("description"), date,
+                            data.getString("type"), data.getString("description"), dateGregorian,
                             data.getBoolean("is_natural"), regions);
 
                     Date endDateSQL = data.getDate("end_date");
                     if (!data.wasNull()) {
                         GregorianCalendar endDateGregorian = new GregorianCalendar();
                         endDateGregorian.setTime(endDateSQL);
+                        endDateGregorian.add(Calendar.MONTH, 1);
                         disaster.setEndDate(endDateGregorian);
                     }
 

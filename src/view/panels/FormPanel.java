@@ -88,13 +88,7 @@ public class FormPanel extends JPanel {
 
     private void subFormPanelCreation() {
         formSubPanel = new JPanel();
-        formSubPanel.setLayout(new GridLayout(11, 2));
-
-
-        idLbl = new JLabel("ID de la catastrophe :* : ");
-        idSpinner = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));  // Si le temps, chercher la valeur de l'auto incr dans la bdd et le remonter ici
-        formSubPanel.add(idLbl);
-        formSubPanel.add(idSpinner);
+        formSubPanel.setLayout(new GridLayout(10, 2));
 
         nameLbl = new JLabel("Nom de la catastrophe : ");
         nameTF = new JTextField();
@@ -202,7 +196,6 @@ public class FormPanel extends JPanel {
     }
 
     private void fillForm() {
-        idSpinner.setValue(disasterToModify.getId());
         nameTF.setText(disasterToModify.getName());
         descriptionTF.setText(disasterToModify.getDescription());
         typeComboBox.setSelectedItem(disasterToModify.getType());
@@ -218,7 +211,6 @@ public class FormPanel extends JPanel {
     private class InsertButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             //Garnir avec les élements du formulaire
-            Integer id                  = (Integer) idSpinner.getValue();
             Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
             Integer directCasualties    = (Integer) directCasualtiesSpinner.getValue();
             Integer indirectCasualties  = (Integer) indirectCasualtiesSpinner.getValue();

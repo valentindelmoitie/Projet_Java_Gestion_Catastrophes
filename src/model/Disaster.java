@@ -23,10 +23,19 @@ public class Disaster {
 
     public Disaster(Integer id) throws DisasterMiscException{
         setId(id);
+        this.impactedPeople = null;
+        this.directCasualties = null;
+        this.indirectCasualties = null;
+        this.type = null;
+        this.description = null;
+        this.date = null;
+        this.isNatural = null;
+        this.regions = null;
     }
 
-    public Disaster(Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
+    public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural) throws DisasterMiscException{
+        this(id);
         setDirectCasualties(directCasualties);
         setIndirectCasualties(indirectCasualties);
         setImpactedPeople(impactedPeople);
@@ -34,12 +43,13 @@ public class Disaster {
         setDescription(description);
         this.date = date;
         this.isNatural = isNatural;
+        this.regions = null;
     }
 
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural,
                     ArrayList<Region> regions) throws DisasterMiscException{
-        this(impactedPeople,directCasualties,indirectCasualties,type,description,date,isNatural);
+        this(id,impactedPeople,directCasualties,indirectCasualties,type,description,date,isNatural);
         setRegions(regions);
     }
 
