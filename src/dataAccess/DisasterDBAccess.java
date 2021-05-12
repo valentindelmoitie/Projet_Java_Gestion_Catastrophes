@@ -167,12 +167,12 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         Connection connection = SingletonConnection.getInstance();
 
         String sqlInstruction = "select distinct d.id, d.impacted_people, d.direct_casualties, d.indirect_casualties, " +
-                "d.type, d.description, d.date, d.is_natural, d.end_date, d.name,d.intensity " +
+                "d.type, d.description, d.date, d.is_natural, d.end_date, d.name,d.intensity, l.region " +
                 "from disaster d " +
                 "join impact_location i on d.id =  i.disaster " +
                 "join region r on i.region = r.name " +
                 "join location l on r.name = l.region " +
-                "where d.date between ? and ? and l.country = ?;";
+                "where d.date between ? and ? and l.country = ? order by id;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -188,18 +188,23 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             disasters = new ArrayList<>();
 
             while (data.next()) {
-                // MODIFIER EN GREGORIAN CALENDAR
+
                 Disaster disaster = null;
                 int disasterId = data.getInt("id");
 
                 if (disasters.size() == 0 || disasterId != disasters.get(disasters.size() - 1).getId()) {
 
+
                     GregorianCalendar date = new GregorianCalendar();
                     date.setTime(data.getDate("date"));
+
+                    ArrayList<Region> regions = new ArrayList<>();
+                    regions.add(new Region(data.getString("region")));
+
                     disaster = new Disaster(disasterId, data.getInt("impacted_people"),
                             data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
                             data.getString("type"), data.getString("description"), date,
-                            data.getBoolean("is_natural"), new ArrayList<Region>());
+                            data.getBoolean("is_natural"), regions);
 
                     Date endDateSQL = data.getDate("end_date");
                     if (!data.wasNull()) {
@@ -219,9 +224,9 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     }
 
                     //disaster.addRegion(new Region(data.getString("region")));
-                } //else {
-                   // disasters.get(disasters.size() - 1).addRegion(new Region(data.getString("region")));
-                //}
+                } else {
+                    disasters.get(disasters.size() - 1).addRegion(new Region(data.getString("region")));
+                }
 
                 if (disaster != null)
                     disasters.add(disaster);

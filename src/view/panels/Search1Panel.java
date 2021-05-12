@@ -2,7 +2,6 @@ package view.panels;
 
 import controller.ApplicationController;
 import model.Country;
-import model.Disaster;
 import model.SearchDisasterByCountryAndDates;
 import view.AllDisastersModel;
 
@@ -28,16 +27,34 @@ public class Search1Panel extends JPanel {
     private JScrollPane scrollPane;
     private ApplicationController controller;
     private AllDisastersModel model;
-
-
+    private JPanel tablePanel;
 
     public Search1Panel() {
-        this.setLayout(new BorderLayout());
-        setController(new ApplicationController());
-        titlePanelCreation();
-        formPanelCreation();
-        buttonPanelCreation();
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            this.setLayout(new BorderLayout());
+            setController(new ApplicationController());
+            titlePanelCreation();
+            formPanelCreation();
+            buttonPanelCreation();
+            tablePanel = new JPanel();
+            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            model = new AllDisastersModel(controller.getAllDisaster());
+
+            disasterTable = new JTable(model);
+            scrollPane = new JScrollPane(disasterTable);
+            scrollPane.setPreferredSize(new Dimension(1300, 400));
+
+            disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
+            disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+            disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
+
+            tablePanel.add(scrollPane);
+            this.add(tablePanel, BorderLayout.SOUTH);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void titlePanelCreation() {
@@ -92,26 +109,10 @@ public class Search1Panel extends JPanel {
         JButton sendButton = new JButton("Rechercher");
         sendButton.addActionListener(new SearchButtonListener());
         buttonPanel.add(sendButton);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(buttonPanel, BorderLayout.EAST);
     }
 
-    private void tablePanelCreation(SearchDisasterByCountryAndDates search){
-        try{
-            model = new AllDisastersModel(controller.getDisastersByCountryBetweenDates(search));
-            disasterTable = new JTable(model);
-            scrollPane = new JScrollPane(disasterTable);
-            scrollPane.setPreferredSize(new Dimension(1300, 400));
 
-            disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
-            disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-            disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-            disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
-
-            this.add(scrollPane);
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     public void setController(ApplicationController controller) {
         this.controller = controller;
@@ -131,7 +132,8 @@ public class Search1Panel extends JPanel {
                     endDate.setTime(date);
                 }
                 SearchDisasterByCountryAndDates search = new SearchDisasterByCountryAndDates(new Country(countryComboBox.getSelectedItem().toString(), null, null), (GregorianCalendar) startDate,(GregorianCalendar) endDate);
-                tablePanelCreation(search);
+                model = new AllDisastersModel( controller.getDisastersByCountryBetweenDates(search));
+                disasterTable.setModel(model);
                 repaint();
                 validate();
 

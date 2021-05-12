@@ -244,7 +244,7 @@ public class FormPanel extends JPanel {
                 }
 
                 //Créer l'objet disaster
-                Disaster disaster = new Disaster(id,impactedPeople,directCasualties,indirectCasualties,
+                Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
                         type,description, (GregorianCalendar) startDate,isNatural,disasterRegions);
 
                 //Ajouts des attributs facultatifs via les setters
