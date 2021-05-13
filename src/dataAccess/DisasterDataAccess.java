@@ -15,6 +15,6 @@ public interface DisasterDataAccess {
 
     public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException;
 
-    public void modifyDisaster(Disaster disaster) throws CommunicationException;
+    public void modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException;
 }
 

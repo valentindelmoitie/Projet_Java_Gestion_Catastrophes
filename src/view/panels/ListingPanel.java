@@ -107,14 +107,14 @@ public class ListingPanel extends JPanel {
             Date date = dateFormat.parse(dateString);
             GregorianCalendar dateGregorian = new GregorianCalendar();
             dateGregorian.setTime(date);
-            //dateGregorian.add(Calendar.MONTH, 1);
+            dateGregorian.add(Calendar.MONTH, 1);
 
             GregorianCalendar endDateGregorian = null;
             if (endDateString != "") {
                 Date endDate = dateFormat.parse(endDateString);
                 endDateGregorian = new GregorianCalendar();
                 endDateGregorian.setTime(endDate);
-                //endDateGregorian.add(Calendar.MONTH, 1);
+                endDateGregorian.add(Calendar.MONTH, 1);
             }
 
             Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural);

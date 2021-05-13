@@ -210,12 +210,11 @@ public class FormPanel extends JPanel {
 
     private class InsertButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            //Garnir avec les élements du formulaire
             Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
             Integer directCasualties    = (Integer) directCasualtiesSpinner.getValue();
             Integer indirectCasualties  = (Integer) indirectCasualtiesSpinner.getValue();
             String type                 = (String) typeComboBox.getSelectedItem();
-            String description             = descriptionTF.getText();
+            String description          = descriptionTF.getText();
             String name                 = nameTF.getText();
             Integer intensity           = (Integer) intensitySpinner.getValue();
             Boolean isNatural           = (isNaturalComboBox.getSelectedItem() == "Oui");
@@ -226,7 +225,7 @@ public class FormPanel extends JPanel {
                 if(!startDateTF.getText().isEmpty()){
                     startDate = new GregorianCalendar();
                     startDate.setTime(date);
-                    startDate.add(Calendar.MONTH, 1);
+                    //startDate.add(Calendar.MONTH, 1);
                 }
                 if(!endDateTF.getText().isEmpty()) {
                     endDate = new GregorianCalendar();
@@ -234,7 +233,7 @@ public class FormPanel extends JPanel {
                     endDate.setTime(date);
                     //endDate.add(Calendar.MONTH, 1);
                 }
-                // Garnir avec les regions choisies par l'utilisateur
+
                 ArrayList<Region> disasterRegions = new ArrayList<>();
                 ListModel model = chosenRegions.getModel();
                 int i = 0;
@@ -243,11 +242,10 @@ public class FormPanel extends JPanel {
                     i++;
                 }
 
-                //Créer l'objet disaster
                 Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
-                        type,description, (GregorianCalendar) startDate,isNatural,disasterRegions);
+                        type, description, (GregorianCalendar) startDate,isNatural,disasterRegions);
 
-                //Ajouts des attributs facultatifs via les setters
+
                 if(!nameTF.getText().isEmpty())
                     disaster.setName(name);
                 if(intensity > 0)
@@ -255,7 +253,7 @@ public class FormPanel extends JPanel {
 
                 if(!endDateTF.getText().isEmpty())
                     disaster.setEndDate((GregorianCalendar)endDate);
-                //Envoie vers les couches inférieures
+
                 if (formType == Type.INSERTION) {
                     int nbInsertedData = controller.addDisaster(disaster); // Possible de récupérer un int ici indiquant le nombre de ligne ajouté
                     if(nbInsertedData == 1)
@@ -264,6 +262,7 @@ public class FormPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE); // Ne doit jamais apparaitre
                 }
                 else {
+                    disaster.setId(disasterToModify.getId());
                     controller.modifyDisaster(disaster);
                 }
 

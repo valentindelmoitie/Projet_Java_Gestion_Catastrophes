@@ -43,7 +43,7 @@ public class ApplicationController {
         return countryManager.getAllCountries();
     }
 
-    public void modifyDisaster(Disaster disaster) throws CommunicationException {
+    public void modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException {
         disasterManager.modifyDisaster(disaster);
     }
 

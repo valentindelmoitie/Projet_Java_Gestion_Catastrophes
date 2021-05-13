@@ -115,3 +115,7 @@
     - Modification style message accueil
     - Clean code
     - Recherche 3 (View)
+
+-- Commit de Valentin du 13/05 à 23:30
+    - Fin modification
+    - OldAddPanel ==> AddPanel using FormPanel
