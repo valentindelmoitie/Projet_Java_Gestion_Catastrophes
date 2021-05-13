@@ -13,12 +13,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Search3Panel extends JPanel {
-    private JLabel descriptionLabel, disasterLabel;
+    private JLabel descriptionLabel, disasterLabel, regionLbl;
     private JComboBox dangerousSiteCb;
-    private JPanel titlePanel, formPanel, buttonPanel;
+    private JPanel titlePanel, formPanel, buttonPanel, regionPanel, tablePanel;
     private JButton sendButton;
     private ApplicationController controller;
-    private JPanel tablePanel;
     private JTable disasterTable;
     private DisastersSearch3Model model;
     private JScrollPane scrollPane;
@@ -30,6 +29,7 @@ public class Search3Panel extends JPanel {
         formPanelCreation();
         buttonPanelCreation();
         tablePanelCreation();
+        regionPanelCreation();
     }
 
     private void titlePanelCreation() {
@@ -96,6 +96,14 @@ public class Search3Panel extends JPanel {
         }
     }
 
+    private void regionPanelCreation(){
+        regionPanel = new JPanel();
+        regionLbl = new JLabel("Information sur la région du site dangereux ");
+        regionPanel.add(regionLbl);
+        this.add(regionPanel, BorderLayout.WEST);
+
+    }
+
     public void setController(ApplicationController controller) {
         this.controller = controller;
     }
@@ -119,6 +127,9 @@ public class Search3Panel extends JPanel {
                 }
                 model = new DisastersSearch3Model(disasters);
                 disasterTable.setModel(model);
+                if(disasters != null) {
+                    regionLbl.setText("Le site dangereux est situé en " + disasters.get(0).getRegionOfDangerousSite().getName() + ", ayant une population de " + disasters.get(0).getRegionOfDangerousSite().getPopulation().toString() + " et étant" + (disasters.get(0).getRegionOfDangerousSite().getWarZone() ? " en paix" : " en guerre"));
+                }
                 repaint();
                 validate();
             } catch (Exception exception) {
