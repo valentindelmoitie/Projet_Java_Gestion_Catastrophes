@@ -23,6 +23,10 @@ public class Region {
         return population;
     }
 
+    public Boolean getWarZone() {
+        return isWarZone;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

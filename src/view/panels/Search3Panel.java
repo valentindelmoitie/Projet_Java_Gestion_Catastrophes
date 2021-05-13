@@ -3,7 +3,8 @@ package view.panels;
 import controller.ApplicationController;
 import model.DangerousSite;
 import model.Disaster;
-import view.AllDisastersModel;
+import model.DisasterOnDangerousSite;
+import view.DisastersSearch3Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,14 +13,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Search3Panel extends JPanel {
-    private JLabel descriptionLabel, disasterLabel;
+    private JLabel descriptionLabel, disasterLabel, regionLbl;
     private JComboBox dangerousSiteCb;
-    private JPanel titlePanel, formPanel, buttonPanel;
+    private JPanel titlePanel, formPanel, buttonPanel, regionPanel, tablePanel;
     private JButton sendButton;
     private ApplicationController controller;
-    private JPanel tablePanel;
     private JTable disasterTable;
-    private AllDisastersModel model;
+    private DisastersSearch3Model model;
     private JScrollPane scrollPane;
 
     public Search3Panel() {
@@ -29,6 +29,7 @@ public class Search3Panel extends JPanel {
         formPanelCreation();
         buttonPanelCreation();
         tablePanelCreation();
+        regionPanelCreation();
     }
 
     private void titlePanelCreation() {
@@ -39,19 +40,19 @@ public class Search3Panel extends JPanel {
     }
 
     private void formPanelCreation() {
-      /*  formPanel = new JPanel();
+        formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(1, 2, 5, 5));
 
         disasterLabel = new JLabel("Catastrophe : ");
         formPanel.add(disasterLabel);
 
-        try {
-            ArrayList<Integer> dangerousSiteArrayList = new ArrayList<>();
+       try {
+            ArrayList<String> dangerousSiteArrayList = new ArrayList<>();
             for (DangerousSite dangerousSite : controller.getAllDangerousSites()) {
-                dangerousSiteArrayList.add(dangerousSite.getId());
+                dangerousSiteArrayList.add(dangerousSite.getId().toString() + "-"  + dangerousSite.getType() + "-" + dangerousSite.getRegion());
             }
 
-            Integer[] disasters = new Integer[dangerousSiteArrayList.size()];
+            String[] disasters = new String[dangerousSiteArrayList.size()];
             for(int i = 0; i < disasters.length; i++) {
                 disasters[i] = dangerousSiteArrayList.get(i);
             }
@@ -61,27 +62,23 @@ public class Search3Panel extends JPanel {
         }
 
         formPanel.add(dangerousSiteCb);
-        this.add(formPanel, BorderLayout.CENTER);*/
+        this.add(formPanel, BorderLayout.CENTER);
     }
 
     private void buttonPanelCreation() {
         buttonPanel = new JPanel();
 
-        sendButton = new JButton("Envoyer !");
+        sendButton = new JButton("Recherche");
         sendButton.setHorizontalAlignment(JButton.CENTER);
         sendButton.addActionListener(new SearchButtonListener());
         buttonPanel.add(sendButton);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(buttonPanel, BorderLayout.EAST);
     }
 
     private void tablePanelCreation(){
         tablePanel = new JPanel();
         try {
-            ArrayList<Disaster> disasters = controller.getAllDisaster();
-            for(Disaster disaster : disasters){
-                disaster.correctDateForDisplay();
-            }
-            model = new AllDisastersModel(disasters);
+            model = new DisastersSearch3Model(new ArrayList<>());
 
             disasterTable = new JTable(model);
             scrollPane = new JScrollPane(disasterTable);
@@ -95,8 +92,16 @@ public class Search3Panel extends JPanel {
             tablePanel.add(scrollPane);
             this.add(tablePanel, BorderLayout.SOUTH);
         } catch (Exception exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE); // ICI
         }
+    }
+
+    private void regionPanelCreation(){
+        regionPanel = new JPanel();
+        regionLbl = new JLabel("Information sur la région du site dangereux ");
+        regionPanel.add(regionLbl);
+        this.add(regionPanel, BorderLayout.WEST);
+
     }
 
     public void setController(ApplicationController controller) {
@@ -106,20 +111,30 @@ public class Search3Panel extends JPanel {
 
     private class SearchButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-           /* try {
-                DangerousSite dangerousSite = new DangerousSite((Integer) dangerousSiteCb.getSelectedItem());
-                ArrayList<Disaster> disasters = controller.getDangerousSitesByDisaster(dangerousSite);
-                for (Disaster disaster : disasters) {
+            try {
+                String userChoice = dangerousSiteCb.getSelectedItem().toString();
+                String[] parts = userChoice.split("-");
+                String part1 = parts[0]; // ID
+                String part2 = parts[1]; // TYPE
+                String part3 = parts[2]; //CITY
+                int id = Integer.parseInt(part1);
+
+                DangerousSite dangerousSite = new DangerousSite(id,part2,part3);
+
+                ArrayList<DisasterOnDangerousSite> disasters = controller.getDangerousSitesByDisaster(dangerousSite);
+                for (DisasterOnDangerousSite disaster : disasters) {
                     disaster.correctDateForDisplay();
                 }
-                model = new AllDisastersModel(disasters);
+                model = new DisastersSearch3Model(disasters);
                 disasterTable.setModel(model);
+                if(disasters != null) {
+                    regionLbl.setText("Le site dangereux est situé en " + disasters.get(0).getRegionOfDangerousSite().getName() + ", ayant une population de " + String.format("%,d",disasters.get(0).getRegionOfDangerousSite().getPopulation()) + " et étant" + (disasters.get(0).getRegionOfDangerousSite().getWarZone() ? " en guerre" : " en paix"));
+                }
                 repaint();
                 validate();
-
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
-            }*/
+            }
         }
     }
 }

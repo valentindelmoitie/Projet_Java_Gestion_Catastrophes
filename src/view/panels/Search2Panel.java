@@ -42,7 +42,7 @@ public class Search2Panel extends JPanel {
     private void buttonPanelCreation() {
         buttonPanel = new JPanel();
 
-        sendButton = new JButton("Envoyer !");
+        sendButton = new JButton("Recherche");
         sendButton.setHorizontalAlignment(JButton.CENTER);
 
         buttonPanel.add(sendButton);

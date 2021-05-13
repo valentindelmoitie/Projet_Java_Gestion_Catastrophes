@@ -259,9 +259,48 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return disasters;
     }
 
-    //public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException
+    public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+        ArrayList<DisasterOnDangerousSite> disasters;
 
-    //public ArrayList<DangerousSite> getAllDangerousSites()
+        Connection connection = SingletonConnection.getInstance();
+
+        String sqlInstruction = "select di.*, r.name, r.population, r.is_warzone\n" +
+                "from disaster di join danger da  on di.id = da.disaster\n" +
+                "join dangerous_site ds on da.dangerous_site = ds.id\n" +
+                "join region r on r.name = ds.region\n" +
+                "where ds.id = ? and ds.type = ? and ds.region = ? order by di.id;";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, dangerousSite.getId());
+            preparedStatement.setString(2, dangerousSite.getType());
+            preparedStatement.setString(3,dangerousSite.getRegion());
+
+            ResultSet data = preparedStatement.executeQuery();
+            disasters = new ArrayList<>();
+
+            while (data.next()){
+                DisasterOnDangerousSite disaster;
+
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTime(data.getDate("date"));
+
+                disaster = new DisasterOnDangerousSite(data.getInt("id"),data.getString("type"),date, data.getInt("impacted_people"),
+                        data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
+                        data.getBoolean("is_natural"), new Region(data.getInt("population"),data.getString("r.name"),data.getBoolean("is_warzone")));
+
+                Integer intensity = data.getInt("intensity");
+                if (!data.wasNull()) {
+                    disaster.setIntensity(intensity);
+                }
+                disasters.add(disaster);
+            }
+
+        }catch (SQLException exception) {
+            throw new ReadingException(exception.getMessage());
+        }
+        return disasters;
+    }
+
 
     public void modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException {
         try {

@@ -5,6 +5,7 @@ import model.Country;
 import model.Disaster;
 import model.SearchDisasterByCountryAndDates;
 import view.AllDisastersModel;
+import view.DisastersSearch1Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +28,7 @@ public class Search1Panel extends JPanel {
     private JTable disasterTable;
     private JScrollPane scrollPane;
     private ApplicationController controller;
-    private AllDisastersModel model;
+    private DisastersSearch1Model model;
     private JPanel tablePanel;
 
     public Search1Panel() {
@@ -89,7 +90,7 @@ public class Search1Panel extends JPanel {
 
     private void buttonPanelCreation() {
         buttonPanel = new JPanel();
-        JButton sendButton = new JButton("Rechercher");
+        JButton sendButton = new JButton("Recherche");
         sendButton.addActionListener(new SearchButtonListener());
         buttonPanel.add(sendButton);
         this.add(buttonPanel, BorderLayout.EAST);
@@ -103,17 +104,14 @@ public class Search1Panel extends JPanel {
             for(Disaster disaster : disasters){
                 disaster.correctDateForDisplay();
             }
-            model = new AllDisastersModel(disasters);
+            model = new DisastersSearch1Model(disasters);
 
             disasterTable = new JTable(model);
             scrollPane = new JScrollPane(disasterTable);
-            scrollPane.setPreferredSize(new Dimension(1300, 400));
+            scrollPane.setPreferredSize(new Dimension(650, 400));
 
             disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
-            disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-            disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-            disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
-
+            disasterTable.getColumnModel().getColumn(5).setPreferredWidth(10);
             tablePanel.add(scrollPane);
             this.add(tablePanel, BorderLayout.SOUTH);
         } catch (Exception exception){
@@ -143,7 +141,7 @@ public class Search1Panel extends JPanel {
                 for(Disaster disaster : disasters){
                     disaster.correctDateForDisplay();
                 }
-                model = new AllDisastersModel(disasters);
+                model = new DisastersSearch1Model(disasters);
                 disasterTable.setModel(model);
                 repaint();
                 validate();

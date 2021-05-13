@@ -2,10 +2,7 @@ package controller;
 
 import business.*;
 import exception.*;
-import model.Country;
-import model.Disaster;
-import model.Region;
-import model.SearchDisasterByCountryAndDates;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -15,12 +12,14 @@ public class ApplicationController {
     private RegionManager regionManager;
     private CountryManager countryManager;
     private DisasterSearchManager disasterSearchManager;
+    private DangerousSiteManager dangerousSiteManager;
 
     public ApplicationController() {
         setDisasterManager(new DisasterManager());
         setRegionManager(new RegionManager());
         setCountryManager(new CountryManager());
         setDisasterSearchManager(new DisasterSearchManager());
+        setDangerousSiteManager(new DangerousSiteManager());
     }
 
     public ArrayList<Disaster> getAllDisaster() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
@@ -51,6 +50,13 @@ public class ApplicationController {
         return disasterSearchManager.getDisastersByCountryBetweenDates(searchParams);
     }
 
+    public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+        return disasterSearchManager.getDangerousSitesByDisaster(dangerousSite);
+    }
+    public ArrayList<DangerousSite> getAllDangerousSites() throws CommunicationException, ReadingException{
+        return dangerousSiteManager.getAllDangerousSites();
+    }
+
     public void setDisasterManager(DisasterManager disasterManager) {
         this.disasterManager = disasterManager;
     }
@@ -65,5 +71,9 @@ public class ApplicationController {
 
     public void setDisasterSearchManager(DisasterSearchManager disasterSearchManager) {
         this.disasterSearchManager = disasterSearchManager;
+    }
+
+    public void setDangerousSiteManager(DangerousSiteManager dangerousSiteManager) {
+        this.dangerousSiteManager = dangerousSiteManager;
     }
 }
