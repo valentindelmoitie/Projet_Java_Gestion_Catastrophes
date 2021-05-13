@@ -19,14 +19,13 @@ public class DisasterManager {
         this.dao = dao;
     }
 
-    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException{
-        return dao.getAllDisasters();
+    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+            return dao.getAllDisasters();
     }
 
     public int addDisaster(Disaster disaster) throws CommunicationException, AddDisasterException {
         return dao.addDisaster(disaster);
     }
-
 
     public int deleteDisasters(ArrayList<Disaster> disasters) throws CommunicationException, DeleteDisasterException{
         return dao.deleteDisasters(disasters);

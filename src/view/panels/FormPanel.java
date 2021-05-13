@@ -232,7 +232,7 @@ public class FormPanel extends JPanel {
                     endDate = new GregorianCalendar();
                     date = dateFormat.parse(endDateTF.getText());
                     endDate.setTime(date);
-                    endDate.add(Calendar.MONTH, 1);
+                    //endDate.add(Calendar.MONTH, 1);
                 }
                 // Garnir avec les regions choisies par l'utilisateur
                 ArrayList<Region> disasterRegions = new ArrayList<>();

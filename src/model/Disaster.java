@@ -2,8 +2,11 @@ package model;
 
 import exception.DisasterMiscException;
 import exception.EndDateException;
+import exception.StartDateException;
 
 import java.util.*;
+
+import static java.util.Calendar.MONTH;
 
 public class Disaster {
     private Integer id;
@@ -34,32 +37,32 @@ public class Disaster {
     }
 
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
-                    String type, String description, GregorianCalendar date, Boolean isNatural) throws DisasterMiscException{
+                    String type, String description, GregorianCalendar date, Boolean isNatural) throws DisasterMiscException, EndDateException, StartDateException{
         this(id);
         setDirectCasualties(directCasualties);
         setIndirectCasualties(indirectCasualties);
         setImpactedPeople(impactedPeople);
         setType(type);
         setDescription(description);
-        this.date = date;
+        setDate(date);
         this.isNatural = isNatural;
         this.regions = null;
     }
 
-    public Disaster(Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) throws DisasterMiscException{
+    public Disaster(Integer impactedPeople, Integer directCasualties, Integer indirectCasualties, String type, String description, GregorianCalendar date, Boolean isNatural, ArrayList<Region> regions) throws DisasterMiscException, EndDateException, StartDateException{
         setDirectCasualties(directCasualties);
         setIndirectCasualties(indirectCasualties);
         setImpactedPeople(impactedPeople);
         setType(type);
         setDescription(description);
-        this.date = date;
+        setDate(date);
         this.isNatural = isNatural;
         this.regions = regions;
     }
 
     public Disaster(Integer id, Integer impactedPeople, Integer directCasualties, Integer indirectCasualties,
                     String type, String description, GregorianCalendar date, Boolean isNatural,
-                    ArrayList<Region> regions) throws DisasterMiscException{
+                    ArrayList<Region> regions) throws DisasterMiscException, EndDateException, StartDateException{
         this(id,impactedPeople,directCasualties,indirectCasualties,type,description,date,isNatural);
         setRegions(regions);
     }
@@ -85,9 +88,16 @@ public class Disaster {
         this.description = description;
     }
 
+    public void setDate(GregorianCalendar date) throws StartDateException{
+        Calendar today = new GregorianCalendar();
+        if(date.compareTo(today) > 0) throw new StartDateException();
+        else
+            this.date = date;
+    }
+
     public void setEndDate(GregorianCalendar endDate) throws EndDateException{
         if(endDate != null)
-            if(endDate.compareTo(date) < 0) throw new EndDateException(endDate,date);
+            if(endDate.compareTo(date) < 0) throw new EndDateException();
         this.endDate = endDate;
     }
 
@@ -158,12 +168,12 @@ public class Disaster {
     }
 
     public String getDateString() {
-        return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(GregorianCalendar.MONTH) + "/" +date.get(GregorianCalendar.YEAR);
+        return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(MONTH) + "/" +date.get(GregorianCalendar.YEAR);
     }
 
     public String getEndDateString() {
         if (endDate != null)
-            return endDate.get(GregorianCalendar.DAY_OF_MONTH) + "/" + endDate.get(GregorianCalendar.MONTH) + "/" + endDate.get(GregorianCalendar.YEAR);
+            return endDate.get(GregorianCalendar.DAY_OF_MONTH) + "/" + endDate.get(MONTH) + "/" + endDate.get(GregorianCalendar.YEAR);
 
         return "";
     }
@@ -178,6 +188,12 @@ public class Disaster {
 
     public void addRegion(Region region) {
         this.regions.add(region);
+    }
+
+    public void correctDateForDisplay(){
+        date.add(MONTH,1);
+        if(endDate != null)
+            endDate.add(MONTH,1);
     }
 
 }

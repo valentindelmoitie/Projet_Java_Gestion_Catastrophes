@@ -1,7 +1,9 @@
 package model;
 
 import exception.EndDateException;
+import exception.StartDateException;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class SearchDisasterByCountryAndDates {
@@ -11,7 +13,7 @@ public class SearchDisasterByCountryAndDates {
     private GregorianCalendar endDate;
 
 
-    public SearchDisasterByCountryAndDates(Country country, GregorianCalendar startDate, GregorianCalendar endDate) {
+    public SearchDisasterByCountryAndDates(Country country, GregorianCalendar startDate, GregorianCalendar endDate) throws EndDateException, StartDateException{
         setCountry(country);
         setStartDate(startDate);
         setEndDate(endDate);
@@ -21,12 +23,16 @@ public class SearchDisasterByCountryAndDates {
         this.country = country;
     }
 
-    public void setStartDate(GregorianCalendar startDate) {
-        this.startDate = startDate;
+    public void setStartDate(GregorianCalendar startDate) throws StartDateException{
+        Calendar today = new GregorianCalendar();
+        if(startDate.compareTo(today) > 0) throw new StartDateException();
+        else
+            this.startDate = startDate;
     }
 
-    public void setEndDate(GregorianCalendar endDate) {
-        //if(endDate.compareTo(startDate) < 0) throw new EndDateException(endDate,startDate);
+    public void setEndDate(GregorianCalendar endDate) throws EndDateException{
+        if(endDate != null)
+            if(endDate.compareTo(startDate) < 0) throw new EndDateException();
         this.endDate = endDate;
     }
 

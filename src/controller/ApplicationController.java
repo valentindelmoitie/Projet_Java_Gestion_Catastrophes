@@ -23,7 +23,7 @@ public class ApplicationController {
         setDisasterSearchManager(new DisasterSearchManager());
     }
 
-    public ArrayList<Disaster> getAllDisaster() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException {
+    public ArrayList<Disaster> getAllDisaster() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
         return disasterManager.getAllDisasters();
    }
 
@@ -47,7 +47,7 @@ public class ApplicationController {
         disasterManager.modifyDisaster(disaster);
     }
 
-    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException{
+    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
         return disasterSearchManager.getDisastersByCountryBetweenDates(searchParams);
     }
 

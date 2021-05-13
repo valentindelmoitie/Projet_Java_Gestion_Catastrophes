@@ -13,7 +13,8 @@ create table disaster
         constraint disaster_id_pk primary key(id),
         constraint disaster_type_list check(`type` in('Ouragan','Tremblement de terre','Tsunami','Naufrage','Incendie','Nucléaire','Industriel','Humanitaire')),
         constraint disaster_intensity_limits check(intensity > 0 and intensity <= 20),
-        constraint disaster_name_uk unique(`name`)
+        constraint disaster_name_uk unique(`name`),
+        constraint disaster_min_impacted_people check(impacted_people >= (direct_casualties + indirect_casualties))
     )   ENGINE = InnoDB
         DEFAULT CHARACTER SET = utf8;
 

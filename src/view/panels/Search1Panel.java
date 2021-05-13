@@ -2,6 +2,7 @@ package view.panels;
 
 import controller.ApplicationController;
 import model.Country;
+import model.Disaster;
 import model.SearchDisasterByCountryAndDates;
 import view.AllDisastersModel;
 
@@ -39,7 +40,11 @@ public class Search1Panel extends JPanel {
             tablePanel = new JPanel();
             dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            model = new AllDisastersModel(controller.getAllDisaster());
+            ArrayList<Disaster> disasters = controller.getAllDisaster();
+            for(Disaster disaster : disasters){
+                disaster.correctDateForDisplay();
+            }
+            model = new AllDisastersModel(disasters);
 
             disasterTable = new JTable(model);
             scrollPane = new JScrollPane(disasterTable);
@@ -132,7 +137,11 @@ public class Search1Panel extends JPanel {
                     endDate.setTime(date);
                 }
                 SearchDisasterByCountryAndDates search = new SearchDisasterByCountryAndDates(new Country(countryComboBox.getSelectedItem().toString(), null, null), (GregorianCalendar) startDate,(GregorianCalendar) endDate);
-                model = new AllDisastersModel( controller.getDisastersByCountryBetweenDates(search));
+                ArrayList<Disaster> disasters = controller.getDisastersByCountryBetweenDates(search);
+                for(Disaster disaster : disasters){
+                    disaster.correctDateForDisplay();
+                }
+                model = new AllDisastersModel(disasters);
                 disasterTable.setModel(model);
                 repaint();
                 validate();

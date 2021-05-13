@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DisasterDBAccess implements  DisasterDataAccess {
-    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException {
+    public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
         ArrayList<Disaster> allDisasters;
 
         Connection connection = SingletonConnection.getInstance();
@@ -37,7 +37,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     Date dateSQL = data.getDate("date");
                     GregorianCalendar dateGregorian = new GregorianCalendar();
                     dateGregorian.setTime(dateSQL);
-                    dateGregorian.add(Calendar.MONTH, 1);
+                    //dateGregorian.add(Calendar.MONTH, 1);
 
                     ArrayList<Region> regions = new ArrayList<>();
                     regions.add(new Region(data.getString("region")));
@@ -51,7 +51,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     if (!data.wasNull()) {
                         GregorianCalendar endDateGregorian = new GregorianCalendar();
                         endDateGregorian.setTime(endDateSQL);
-                        endDateGregorian.add(Calendar.MONTH, 1);
+                        //endDateGregorian.add(Calendar.MONTH, 1);
                         disaster.setEndDate(endDateGregorian);
                     }
 
@@ -169,7 +169,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         }
     }
 
-    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException {
+    public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
         ArrayList<Disaster> disasters;
 
         Connection connection = SingletonConnection.getInstance();

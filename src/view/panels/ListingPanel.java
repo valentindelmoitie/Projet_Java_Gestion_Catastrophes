@@ -36,15 +36,13 @@ public class ListingPanel extends JPanel {
 
         try {
             ArrayList<Disaster> disasters = controller.getAllDisaster();
-            model = new AllDisastersModel(controller.getAllDisaster());
-        } catch (CommunicationException e) {
-            e.printStackTrace();
-        } catch (ReadingException e) {
-            e.printStackTrace();
-        } catch (DisasterMiscException e) {
-            e.printStackTrace();
-        } catch (EndDateException e) {
-            e.printStackTrace();
+            for(Disaster disaster : disasters){
+                disaster.correctDateForDisplay();
+            }
+            model = new AllDisastersModel(disasters);
+            //model = new AllDisastersModel(controller.getAllDisaster());
+        } catch (Exception exception){
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
 
         disasterTable = new JTable(model);
@@ -82,7 +80,6 @@ public class ListingPanel extends JPanel {
             int id = (Integer) disasterTable.getModel().getValueAt(i, 0);
             disasters.add(new Disaster(id));
         }
-
         return disasters;
     }
 
@@ -111,14 +108,14 @@ public class ListingPanel extends JPanel {
             Date date = dateFormat.parse(dateString);
             GregorianCalendar dateGregorian = new GregorianCalendar();
             dateGregorian.setTime(date);
-            dateGregorian.add(Calendar.MONTH, 1);
+            //dateGregorian.add(Calendar.MONTH, 1);
 
             GregorianCalendar endDateGregorian = null;
             if (endDateString != "") {
                 Date endDate = dateFormat.parse(endDateString);
                 endDateGregorian = new GregorianCalendar();
                 endDateGregorian.setTime(endDate);
-                endDateGregorian.add(Calendar.MONTH, 1);
+                //endDateGregorian.add(Calendar.MONTH, 1);
             }
 
             Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural);
@@ -128,7 +125,7 @@ public class ListingPanel extends JPanel {
             disaster.setEndDate(endDateGregorian);
 
             return  disaster;
-        } catch (ParseException | DisasterMiscException | EndDateException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
         }
 

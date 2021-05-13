@@ -2,6 +2,11 @@
     - Il faudra être cohérent avec l'ID
       (On autorise l'utilisateur à choisir et alors pas d'increment dans la bdd, ou inverse)
 
+    - Bug insertion
+             - Inserer une catastrophe avec un nom
+             - Inserer une autre catastrophe avec le même nom
+             - Erreur remontée mais seconde catastrophe ajoutée avec un nom à null
+
 --------------------------------------------------------------------------------------
 
 -- Commit de Valentin du 8/05 à 14:30
@@ -100,3 +105,7 @@
     -- Commit de Mathieu du 12/05 23:15
         - Fix bugs suppression
         - Ajouts de données script SQL
+
+    -- Commit de Mathieu du 12/05 23:15
+        - Découverte bug insertion
+        - Filtres dates & changement dans la gestion du décallage (voir listing panel)
