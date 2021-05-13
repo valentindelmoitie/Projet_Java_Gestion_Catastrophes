@@ -246,9 +246,47 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return disasters;
     }
 
-    //public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException
+    public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+        ArrayList<Disaster> disasters;
 
-    //public ArrayList<DangerousSite> getAllDangerousSites()
+        Connection connection = SingletonConnection.getInstance();
+
+        String sqlInstruction = "select di.*, ds.region\n" +
+                "from disaster di join danger da  on di.id = da.disaster\n" +
+                "join dangerous_site ds on da.dangerous_site = ds.id where ds.id = ? and ds.type = ? and ds.region = ? order by di.id;";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, dangerousSite.getId());
+            preparedStatement.setString(2, dangerousSite.getType());
+            preparedStatement.setString(3,dangerousSite.getRegion());
+
+            ResultSet data = preparedStatement.executeQuery();
+            disasters = new ArrayList<>();
+
+            while (data.next()){
+                Disaster disaster;
+
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTime(data.getDate("date"));
+
+                disaster = new Disaster(data.getInt("id"), data.getInt("impacted_people"),
+                        data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
+                        data.getString("type"), data.getString("description"), date,
+                        data.getBoolean("is_natural"));
+
+                Integer intensity = data.getInt("intensity");
+                if (!data.wasNull()) {
+                    disaster.setIntensity(intensity);
+                }
+                disasters.add(disaster);
+            }
+
+        }catch (SQLException exception) {
+            throw new ReadingException(exception.getMessage());
+        }
+        return disasters;
+    }
+
 
     public void modifyDisaster(Disaster disaster) throws CommunicationException { // Il faut remonter une ModifyException
         Connection connection = SingletonConnection.getInstance();

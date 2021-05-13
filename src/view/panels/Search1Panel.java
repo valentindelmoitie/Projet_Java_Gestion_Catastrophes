@@ -90,7 +90,7 @@ public class Search1Panel extends JPanel {
 
     private void buttonPanelCreation() {
         buttonPanel = new JPanel();
-        JButton sendButton = new JButton("Rechercher");
+        JButton sendButton = new JButton("Recherche");
         sendButton.addActionListener(new SearchButtonListener());
         buttonPanel.add(sendButton);
         this.add(buttonPanel, BorderLayout.EAST);

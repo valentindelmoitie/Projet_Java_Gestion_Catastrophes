@@ -3,6 +3,7 @@ package business;
 import dataAccess.DisasterDBAccess;
 import dataAccess.DisasterDataAccess;
 import exception.*;
+import model.DangerousSite;
 import model.Disaster;
 import model.SearchDisasterByCountryAndDates;
 
@@ -18,6 +19,10 @@ public class DisasterSearchManager {
 
     public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
             return dao.getDisastersByCountryBetweenDates(searchParams);
+    }
+
+    public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+        return dao.getDangerousSitesByDisaster(dangerousSite);
     }
 
     public void setDao(DisasterDataAccess dao) {

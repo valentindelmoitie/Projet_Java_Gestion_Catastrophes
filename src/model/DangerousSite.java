@@ -7,8 +7,16 @@ public class DangerousSite {
     private String manager;
     private String region;
 
-    public DangerousSite(Integer id) {
+    public DangerousSite(Integer id, String type, String description, String manager, String region) {
         this.id = id;
+        this.type = type;
+        this.description = description;
+        this.manager = manager;
+        this.region = region;
+    }
+
+    public DangerousSite(Integer id) {
+        this(id, null, null, null, null);
     }
 
     public Integer getId() {

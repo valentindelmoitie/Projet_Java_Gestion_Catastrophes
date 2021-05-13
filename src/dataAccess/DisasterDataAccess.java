@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exception.*;
+import model.DangerousSite;
 import model.Disaster;
 import model.SearchDisasterByCountryAndDates;
 
@@ -16,5 +17,7 @@ public interface DisasterDataAccess {
     public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException;
 
     public void modifyDisaster(Disaster disaster) throws CommunicationException;
+
+    public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException;
 }
 

@@ -3,8 +3,7 @@ package view.panels;
 import controller.ApplicationController;
 import model.DangerousSite;
 import model.Disaster;
-import view.AllDisastersModel;
-import view.DisasterSearch3Model;
+import view.DisastersSearch3Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class Search3Panel extends JPanel {
     private ApplicationController controller;
     private JPanel tablePanel;
     private JTable disasterTable;
-    private DisasterSearch3Model model;
+    private DisastersSearch3Model model;
     private JScrollPane scrollPane;
 
     public Search3Panel() {
@@ -46,7 +45,7 @@ public class Search3Panel extends JPanel {
         disasterLabel = new JLabel("Catastrophe : ");
         formPanel.add(disasterLabel);
 
-       /* try {
+       try {
             ArrayList<String> dangerousSiteArrayList = new ArrayList<>();
             for (DangerousSite dangerousSite : controller.getAllDangerousSites()) {
                 dangerousSiteArrayList.add(dangerousSite.getId().toString() + " "  + dangerousSite.getType().toString() + " " + dangerousSite.getRegion().toString());
@@ -59,7 +58,7 @@ public class Search3Panel extends JPanel {
             dangerousSiteCb = new JComboBox(disasters);
         }catch (Exception exception){
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
-        }*/
+        }
 
         formPanel.add(dangerousSiteCb);
         this.add(formPanel, BorderLayout.CENTER);
@@ -68,11 +67,11 @@ public class Search3Panel extends JPanel {
     private void buttonPanelCreation() {
         buttonPanel = new JPanel();
 
-        sendButton = new JButton("Envoyer !");
+        sendButton = new JButton("Recherche");
         sendButton.setHorizontalAlignment(JButton.CENTER);
         sendButton.addActionListener(new SearchButtonListener());
         buttonPanel.add(sendButton);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(buttonPanel, BorderLayout.EAST);
     }
 
     private void tablePanelCreation(){
@@ -82,7 +81,7 @@ public class Search3Panel extends JPanel {
             for(Disaster disaster : disasters){
                 disaster.correctDateForDisplay();
             }
-            model = new DisasterSearch3Model(disasters);
+            model = new DisastersSearch3Model(disasters);
 
             disasterTable = new JTable(model);
             scrollPane = new JScrollPane(disasterTable);
@@ -107,20 +106,20 @@ public class Search3Panel extends JPanel {
 
     private class SearchButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-           /* try {
+            try {
                 DangerousSite dangerousSite = new DangerousSite((Integer) dangerousSiteCb.getSelectedItem());
                 ArrayList<Disaster> disasters = controller.getDangerousSitesByDisaster(dangerousSite);
                 for (Disaster disaster : disasters) {
                     disaster.correctDateForDisplay();
                 }
-                model = new DisasterSearch3Model(disasters);
+                model = new DisastersSearch3Model(disasters);
                 disasterTable.setModel(model);
                 repaint();
                 validate();
 
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
-            }*/
+            }
         }
     }
 }

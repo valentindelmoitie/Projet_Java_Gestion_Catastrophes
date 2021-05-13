@@ -6,11 +6,11 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class DisasterSearch3Model extends AbstractTableModel {
+public class DisastersSearch3Model extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<Disaster> contents;
 
-    public DisasterSearch3Model(ArrayList<Disaster> disasters) {
+    public DisastersSearch3Model(ArrayList<Disaster> disasters) {
         columnNames = new ArrayList<>();
         columnNames.add("Id");
         columnNames.add("Type");
