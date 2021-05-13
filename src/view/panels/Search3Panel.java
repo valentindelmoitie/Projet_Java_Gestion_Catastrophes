@@ -1,18 +1,19 @@
 package view.panels;
 
 import controller.ApplicationController;
+import model.DangerousSite;
 import model.Disaster;
-import model.Region;
 import view.AllDisastersModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Search3Panel extends JPanel {
     private JLabel descriptionLabel, disasterLabel;
-    private JComboBox disasterCb;
+    private JComboBox dangerousSiteCb;
     private JPanel titlePanel, formPanel, buttonPanel;
     private JButton sendButton;
     private ApplicationController controller;
@@ -38,29 +39,29 @@ public class Search3Panel extends JPanel {
     }
 
     private void formPanelCreation() {
-        formPanel = new JPanel();
+      /*  formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(1, 2, 5, 5));
 
         disasterLabel = new JLabel("Catastrophe : ");
         formPanel.add(disasterLabel);
 
         try {
-            ArrayList<Integer> disastersArrayList = new ArrayList<>();
-            for (Disaster disaster : controller.getAllDisaster()) {
-                disastersArrayList.add(disaster.getId());
+            ArrayList<Integer> dangerousSiteArrayList = new ArrayList<>();
+            for (DangerousSite dangerousSite : controller.getAllDangerousSites()) {
+                dangerousSiteArrayList.add(dangerousSite.getId());
             }
 
-            Integer[] disasters = new Integer[disastersArrayList.size()];
+            Integer[] disasters = new Integer[dangerousSiteArrayList.size()];
             for(int i = 0; i < disasters.length; i++) {
-                disasters[i] = disastersArrayList.get(i);
+                disasters[i] = dangerousSiteArrayList.get(i);
             }
-            disasterCb = new JComboBox(disasters);
+            dangerousSiteCb = new JComboBox(disasters);
         }catch (Exception exception){
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
 
-        formPanel.add(disasterCb);
-        this.add(formPanel, BorderLayout.CENTER);
+        formPanel.add(dangerousSiteCb);
+        this.add(formPanel, BorderLayout.CENTER);*/
     }
 
     private void buttonPanelCreation() {
@@ -68,7 +69,7 @@ public class Search3Panel extends JPanel {
 
         sendButton = new JButton("Envoyer !");
         sendButton.setHorizontalAlignment(JButton.CENTER);
-
+        sendButton.addActionListener(new SearchButtonListener());
         buttonPanel.add(sendButton);
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -100,19 +101,25 @@ public class Search3Panel extends JPanel {
 
     public void setController(ApplicationController controller) {
         this.controller = controller;
-        try {
-/*            Disaster disaster = new Disaster((Integer) disasterCb.getSelectedItem());
-            ArrayList<Disaster> disasters = controller.getDangerousSitesByDisaster(disaster);
-            for(Disaster disaster : disasters){
-                disaster.correctDateForDisplay();
-            }
-            model = new AllDisastersModel(disasters);
-            disasterTable.setModel(model);
-            repaint();
-            validate();*/
+    }
 
-        } catch(Exception exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+
+    private class SearchButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+           /* try {
+                DangerousSite dangerousSite = new DangerousSite((Integer) dangerousSiteCb.getSelectedItem());
+                ArrayList<Disaster> disasters = controller.getDangerousSitesByDisaster(dangerousSite);
+                for (Disaster disaster : disasters) {
+                    disaster.correctDateForDisplay();
+                }
+                model = new AllDisastersModel(disasters);
+                disasterTable.setModel(model);
+                repaint();
+                validate();
+
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+            }*/
         }
     }
 }

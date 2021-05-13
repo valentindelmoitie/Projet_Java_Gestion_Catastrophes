@@ -110,8 +110,8 @@
     - Découverte bug insertion (voir en tête de fichier)
     - Filtres dates & changement dans la gestion du décallage du mois avec Gregorian Calendar (voir listing panel)
 
--- Commit de Mathieu du 13/05 1x:xx
+-- Commit de Mathieu du 13/05 14:30
     - Orthographe
     - Modification style message accueil
     - Clean code
-    - Debut recherche 3
+    - Recherche 3 (View)

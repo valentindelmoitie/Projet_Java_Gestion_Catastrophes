@@ -246,9 +246,9 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return disasters;
     }
 
-    //public ArrayList<DangerousSite> getDangerousSitesByDisaster(Disaster disaster) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
-    //    return null;
-    //}
+    //public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException
+
+    //public ArrayList<DangerousSite> getAllDangerousSites()
 
     public void modifyDisaster(Disaster disaster) throws CommunicationException { // Il faut remonter une ModifyException
         Connection connection = SingletonConnection.getInstance();
