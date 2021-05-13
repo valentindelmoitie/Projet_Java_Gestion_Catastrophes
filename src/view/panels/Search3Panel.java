@@ -128,7 +128,7 @@ public class Search3Panel extends JPanel {
                 model = new DisastersSearch3Model(disasters);
                 disasterTable.setModel(model);
                 if(disasters != null) {
-                    regionLbl.setText("Le site dangereux est situé en " + disasters.get(0).getRegionOfDangerousSite().getName() + ", ayant une population de " + disasters.get(0).getRegionOfDangerousSite().getPopulation().toString() + " et étant" + (disasters.get(0).getRegionOfDangerousSite().getWarZone() ? " en paix" : " en guerre"));
+                    regionLbl.setText("Le site dangereux est situé en " + disasters.get(0).getRegionOfDangerousSite().getName() + ", ayant une population de " + String.format("%,d",disasters.get(0).getRegionOfDangerousSite().getPopulation()) + " et étant" + (disasters.get(0).getRegionOfDangerousSite().getWarZone() ? " en guerre" : " en paix"));
                 }
                 repaint();
                 validate();

@@ -273,7 +273,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
                 disaster = new DisasterOnDangerousSite(data.getInt("id"),data.getString("type"),date, data.getInt("impacted_people"),
                         data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
-                        data.getBoolean("is_natural"), new Region(data.getInt("population"),data.getString("name"),data.getBoolean("is_warzone")));
+                        data.getBoolean("is_natural"), new Region(data.getInt("population"),data.getString("r.name"),data.getBoolean("is_warzone")));
 
                 Integer intensity = data.getInt("intensity");
                 if (!data.wasNull()) {
