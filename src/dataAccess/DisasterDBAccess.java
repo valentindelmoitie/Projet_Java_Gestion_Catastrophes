@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import static java.util.Calendar.MONTH;
+
 public class DisasterDBAccess implements  DisasterDataAccess {
     public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
         ArrayList<Disaster> allDisasters;
@@ -29,7 +31,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             allDisasters = new ArrayList<>();
 
             while (data.next()) {
-                // MODIFIER EN GREGORIAN CALENDAR
                 Disaster disaster = null;
                 int disasterId = data.getInt("id");
 
@@ -38,7 +39,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     Date dateSQL = data.getDate("date");
                     GregorianCalendar dateGregorian = new GregorianCalendar();
                     dateGregorian.setTime(dateSQL);
-                    //dateGregorian.add(Calendar.MONTH, 1);
 
                     ArrayList<Region> regions = new ArrayList<>();
                     regions.add(new Region(data.getString("region")));
@@ -52,7 +52,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     if (!data.wasNull()) {
                         GregorianCalendar endDateGregorian = new GregorianCalendar();
                         endDateGregorian.setTime(endDateSQL);
-                        //endDateGregorian.add(Calendar.MONTH, 1);
                         disaster.setEndDate(endDateGregorian);
                     }
 
@@ -68,6 +67,8 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                 } else {
                     allDisasters.get(allDisasters.size() - 1).addRegion(new Region(data.getString("region")));
                 }
+
+
 
                 if (disaster != null)
                     allDisasters.add(disaster);

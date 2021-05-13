@@ -101,9 +101,9 @@ public class Search1Panel extends JPanel {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             ArrayList<Disaster> disasters = controller.getAllDisaster();
-            for(Disaster disaster : disasters){
+            /*for(Disaster disaster : disasters){
                 disaster.correctDateForDisplay();
-            }
+            }*/
             model = new DisastersSearch1Model(disasters);
 
             disasterTable = new JTable(model);
@@ -138,9 +138,9 @@ public class Search1Panel extends JPanel {
                 }
                 SearchDisasterByCountryAndDates search = new SearchDisasterByCountryAndDates(new Country(countryComboBox.getSelectedItem().toString(), null, null), (GregorianCalendar) startDate,(GregorianCalendar) endDate);
                 ArrayList<Disaster> disasters = controller.getDisastersByCountryBetweenDates(search);
-                for(Disaster disaster : disasters){
+                /*for(Disaster disaster : disasters){
                     disaster.correctDateForDisplay();
-                }
+                }*/
                 model = new DisastersSearch1Model(disasters);
                 disasterTable.setModel(model);
                 repaint();

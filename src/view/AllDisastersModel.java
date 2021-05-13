@@ -95,7 +95,7 @@ public class AllDisastersModel extends AbstractTableModel {
                 c = String.class;
                 break;
             case 4 : case 5 :
-                c = GregorianCalendar.class;
+                c = String.class;
                 break;
             case 10 :
                 c = Boolean.class;

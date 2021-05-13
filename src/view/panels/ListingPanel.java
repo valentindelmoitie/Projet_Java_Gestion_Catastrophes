@@ -37,7 +37,7 @@ public class ListingPanel extends JPanel {
         try {
             ArrayList<Disaster> disasters = controller.getAllDisaster();
             for(Disaster disaster : disasters){
-                disaster.correctDateForDisplay();
+                System.out.println(disaster.getDate().get(Calendar.MONTH));
             }
             model = new AllDisastersModel(disasters);
         } catch (Exception exception){
@@ -107,14 +107,12 @@ public class ListingPanel extends JPanel {
             Date date = dateFormat.parse(dateString);
             GregorianCalendar dateGregorian = new GregorianCalendar();
             dateGregorian.setTime(date);
-            dateGregorian.add(Calendar.MONTH, 1);
 
             GregorianCalendar endDateGregorian = null;
             if (endDateString != "") {
                 Date endDate = dateFormat.parse(endDateString);
                 endDateGregorian = new GregorianCalendar();
                 endDateGregorian.setTime(endDate);
-                endDateGregorian.add(Calendar.MONTH, 1);
             }
 
             Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural);

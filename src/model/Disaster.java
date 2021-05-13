@@ -168,12 +168,12 @@ public class Disaster {
     }
 
     public String getDateString() {
-        return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(MONTH) + "/" +date.get(GregorianCalendar.YEAR);
+        return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (date.get(MONTH) + 1) + "/" + date.get(GregorianCalendar.YEAR);
     }
 
     public String getEndDateString() {
         if (endDate != null)
-            return endDate.get(GregorianCalendar.DAY_OF_MONTH) + "/" + endDate.get(MONTH) + "/" + endDate.get(GregorianCalendar.YEAR);
+            return endDate.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (endDate.get(MONTH) + 1) + "/" + endDate.get(GregorianCalendar.YEAR);
 
         return "";
     }
@@ -190,10 +190,10 @@ public class Disaster {
         this.regions.add(region);
     }
 
-    public void correctDateForDisplay(){
+   /* public void correctDateForDisplay(){
         date.add(MONTH,1);
         if(endDate != null)
             endDate.add(MONTH,1);
     }
-
+   */
 }
