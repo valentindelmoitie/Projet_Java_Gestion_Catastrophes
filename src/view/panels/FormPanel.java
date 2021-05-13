@@ -178,8 +178,8 @@ public class FormPanel extends JPanel {
             chosenRegions.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
             regionPanel.add(new JScrollPane(chosenRegions));
 
-        }catch(Exception e){ //Change this
-            e.printStackTrace();
+        }catch(Exception exception){
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
 
         formPanel.add(regionPanel, BorderLayout.SOUTH);

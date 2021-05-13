@@ -40,7 +40,6 @@ public class ListingPanel extends JPanel {
                 disaster.correctDateForDisplay();
             }
             model = new AllDisastersModel(disasters);
-            //model = new AllDisastersModel(controller.getAllDisaster());
         } catch (Exception exception){
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
@@ -125,8 +124,8 @@ public class ListingPanel extends JPanel {
             disaster.setEndDate(endDateGregorian);
 
             return  disaster;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
         }
 
         return null;

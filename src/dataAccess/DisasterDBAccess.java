@@ -246,7 +246,11 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return disasters;
     }
 
-    public void modifyDisaster(Disaster disaster) throws CommunicationException {
+    //public ArrayList<DangerousSite> getDangerousSitesByDisaster(Disaster disaster) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+    //    return null;
+    //}
+
+    public void modifyDisaster(Disaster disaster) throws CommunicationException { // Il faut remonter une ModifyException
         Connection connection = SingletonConnection.getInstance();
 
         String sqlInstructionImpactLocation =
@@ -276,7 +280,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.getMessage();
+            e.getMessage(); //Throw new ModifyException ici
         }
     }
 }

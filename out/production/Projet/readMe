@@ -99,13 +99,19 @@
     - Fix du bug des dates dans le listing
     -
 
-    -- Commit de Mathieu du 12/05 17:15
-        - Recherche 1 fonctionnelle (sans filtres)
+-- Commit de Mathieu du 12/05 17:15
+    - Recherche 1 fonctionnelle (sans filtres)
 
-    -- Commit de Mathieu du 12/05 23:15
-        - Fix bugs suppression
-        - Ajouts de données script SQL
+-- Commit de Mathieu du 12/05 23:15
+    - Fix bugs suppression
+    - Ajouts de données script SQL
 
-    -- Commit de Mathieu du 12/05 23:15
-        - Découverte bug insertion
-        - Filtres dates & changement dans la gestion du décallage (voir listing panel)
+-- Commit de Mathieu du 13/05 13:00
+    - Découverte bug insertion (voir en tête de fichier)
+    - Filtres dates & changement dans la gestion du décallage du mois avec Gregorian Calendar (voir listing panel)
+
+-- Commit de Mathieu du 13/05 1x:xx
+    - Orthographe
+    - Modification style message accueil
+    - Clean code
+    - Debut recherche 3

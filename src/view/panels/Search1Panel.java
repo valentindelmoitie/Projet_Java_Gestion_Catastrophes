@@ -37,29 +37,7 @@ public class Search1Panel extends JPanel {
             titlePanelCreation();
             formPanelCreation();
             buttonPanelCreation();
-            tablePanel = new JPanel();
-            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            ArrayList<Disaster> disasters = controller.getAllDisaster();
-            for(Disaster disaster : disasters){
-                disaster.correctDateForDisplay();
-            }
-            model = new AllDisastersModel(disasters);
-
-            disasterTable = new JTable(model);
-            scrollPane = new JScrollPane(disasterTable);
-            scrollPane.setPreferredSize(new Dimension(1300, 400));
-
-            disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
-            disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-            disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-            disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
-
-            tablePanel.add(scrollPane);
-            this.add(tablePanel, BorderLayout.SOUTH);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+            tablePanelCreation();
     }
 
     private void titlePanelCreation() {
@@ -103,7 +81,7 @@ public class Search1Panel extends JPanel {
 
 
         }catch(Exception exception){
-            System.out.println(exception.getMessage());
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
 
         this.add(formPanel, BorderLayout.CENTER);
@@ -117,7 +95,31 @@ public class Search1Panel extends JPanel {
         this.add(buttonPanel, BorderLayout.EAST);
     }
 
+    private void tablePanelCreation(){
+        tablePanel = new JPanel();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            ArrayList<Disaster> disasters = controller.getAllDisaster();
+            for(Disaster disaster : disasters){
+                disaster.correctDateForDisplay();
+            }
+            model = new AllDisastersModel(disasters);
 
+            disasterTable = new JTable(model);
+            scrollPane = new JScrollPane(disasterTable);
+            scrollPane.setPreferredSize(new Dimension(1300, 400));
+
+            disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
+            disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            disasterTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+            disasterTable.getColumnModel().getColumn(6).setPreferredWidth(5);
+
+            tablePanel.add(scrollPane);
+            this.add(tablePanel, BorderLayout.SOUTH);
+        } catch (Exception exception){
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     public void setController(ApplicationController controller) {
         this.controller = controller;
@@ -147,7 +149,7 @@ public class Search1Panel extends JPanel {
                 validate();
 
             }catch (Exception exception){
-                System.out.println(exception.getMessage());
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

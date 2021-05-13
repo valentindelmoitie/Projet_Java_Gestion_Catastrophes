@@ -57,10 +57,10 @@ public class RemovePanel extends JPanel {
                 repaint();
                 validate();
 
-            } catch (SelectionException e) {
-                System.out.println(e.getMessage()); // Message à l'intention d'un développeur, et non d'un utilisateur.
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);;
+            } catch (SelectionException exception) {
+                System.out.println(exception.getMessage()); // Message à l'intention d'un développeur, et non d'un utilisateur.
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);;
             }
         }
     }
