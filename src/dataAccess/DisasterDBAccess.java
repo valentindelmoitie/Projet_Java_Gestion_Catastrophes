@@ -246,14 +246,16 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return disasters;
     }
 
-    public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
-        ArrayList<Disaster> disasters;
+    public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+        ArrayList<DisasterOnDangerousSite> disasters;
 
         Connection connection = SingletonConnection.getInstance();
 
-        String sqlInstruction = "select di.*, ds.region\n" +
+        String sqlInstruction = "select di.*, r.name, r.population, r.is_warzone\n" +
                 "from disaster di join danger da  on di.id = da.disaster\n" +
-                "join dangerous_site ds on da.dangerous_site = ds.id where ds.id = ? and ds.type = ? and ds.region = ? order by di.id;";
+                "join dangerous_site ds on da.dangerous_site = ds.id\n" +
+                "join region r on r.name = ds.region\n" +
+                "where ds.id = ? and ds.type = ? and ds.region = ? order by di.id;";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, dangerousSite.getId());
@@ -264,15 +266,14 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             disasters = new ArrayList<>();
 
             while (data.next()){
-                Disaster disaster;
+                DisasterOnDangerousSite disaster;
 
                 GregorianCalendar date = new GregorianCalendar();
                 date.setTime(data.getDate("date"));
 
-                disaster = new Disaster(data.getInt("id"), data.getInt("impacted_people"),
+                disaster = new DisasterOnDangerousSite(data.getInt("id"),data.getString("type"),date, data.getInt("impacted_people"),
                         data.getInt("direct_casualties"), data.getInt("indirect_casualties"),
-                        data.getString("type"), data.getString("description"), date,
-                        data.getBoolean("is_natural"));
+                        data.getBoolean("is_natural"), new Region(data.getInt("population"),data.getString("name"),data.getBoolean("is_warzone")));
 
                 Integer intensity = data.getInt("intensity");
                 if (!data.wasNull()) {

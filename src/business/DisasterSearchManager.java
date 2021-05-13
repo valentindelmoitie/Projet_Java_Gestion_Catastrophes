@@ -5,6 +5,7 @@ import dataAccess.DisasterDataAccess;
 import exception.*;
 import model.DangerousSite;
 import model.Disaster;
+import model.DisasterOnDangerousSite;
 import model.SearchDisasterByCountryAndDates;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class DisasterSearchManager {
             return dao.getDisastersByCountryBetweenDates(searchParams);
     }
 
-    public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+    public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
         return dao.getDangerousSitesByDisaster(dangerousSite);
     }
 

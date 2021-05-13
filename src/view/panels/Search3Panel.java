@@ -3,6 +3,7 @@ package view.panels;
 import controller.ApplicationController;
 import model.DangerousSite;
 import model.Disaster;
+import model.DisasterOnDangerousSite;
 import view.DisastersSearch3Model;
 
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class Search3Panel extends JPanel {
        try {
             ArrayList<String> dangerousSiteArrayList = new ArrayList<>();
             for (DangerousSite dangerousSite : controller.getAllDangerousSites()) {
-                dangerousSiteArrayList.add(dangerousSite.getId().toString() + " "  + dangerousSite.getType().toString() + " " + dangerousSite.getRegion().toString());
+                dangerousSiteArrayList.add(dangerousSite.getId().toString() + "-"  + dangerousSite.getType() + "-" + dangerousSite.getRegion());
             }
 
             String[] disasters = new String[dangerousSiteArrayList.size()];
@@ -77,11 +78,7 @@ public class Search3Panel extends JPanel {
     private void tablePanelCreation(){
         tablePanel = new JPanel();
         try {
-            ArrayList<Disaster> disasters = controller.getAllDisaster();
-            for(Disaster disaster : disasters){
-                disaster.correctDateForDisplay();
-            }
-            model = new DisastersSearch3Model(disasters);
+            model = new DisastersSearch3Model(new ArrayList<>());
 
             disasterTable = new JTable(model);
             scrollPane = new JScrollPane(disasterTable);
@@ -95,7 +92,7 @@ public class Search3Panel extends JPanel {
             tablePanel.add(scrollPane);
             this.add(tablePanel, BorderLayout.SOUTH);
         } catch (Exception exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE); // ICI
         }
     }
 
@@ -107,16 +104,23 @@ public class Search3Panel extends JPanel {
     private class SearchButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                DangerousSite dangerousSite = new DangerousSite((Integer) dangerousSiteCb.getSelectedItem());
-                ArrayList<Disaster> disasters = controller.getDangerousSitesByDisaster(dangerousSite);
-                for (Disaster disaster : disasters) {
+                String userChoice = dangerousSiteCb.getSelectedItem().toString();
+                String[] parts = userChoice.split("-");
+                String part1 = parts[0]; // ID
+                String part2 = parts[1]; // TYPE
+                String part3 = parts[2]; //CITY
+                int id = Integer.parseInt(part1);
+
+                DangerousSite dangerousSite = new DangerousSite(id,part2,part3);
+
+                ArrayList<DisasterOnDangerousSite> disasters = controller.getDangerousSitesByDisaster(dangerousSite);
+                for (DisasterOnDangerousSite disaster : disasters) {
                     disaster.correctDateForDisplay();
                 }
                 model = new DisastersSearch3Model(disasters);
                 disasterTable.setModel(model);
                 repaint();
                 validate();
-
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }

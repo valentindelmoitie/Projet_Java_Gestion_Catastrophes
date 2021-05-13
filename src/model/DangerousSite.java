@@ -15,9 +15,15 @@ public class DangerousSite {
         this.region = region;
     }
 
-    public DangerousSite(Integer id) {
-        this(id, null, null, null, null);
+    public DangerousSite(Integer id, String type, String region) {
+        this(id,type, null, null, region);
     }
+
+    public DangerousSite(Integer id) {
+        this(id, null, null);
+    }
+
+
 
     public Integer getId() {
         return id;

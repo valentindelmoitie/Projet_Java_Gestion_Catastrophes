@@ -50,7 +50,7 @@ public class ApplicationController {
         return disasterSearchManager.getDisastersByCountryBetweenDates(searchParams);
     }
 
-    public ArrayList<Disaster> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+    public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
         return disasterSearchManager.getDangerousSitesByDisaster(dangerousSite);
     }
     public ArrayList<DangerousSite> getAllDangerousSites() throws CommunicationException, ReadingException{

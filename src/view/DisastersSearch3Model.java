@@ -1,6 +1,7 @@
 package view;
 
 import model.Disaster;
+import model.DisasterOnDangerousSite;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -8,13 +9,12 @@ import java.util.GregorianCalendar;
 
 public class DisastersSearch3Model extends AbstractTableModel {
     private ArrayList<String> columnNames;
-    private ArrayList<Disaster> contents;
+    private ArrayList<DisasterOnDangerousSite> contents;
 
-    public DisastersSearch3Model(ArrayList<Disaster> disasters) {
+    public DisastersSearch3Model(ArrayList<DisasterOnDangerousSite> disasters) {
         columnNames = new ArrayList<>();
         columnNames.add("Id");
         columnNames.add("Type");
-        columnNames.add("Description");
         columnNames.add("Date");
         columnNames.add("Intensité");
         columnNames.add("Personnes impactées");
@@ -25,7 +25,7 @@ public class DisastersSearch3Model extends AbstractTableModel {
         setContents(disasters);
     }
 
-    public void setContents(ArrayList<Disaster> contents) {
+    public void setContents(ArrayList<DisasterOnDangerousSite> contents) {
         this.contents = contents;
     }
 
@@ -42,7 +42,7 @@ public class DisastersSearch3Model extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int column) {
-        Disaster disaster = contents.get(row);
+        DisasterOnDangerousSite disaster = contents.get(row);
 
         switch (column) {
             case 0:
@@ -50,18 +50,16 @@ public class DisastersSearch3Model extends AbstractTableModel {
             case 1:
                 return disaster.getType();
             case 2:
-                return disaster.getDescription();
-            case 3:
                 return disaster.getDateString();
-            case 4:
+            case 3:
                 return disaster.getIntensity();
-            case 5:
+            case 4:
                 return disaster.getImpactedPeople();
-            case 6:
+            case 5:
                 return disaster.getDirectCasualties();
-            case 7:
+            case 6:
                 return disaster.getIndirectCasualties();
-            case 8:
+            case 7:
                 return disaster.getNatural();
             default:
                 return null;
@@ -72,16 +70,16 @@ public class DisastersSearch3Model extends AbstractTableModel {
         Class c;
 
         switch (column) {
-            case 0 : case 4 : case 5 :  case 6 :  case 7 :
+            case 0 : case 3 : case 4 : case 5 :  case 6 :
                 c = Integer.class;
                 break;
-            case 1 : case 2 :
+            case 1 :
                 c = String.class;
                 break;
-            case 3 :
+            case 2 :
                 c = GregorianCalendar.class;
                 break;
-            case 8 :
+            case 7 :
                 c = Boolean.class;
                 break;
             default :
