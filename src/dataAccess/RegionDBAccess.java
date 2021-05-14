@@ -4,7 +4,7 @@ import exception.CommunicationException;
 import exception.ReadingException;
 import model.PopulationData;
 import model.Region;
-import model.SearchByRegionAndTypes;
+import model.SearchByRegionAndType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,7 +39,7 @@ public class RegionDBAccess implements RegionDataAccess {
         return regions;
     }
 
-    public PopulationData getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndTypes search) throws CommunicationException, ReadingException {
+    public PopulationData getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
         PopulationData popData = null;
         Connection connection = SingletonConnection.getInstance();
 

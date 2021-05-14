@@ -60,7 +60,7 @@ public class ApplicationController {
         return dangerousSiteManager.getAllDangerousSites();
     }
 
-    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndTypes search) throws CommunicationException, ReadingException {
+    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
         return businessTaskManager.getPourcOfPopulationOfRegionImpactedByType(search);
     }
 

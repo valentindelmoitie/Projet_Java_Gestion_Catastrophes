@@ -5,7 +5,7 @@ import dataAccess.RegionDataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.PopulationData;
-import model.SearchByRegionAndTypes;
+import model.SearchByRegionAndType;
 
 public class BusinessTaskManager {
     private RegionDataAccess dao;
@@ -14,7 +14,7 @@ public class BusinessTaskManager {
         setDao(new RegionDBAccess());
     }
 
-    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndTypes search) throws CommunicationException, ReadingException {
+    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
         PopulationData data =  dao.getPourcOfPopulationOfRegionImpactedByType(search);
         Double pourc = calculatePourc(data.getTotalPopulation(), data.getImpactedPeople());
         return pourc;

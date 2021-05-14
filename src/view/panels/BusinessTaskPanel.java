@@ -2,12 +2,13 @@ package view.panels;
 
 import controller.ApplicationController;
 import model.Region;
-import model.SearchByRegionAndTypes;
+import model.SearchByRegionAndType;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class BusinessTaskPanel extends JPanel {
@@ -82,10 +83,11 @@ public class BusinessTaskPanel extends JPanel {
     private class BusinessButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                SearchByRegionAndTypes search = new SearchByRegionAndTypes(regionComboBox.getSelectedItem().toString(), typeComboBox.getSelectedItem().toString());
+                SearchByRegionAndType search = new SearchByRegionAndType(regionComboBox.getSelectedItem().toString(), typeComboBox.getSelectedItem().toString());
                 Double pourc = controller.getPourcOfPopulationOfRegionImpactedByType(search);
-
-                resultLbl.setText("Le pourcentage de la population impacté par des catastrophes de type " + search.getType() + " en " + search.getRegionName() + " est de " +  pourc.toString() + '%');
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+                resultLbl.setText("Le pourcentage de la population impacté par des catastrophes de type " + search.getType() + " en " + search.getRegionName() + " est de " +  df.format(pourc) + '%');
 
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
