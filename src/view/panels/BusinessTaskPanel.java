@@ -2,6 +2,7 @@ package view.panels;
 
 import controller.ApplicationController;
 import model.Region;
+import model.SearchByRegionAndTypes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 
 public class BusinessTaskPanel extends JPanel {
     private ApplicationController controller;
+    private JLabel resultLbl;
+    JComboBox typeComboBox, regionComboBox;
 
     public BusinessTaskPanel() {
         this.setLayout(new BorderLayout());
@@ -18,6 +21,7 @@ public class BusinessTaskPanel extends JPanel {
         titlePanelCreation();
         formPanelCreation();
         buttonPanelCreation();
+        resultPanelCreation();
     }
 
     private void titlePanelCreation(){
@@ -39,13 +43,13 @@ public class BusinessTaskPanel extends JPanel {
                 regions[i] = region.getName();
                 i++;
             }
-            JComboBox regionComboBox = new JComboBox<>(regions);
+            regionComboBox = new JComboBox<>(regions);
             formPanel.add(regionLbl);
             formPanel.add(regionComboBox);
 
             JLabel typeLbl = new JLabel("Type : ");
             String[] types = {"Humanitaire","Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"};
-            JComboBox typeComboBox = new JComboBox(types);
+            typeComboBox = new JComboBox(types);
             formPanel.add(typeLbl);
             formPanel.add(typeComboBox);
             this.add(formPanel,BorderLayout.CENTER);
@@ -63,6 +67,13 @@ public class BusinessTaskPanel extends JPanel {
         this.add(buttonPanel, BorderLayout.EAST);
     }
 
+    private void resultPanelCreation(){
+        JPanel resultPanel = new JPanel();
+        resultLbl = new JLabel("Les résultats de la recherche apparaitront ici");
+        resultPanel.add(resultLbl);
+        this.add(resultPanel,BorderLayout.SOUTH);
+    }
+
 
     public void setController(ApplicationController controller) {
         this.controller = controller;
@@ -70,8 +81,15 @@ public class BusinessTaskPanel extends JPanel {
 
     private class BusinessButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            
+            try {
+                SearchByRegionAndTypes search = new SearchByRegionAndTypes(regionComboBox.getSelectedItem().toString(), typeComboBox.getSelectedItem().toString());
+                Double pourc = controller.getPourcOfPopulationOfRegionImpactedByType(search);
+
+                resultLbl.setText("Le pourcentage de la population impacté par des catastrophes de type " + search.getType() + " en " + search.getRegionName() + " est de " +  pourc.toString() + '%');
+
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-
 }

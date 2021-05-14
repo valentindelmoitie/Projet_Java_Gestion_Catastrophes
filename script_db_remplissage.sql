@@ -125,7 +125,6 @@ insert into dangerous_site (`type`,`description`,manager,region)
 values ('Nucléaire','Centrale nucléaire de Doel','Engie','Flandre');
 insert into dangerous_site (`type`,`description`,manager,region) 
 values ('Industriel','Usine de traitement chimique',null,'Flandre');
-insert into danger(dangerous_site,disaster) values(3,5);
 insert into danger(dangerous_site,disaster) values(4,5);
 insert into danger(dangerous_site,disaster) values(5,5);
 insert into danger(dangerous_site,disaster) values(6,5);
@@ -150,7 +149,7 @@ insert into `help` (disaster, hospital) values(6, 29);
 insert into `help` (disaster, hospital) values(6, 30);
 
 insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
-values('Pandémie de Covid-19 en Belgique','Humanitaire','Crise sanitaire',str_to_date ('01-mar-2020','%e-%b-%Y'),null, null,11000000,24609,0,true);
+values('Pandémie de Covid-19 en Belgique','Humanitaire','Crise sanitaire',str_to_date ('01-mar-2020','%e-%b-%Y'),null, null,10000000,24609,0,true);
 insert into impact_location (disaster, region) values (7,'Flandre');
 insert into impact_location (disaster, region) values (7,'Bruxelles');
 insert into impact_location (disaster, region) values (7,'Wallonie');
@@ -175,18 +174,18 @@ insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impa
 values('Explosion de gaz de Ghislenghien','Industriel','Explosion de conduite de gaz',str_to_date ('30-jul-2004','%e-%b-%Y'),null,null,160,24,0,false);
 insert into dangerous_site (`type`,`description`,manager,region) 
 values ('Industriel','Zone industrielle de Ghislenghien',null,'Wallonie');
-insert into danger(dangerous_site,disaster) values (7,9);
-insert into impact_location (disaster, region) values (9,'Wallonie');
-insert into `help` (disaster, hospital) values(9, 2);
+insert into danger(dangerous_site,disaster) values (7,10);
+insert into impact_location (disaster, region) values (10,'Wallonie');
+insert into `help` (disaster, hospital) values(10, 2);
 
 insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
 values('Catastrophe du Bois du Cazier','Incendie','Incendie dans une mine',str_to_date ('08-aug-1956','%e-%b-%Y'),null,null,600,262,200,false);
 insert into dangerous_site (`type`,`description`,manager,region) 
 values ('Industriel',' charbonnage du Bois du Cazier',null,'Wallonie');
-insert into danger(dangerous_site,disaster) values (8,10);
-insert into impact_location (disaster, region) values (10,'Wallonie');
-insert into `help` (disaster, hospital) values(10, 2);
-insert into `help` (disaster, hospital) values(10, 1);
+insert into danger(dangerous_site,disaster) values (8,11);
+insert into impact_location (disaster, region) values (11,'Wallonie');
+insert into `help` (disaster, hospital) values(11, 2);
+insert into `help` (disaster, hospital) values(11, 1);
 
 insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
 values('Séisme de 1946 en Suisse','Tremblement de terre','Tremblement de terre dans la region de Wildhorn',str_to_date ('25-jan-1946','%e-%b-%Y'),null,6,6000,4,2,true);
@@ -194,10 +193,10 @@ insert into dangerous_site (`type`,`description`,manager,region)
 values ('Industriel',' Usine chimique de Wildhorn',null,'Zurich');
 insert into dangerous_site (`type`,`description`,manager,region) 
 values ('Industriel',' Usine de traitement de metaux lourds',null,'Espace Mittelland');
-insert into danger(dangerous_site,disaster) values (9,11);
-insert into danger(dangerous_site,disaster) values (10,11);
-insert into impact_location (disaster, region) values (11,'Zurich');
-insert into impact_location (disaster, region) values (11,'Espace Mittelland');
-insert into `help` (disaster, hospital) values(11, 27);
+insert into danger(dangerous_site,disaster) values (9,12);
+insert into danger(dangerous_site,disaster) values (10,12);
+insert into impact_location (disaster, region) values (12,'Zurich');
+insert into impact_location (disaster, region) values (12,'Espace Mittelland');
+insert into `help` (disaster, hospital) values(12, 27);
 
 commit;

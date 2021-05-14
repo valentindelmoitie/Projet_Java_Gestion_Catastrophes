@@ -13,6 +13,7 @@ public class ApplicationController {
     private CountryManager countryManager;
     private DisasterSearchManager disasterSearchManager;
     private DangerousSiteManager dangerousSiteManager;
+    private BusinessTaskManager businessTaskManager;
 
     public ApplicationController() {
         setDisasterManager(new DisasterManager());
@@ -20,6 +21,7 @@ public class ApplicationController {
         setCountryManager(new CountryManager());
         setDisasterSearchManager(new DisasterSearchManager());
         setDangerousSiteManager(new DangerousSiteManager());
+        setBusinessTaskManager(new BusinessTaskManager());
     }
 
     public ArrayList<Disaster> getAllDisaster() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
@@ -58,8 +60,12 @@ public class ApplicationController {
         return dangerousSiteManager.getAllDangerousSites();
     }
 
+    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndTypes search) throws CommunicationException, ReadingException {
+        return businessTaskManager.getPourcOfPopulationOfRegionImpactedByType(search);
+    }
 
-    public void setDisasterManager(DisasterManager disasterManager) {
+
+        public void setDisasterManager(DisasterManager disasterManager) {
         this.disasterManager = disasterManager;
     }
 
@@ -77,5 +83,9 @@ public class ApplicationController {
 
     public void setDangerousSiteManager(DangerousSiteManager dangerousSiteManager) {
         this.dangerousSiteManager = dangerousSiteManager;
+    }
+
+    public void setBusinessTaskManager(BusinessTaskManager businessTaskManager) {
+        this.businessTaskManager = businessTaskManager;
     }
 }

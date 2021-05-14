@@ -3,6 +3,7 @@ package dataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.Region;
+import model.SearchByRegionAndTypes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,5 +36,32 @@ public class RegionDBAccess implements RegionDataAccess {
             throw new ReadingException(exception.getMessage());
         }
         return regions;
+    }
+
+    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndTypes search) throws CommunicationException, ReadingException {
+        Double pourc = null;
+        Connection connection = SingletonConnection.getInstance();
+
+        String sqlInstruction = "select (d.impacted_people / sum(r.population))*100 as \"Result\" from region r join impact_location l on r.name = l.region\n" +
+                "join disaster d on l.disaster = d.id\n" +
+                "where d.id in (\n" +
+                "select d.id \n" +
+                "from region r join impact_location l on r.name = l.region\n" +
+                "join disaster d on l.disaster = d.id\n" +
+                "where r.name = ? and d.type = ?);";
+
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setString(1,search.getRegionName());
+            preparedStatement.setString(2,search.getType());
+            ResultSet data = preparedStatement.executeQuery();
+            while(data.next()) {
+                pourc = data.getDouble("Result");
+            }
+
+        }catch (SQLException exception) {
+            throw new ReadingException(exception.getMessage());
+        }
+        return pourc;
     }
 }
