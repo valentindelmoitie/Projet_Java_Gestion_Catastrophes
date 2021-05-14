@@ -4,6 +4,7 @@ public class Region {
     private Integer population;
     private String name;
     private Boolean isWarZone;
+    private Country country;
 
     public Region(Integer population, String name, Boolean isWarZone) {
         setPopulation(population);
@@ -36,7 +37,15 @@ public class Region {
         this.population = population;
     }
 
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
     public void setWarZone(Boolean warZone) {
         isWarZone = warZone;
+    }
+
+    public Country getCountry() {
+        return country;
     }
 }

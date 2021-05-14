@@ -11,6 +11,10 @@ public class Country {
         this.isInWar = isInWar;
     }
 
+    public Country(String name) {
+        this(name, null, null);
+    }
+
     public String getName() {
         return name;
     }

@@ -1,50 +1,110 @@
 package view.panels;
 
+import controller.ApplicationController;
+import exception.*;
+import model.Country;
+import model.Disaster;
+import model.Region;
+import view.Search2Model;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Search2Panel extends JPanel {
-    private JLabel descriptionLabel, disasterLabel;
-    private JComboBox disasterCb;
-    private JPanel titlePanel, formPanel, buttonPanel;
-    private JButton sendButton;
+    private JLabel titleLbl, resultLbl;
+    private JPanel centerPanel, choicePanel, resultPanel;
+    private JComboBox choiceCB;
+    private JButton choiceBtn;
+    private ArrayList<Disaster> disasters;
+    private ApplicationController controler;
+    private JTable resultTable;
+    private JScrollPane resultScrollPane;
+    private Search2Model resultModel;
 
     public Search2Panel() {
         this.setLayout(new BorderLayout());
 
-        titlePanelCreation();
-        this.add(titlePanel, BorderLayout.NORTH);
+        controler = new ApplicationController();
 
-        formPanelCreation();
-        this.add(formPanel, BorderLayout.CENTER);
+        try {
+            disasters = controler.getAllDisaster();
 
-        buttonPanelCreation();
-        this.add(buttonPanel, BorderLayout.SOUTH);
+            titlePanelCreation();
+            centerPanelCreation();
+
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void titlePanelCreation() {
-        titlePanel = new JPanel();
-        descriptionLabel = new JLabel("<html><h3>Rechercher les pays et régions impactés par une catastrophe</h3></html>");
-        titlePanel.add(descriptionLabel);
+        titleLbl = new JLabel("<html><h3>Rechercher les régions et les pays touchés par une catastrophe</h3><html>");
+        titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
+
+        this.add(titleLbl, BorderLayout.NORTH);
     }
 
-    private void formPanelCreation() {
-        formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(1, 2, 5, 5));
+    private void centerPanelCreation() {
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new BorderLayout());
 
-        disasterLabel = new JLabel("Catastrophe : ");
-        formPanel.add(disasterLabel);
+        choicePanelCreation();
 
-        disasterCb = new JComboBox();
-        formPanel.add(disasterCb);
+        resultPanelCreation();
+
+        this.add(centerPanel);
     }
 
-    private void buttonPanelCreation() {
-        buttonPanel = new JPanel();
+    private void choicePanelCreation() {
+        choicePanel = new JPanel();
+        choicePanel.setLayout(new FlowLayout());
 
-        sendButton = new JButton("Recherche");
-        sendButton.setHorizontalAlignment(JButton.CENTER);
+        ArrayList<String> choices =  new ArrayList<>();
+        for (Disaster disaster : disasters) {
+            choices.add( disaster.getId() + " " + (disaster.getDescription() == null ? "" : (disaster.getName()) + " ") + disaster.getType() + " " + disaster.getDateString() );
+        }
+        choiceCB = new JComboBox(choices.toArray());
 
-        buttonPanel.add(sendButton);
+        choiceBtn = new JButton("Rechercher");
+        choiceBtn.addActionListener(new SearchButtonListener());
+
+        choicePanel.add(choiceCB);
+        choicePanel.add(choiceBtn);
+
+        centerPanel.add(choicePanel, BorderLayout.NORTH);
+    }
+
+    private void resultPanelCreation() {
+        resultPanel = new JPanel();
+        resultPanel.setLayout(new BorderLayout());
+
+        resultModel = new Search2Model(new ArrayList<>());
+        resultTable = new JTable(resultModel);
+        resultScrollPane = new JScrollPane(resultTable);
+        resultScrollPane.setPreferredSize(new Dimension(1300, 400));
+
+        centerPanel.add(resultScrollPane, BorderLayout.CENTER);
+    }
+
+    private class SearchButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int selectedId = Integer.parseInt(choiceCB.getSelectedItem().toString().split(" ")[0]);
+
+            try {
+                ArrayList<Region> regions = controler.getRegionsImpactedBy(selectedId);
+
+                resultModel  = new Search2Model(regions);
+                resultTable.setModel(resultModel);
+
+                repaint();
+                validate();
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }

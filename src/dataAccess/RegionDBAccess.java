@@ -2,6 +2,7 @@ package dataAccess;
 
 import exception.CommunicationException;
 import exception.ReadingException;
+import model.Country;
 import model.PopulationData;
 import model.Region;
 import model.SearchByRegionAndType;
@@ -64,5 +65,38 @@ public class RegionDBAccess implements RegionDataAccess {
             throw new ReadingException(exception.getMessage());
         }
         return popData;
+    }
+
+    public ArrayList<Region> getRegionsImpactedBy (int disasterId) throws CommunicationException, ReadingException {
+        Connection connection = SingletonConnection.getInstance();
+
+        String sqlInstruction =
+                "select r.name 'region_name', r.population, r.is_warzone, c.name 'country_name'\n" +
+                "from disaster d, impact_location il, region r, location l , country c\n" +
+                "where d.id = ? \n" +
+                "and d.id = il.disaster\n" +
+                "and il.region = r.name\n" +
+                "and r.name = l.region\n" +
+                "and l.country = c.name;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, disasterId);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            ArrayList<Region> regions = new ArrayList<>();
+
+            while (data.next()) {
+                Region region = new Region(data.getInt("population"), data.getString("region_name"), data.getBoolean("is_warzone"));
+                region.setCountry(new Country(data.getString("country_name")));
+                regions.add(region);
+            }
+
+            return regions;
+        } catch (SQLException exception) {
+            throw new ReadingException(exception.getMessage());
+        }
     }
 }

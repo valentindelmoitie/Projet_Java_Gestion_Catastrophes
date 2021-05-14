@@ -44,6 +44,10 @@ public class ApplicationController {
         return countryManager.getAllCountries();
     }
 
+    public ArrayList<Country> getCountriesImpactedBy(int disasterId) throws CommunicationException, ReadingException {
+        return countryManager.getCountriesImpactedBy(disasterId);
+    }
+
     public int modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException {
         return disasterManager.modifyDisaster(disaster);
     }
@@ -64,8 +68,11 @@ public class ApplicationController {
         return businessTaskManager.getPourcOfPopulationOfRegionImpactedByType(search);
     }
 
+    public ArrayList<Region> getRegionsImpactedBy (int disasterId) throws CommunicationException, ReadingException {
+        return regionManager.getRegionsImpactedBy(disasterId);
+    }
 
-        public void setDisasterManager(DisasterManager disasterManager) {
+    public void setDisasterManager(DisasterManager disasterManager) {
         this.disasterManager = disasterManager;
     }
 

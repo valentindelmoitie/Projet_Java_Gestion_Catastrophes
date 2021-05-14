@@ -13,4 +13,6 @@ public interface RegionDataAccess {
 
     public PopulationData getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException;
 
+    public ArrayList<Region> getRegionsImpactedBy (int disasterId) throws CommunicationException, ReadingException;
+
 }

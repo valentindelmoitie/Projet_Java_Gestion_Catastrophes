@@ -20,6 +20,10 @@ public class RegionManager {
         return dao.getAllRegions();
     }
 
+    public ArrayList<Region> getRegionsImpactedBy (int disasterId) throws CommunicationException, ReadingException {
+        return dao.getRegionsImpactedBy(disasterId);
+    }
+
     public void setDao(RegionDataAccess dao) {
         this.dao = dao;
     }
