@@ -1,7 +1,9 @@
 -----------------------------------------NOTES---------------------------------------
-    - Il faudra être cohérent avec l'ID
+    - Il faudra être cohérent avec l'ID -- FIXED
       (On autorise l'utilisateur à choisir et alors pas d'increment dans la bdd, ou inverse)
 
+
+-----------------------------------------BUG---------------------------------------
     - Bug insertion
              - Inserer une catastrophe avec un nom
              - Inserer une autre catastrophe avec le même nom
@@ -14,7 +16,7 @@
     - Update de la classe business>DisasterManager pour qu'elle utilise l'interface crée précédement.
     - Fix de l'affichage du formulaire
     - Création de la classe "FormPanel" qui reprend le formulaire à utiliser dans "AddPanel" et "ModifyPanel".
-      La classe 'OldAddPanel' est juste l'ancienne version de AddPanel en sauvegarde au cas où la nouvelle version n'est pas optimale.
+        La classe 'OldAddPanel' est juste l'ancienne version de AddPanel en sauvegarde au cas où la nouvelle version n'est pas optimale.
 
 
 -- Commit de Valentin du 8/05 à 21:O3
@@ -24,8 +26,8 @@
 
 -- Commit de Valentin du 8/05 22:12
     - Ajout des bouttons "Modifier" et "Supprimer" dans le listing.
-      Ces boutons seront retirés et le clic sur le "Modifier" du menu entraînera l'affichage du listing avec UNIQUEMENT le menu modifier.
-      Il faut que l'on puisse supprimer PLUSIEURS catastrophes EN MÊME TEMPS
+        Ces boutons seront retirés et le clic sur le "Modifier" du menu entraînera l'affichage du listing avec UNIQUEMENT le menu modifier.
+        Il faut que l'on puisse supprimer PLUSIEURS catastrophes EN MÊME TEMPS
     - La classe de gestion d'évènement "ButtonListener" fonctionne et crée et remplis une classe Disaster.
 
 -- Commit de Mathieu du 09/05 12:00
@@ -35,7 +37,7 @@
     - Modification des constructeurs des classes modèles (region et disasters (incomplet)) pour utiliser les setters
     - Ajout d'exceptions (classes) + commentaires exceptions existantes (à discuter)
     - Ajout d'une list dans Model.Disaster pour vérifier les types dans le setters
-      (regarde pour voir si tu valides)
+        (regarde pour voir si tu valides)
     - NB : Les exceptions sont prévues mais mise en commentaires car il faut prévoir les blocs try/catch adéquats
 
 -- Commit de Mathieu du 09/05 20:15
@@ -50,7 +52,7 @@
 -- Commit de Mathieu du 10/05 15:00
     - Ajout classe d'exception (+ Clean code DAO)
     - Fix instructions SQL (; oubliés à la fin de certaines instructions
-      le listing s'affiche désormais correctement après des ajouts dans la DB via le formulaire
+        le listing s'affiche désormais correctement après des ajouts dans la DB via le formulaire
 
 -- Commit de Mathieu du 10/05 16:35
     - Ajout deleteDisasters;
@@ -72,16 +74,16 @@
 
 -- Commit de Valentin du 11/05 14:45
     - Avancement dans la modification.
-      On peut cliquer sur la catastrophe à modifier et ça renvoie vers un formulaire avec les données déjà encodées.
+        On peut cliquer sur la catastrophe à modifier et ça renvoie vers un formulaire avec les données déjà encodées.
 
 -- Commit de Mathieu du 11/05 15:30
     - DisasterMiscException regroupe les anciennes exceptions DisasterType, ImpactedPeople, NumberOfPeople (placées dans unusedExceptionSave au cas où)
-    Commit avant d'implémenter les filtres/exceptions au cas où.
+        Commit avant d'implémenter les filtres/exceptions au cas où.
 
 -- Commit de Mathieu du 11/05 17:15
     - Filtres et setters sur Disaster
-    Adapatation pour les ParseException dans OldAddPanel
-    Celui de region est prêt mais en commentaire en attendant le fix sur le listing
+        Adapatation pour les ParseException dans OldAddPanel
+        Celui de region est prêt mais en commentaire en attendant le fix sur le listing
 
 -- Commit de Mathieu du 11/05 20:15
     - Search1Panel suite
@@ -97,7 +99,7 @@
 
 -- Commit de Valentin du 12/05 à xx:xx
     - Fix du bug des dates dans le listing
-    -
+
 
 -- Commit de Mathieu du 12/05 17:15
     - Recherche 1 fonctionnelle (sans filtres)
@@ -119,5 +121,14 @@
 -- Commit de Mathieu du 13/05 14:30
         - Ajout thread
 
+-- Commit de Mathieu du 13/05 21:30
+        - Recherche 3 fonctionnelle
+
 -- Commit de Valentin du 14/05 à 1:45
         - Fix des dates
+
+-- Commit de Mathieu du 14/05 1x:xx
+        - Ergonomie modification
+            Renvoie une JOption pane confirmant la maj ou non
+        - Filtre date recherche 1
+        - Modification critères de recherche 3

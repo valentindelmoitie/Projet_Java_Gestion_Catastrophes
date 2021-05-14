@@ -99,6 +99,7 @@ public class Search1Panel extends JPanel {
     private void tablePanelCreation(){
         tablePanel = new JPanel();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
         try {
             ArrayList<Disaster> disasters = controller.getAllDisaster();
             /*for(Disaster disaster : disasters){
@@ -131,9 +132,9 @@ public class Search1Panel extends JPanel {
                     startDate = new GregorianCalendar();
                     startDate.setTime(date);
                 }
+                date = dateFormat.parse(endDateTF.getText());
                 if(!endDateTF.getText().isEmpty()) {
                     endDate = new GregorianCalendar();
-                    date = dateFormat.parse(endDateTF.getText());
                     endDate.setTime(date);
                 }
                 SearchDisasterByCountryAndDates search = new SearchDisasterByCountryAndDates(new Country(countryComboBox.getSelectedItem().toString(), null, null), (GregorianCalendar) startDate,(GregorianCalendar) endDate);

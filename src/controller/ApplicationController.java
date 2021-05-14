@@ -42,8 +42,8 @@ public class ApplicationController {
         return countryManager.getAllCountries();
     }
 
-    public void modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException {
-        disasterManager.modifyDisaster(disaster);
+    public int modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException {
+        return disasterManager.modifyDisaster(disaster);
     }
 
     public ArrayList<Disaster> getDisastersByCountryBetweenDates(SearchDisasterByCountryAndDates searchParams) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
@@ -53,9 +53,11 @@ public class ApplicationController {
     public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
         return disasterSearchManager.getDangerousSitesByDisaster(dangerousSite);
     }
+
     public ArrayList<DangerousSite> getAllDangerousSites() throws CommunicationException, ReadingException{
         return dangerousSiteManager.getAllDangerousSites();
     }
+
 
     public void setDisasterManager(DisasterManager disasterManager) {
         this.disasterManager = disasterManager;

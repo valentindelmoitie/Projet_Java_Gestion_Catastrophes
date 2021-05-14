@@ -123,7 +123,7 @@ public class Disaster {
     }
 
     public void setRegions(ArrayList<Region> regions) throws DisasterMiscException{
-        if(regions.isEmpty()) throw new DisasterMiscException(regions);  // Quand le listing sera fix
+        if(regions.isEmpty()) throw new DisasterMiscException(regions);  // Quand le listing sera fix + Cette condition ne semble plus fonctionner ????
             this.regions = regions;
     }
 

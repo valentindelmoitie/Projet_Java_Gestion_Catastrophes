@@ -1,6 +1,7 @@
 package view.panels;
 
 import controller.ApplicationController;
+import exception.DisasterMiscException;
 import model.Disaster;
 import model.Region;
 
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -236,11 +238,13 @@ public class FormPanel extends JPanel {
 
                 ArrayList<Region> disasterRegions = new ArrayList<>();
                 ListModel model = chosenRegions.getModel();
+                if(model.getSize() == 0) throw new DisasterMiscException(disasterRegions);
                 int i = 0;
-                while(i < model.getSize() && model.getElementAt(i) != null){
-                    disasterRegions.add(new Region((String)model.getElementAt(i)));
-                    i++;
-                }
+                    while (i < model.getSize() && model.getElementAt(i) != null) {
+                        disasterRegions.add(new Region((String) model.getElementAt(i)));
+                        i++;
+                    }
+
 
                 Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
                         type, description, (GregorianCalendar) startDate,isNatural,disasterRegions);
@@ -263,11 +267,16 @@ public class FormPanel extends JPanel {
                 }
                 else {
                     disaster.setId(disasterToModify.getId());
-                    controller.modifyDisaster(disaster);
+                    int nbModifiedData = controller.modifyDisaster(disaster);
+                    if(nbModifiedData == 1)
+                        JOptionPane.showMessageDialog(null, "Catastrophe modifiée", "Modification catastrophe catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                    else
+                        JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de la modification", "Erreur ajout", JOptionPane.ERROR_MESSAGE); // Ne doit jamais apparaitre
                 }
 
-            }
-            catch (Exception exception){
+            }catch(ParseException exception){
+                JOptionPane.showMessageDialog(null, "Le format de date entré ne correspond aux valeurs normalement attendues : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+            }catch (Exception exception){
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
             }
         }

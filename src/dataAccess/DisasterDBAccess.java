@@ -2,14 +2,10 @@ package dataAccess;
 
 import exception.*;
 import model.*;
-import view.panels.FormPanel;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import static java.util.Calendar.MONTH;
 
 public class DisasterDBAccess implements  DisasterDataAccess {
     public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
@@ -269,12 +265,10 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                 "from disaster di join danger da  on di.id = da.disaster\n" +
                 "join dangerous_site ds on da.dangerous_site = ds.id\n" +
                 "join region r on r.name = ds.region\n" +
-                "where ds.id = ? and ds.type = ? and ds.region = ? order by di.id;";
+                "where ds.id = ? order by di.id;";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, dangerousSite.getId());
-            preparedStatement.setString(2, dangerousSite.getType());
-            preparedStatement.setString(3,dangerousSite.getRegion());
 
             ResultSet data = preparedStatement.executeQuery();
             disasters = new ArrayList<>();
@@ -302,8 +296,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return disasters;
     }
 
-
-    public void modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException {
+    public int modifyDisaster(Disaster disaster) throws CommunicationException, ModifyException {
         try {
             Connection connection = SingletonConnection.getInstance();
 
@@ -314,7 +307,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
 
-            System.out.println(disaster.getType());
+            //System.out.println(disaster.getType());
             preparedStatement.setString(1, disaster.getType());
             preparedStatement.setString(2, disaster.getDescription());
 
@@ -328,7 +321,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
             preparedStatement.setInt(8, disaster.getId());
 
-            preparedStatement.executeUpdate();
+            int nbModifiedRow = preparedStatement.executeUpdate();
 
             sqlInstructionImpactLocation = "update disaster set name = ? where id = ?";
             preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
@@ -364,6 +357,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
             preparedStatement.setInt(2, disaster.getId());
             preparedStatement.executeUpdate();
+            return nbModifiedRow;
         } catch (SQLException e) {
             throw new ModifyException(e.getMessage());
         }
