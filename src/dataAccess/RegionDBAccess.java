@@ -2,6 +2,7 @@ package dataAccess;
 
 import exception.CommunicationException;
 import exception.ReadingException;
+import model.PopulationData;
 import model.Region;
 import model.SearchByRegionAndTypes;
 
@@ -38,11 +39,11 @@ public class RegionDBAccess implements RegionDataAccess {
         return regions;
     }
 
-    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndTypes search) throws CommunicationException, ReadingException {
-        Double pourc = null;
+    public PopulationData getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndTypes search) throws CommunicationException, ReadingException {
+        PopulationData popData = null;
         Connection connection = SingletonConnection.getInstance();
 
-        String sqlInstruction = "select (d.impacted_people / sum(r.population))*100 as \"Result\" from region r join impact_location l on r.name = l.region\n" +
+        String sqlInstruction = "select d.impacted_people, sum(r.population) from region r join impact_location l on r.name = l.region\n" +
                 "join disaster d on l.disaster = d.id\n" +
                 "where d.id in (\n" +
                 "select d.id \n" +
@@ -56,12 +57,12 @@ public class RegionDBAccess implements RegionDataAccess {
             preparedStatement.setString(2,search.getType());
             ResultSet data = preparedStatement.executeQuery();
             while(data.next()) {
-                pourc = data.getDouble("Result");
+                popData = new PopulationData(data.getInt(2),data.getInt(1));
             }
 
         }catch (SQLException exception) {
             throw new ReadingException(exception.getMessage());
         }
-        return pourc;
+        return popData;
     }
 }
