@@ -68,6 +68,7 @@ public class MainWindow extends JFrame {
 
         taskMenuItem = new JMenuItem("Tâche métier");
         taskMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
+        taskMenuItem.addActionListener(new MenuListener());
         disasterMenu.add(taskMenuItem);
 
         menuBar.add(disasterMenu);
@@ -120,6 +121,9 @@ public class MainWindow extends JFrame {
                     break;
                 case "Recherche 3" :
                     container.add(new Search3Panel());
+                    break;
+                case "Tâche métier" :
+                    container.add(new BusinessTaskPanel());
                     break;
             }
             container.repaint();

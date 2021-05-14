@@ -52,7 +52,8 @@ public class Search1Panel extends JPanel {
         try {
 
             ArrayList<Country> countriesAL = controller.getAllCountries();
-            String[] countries = new String[controller.getAllCountries().size()];
+           // String[] countries = new String[controller.getAllCountries().size()];
+            String[] countries = new String[countriesAL.size()];
             int i = 0;
             for(Country country : countriesAL) {
                 countries[i] = country.getName();

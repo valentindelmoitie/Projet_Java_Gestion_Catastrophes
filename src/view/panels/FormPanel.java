@@ -105,7 +105,7 @@ public class FormPanel extends JPanel {
         typeLbl = new JLabel("Type de la catastrophe* : ");
         String[] types = {"Humanitaire","Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"};
         typeComboBox = new JComboBox(types);
-        typeComboBox.setSelectedItem("Humanitaire");
+        typeComboBox.setSelectedItem("Humanitaire");  //Ne sert à rien ?
         typeComboBox.setMaximumRowCount(4);
         formSubPanel.add(typeLbl);
         formSubPanel.add(typeComboBox);

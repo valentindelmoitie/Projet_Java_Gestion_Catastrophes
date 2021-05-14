@@ -29,6 +29,7 @@ public class WelcomePanel extends JPanel {
         int random = rand.nextInt(6);
         this.color = colors[random];
         welcomeLabel.setForeground(color);
+        System.out.println("Ceci est une sortie console provenant d'une méthode appelée par le thread");
         this.repaint();
     }
 }
