@@ -19,12 +19,6 @@ public class DangerousSite {
         this(id,type, null, null, region);
     }
 
-    public DangerousSite(Integer id) {
-        this(id, null, null);
-    }
-
-
-
     public Integer getId() {
         return id;
     }

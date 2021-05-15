@@ -16,12 +16,4 @@ public class PopulationData {
     public Integer getImpactedPeople() {
         return impactedPeople;
     }
-
-    public void setTotalPopulation(Integer totalPopulation) {
-        this.totalPopulation = totalPopulation;
-    }
-
-    public void setImpactedPeople(Integer impactedPeople) {
-        this.impactedPeople = impactedPeople;
-    }
 }

@@ -1,11 +1,9 @@
-package view;
+package view.tableModel;
 
 import model.Disaster;
 import model.Region;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -50,7 +48,7 @@ public class AllDisastersModel extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         Disaster disaster = contents.get(row);
 
-        switch (column) {
+        switch (column) {    // A SUPPR : ON peut pas faire comme en bas ici vu qu'on a traitement sur region, clean code d'ailleurs ?
             case 0 :
                 return disaster.getId();
             case 1 :
@@ -60,7 +58,7 @@ public class AllDisastersModel extends AbstractTableModel {
             case 3 :
                 return disaster.getDescription();
             case 4 :
-                return disaster.getDateString(); // À modifier : il faut ajouter du code pour convertir la date.
+                return disaster.getDateString(); // À modifier : il faut ajouter du code pour convertir la date.  Je te laisse delete ? C'était ton commentaire donc je suppose que tu n'en a plus besoin
             case 5 :
                 return disaster.getEndDateString(); // Idem
             case 6 :
@@ -76,8 +74,7 @@ public class AllDisastersModel extends AbstractTableModel {
             case 11 :
                 StringBuilder regions = new StringBuilder();
                 for (Region region : disaster.getRegions())
-                    regions.append(region.getName() + " ");
-
+                    regions.append(region.getName()).append(" ");
                 return regions.toString();
             default :
                 return null;
@@ -85,27 +82,11 @@ public class AllDisastersModel extends AbstractTableModel {
     }
 
     public Class getColumnClass(int column) {
-        Class c;
-
-        switch (column) {
-            case 0 : case 6 : case 7 : case 8 : case 9 :
-                c = Integer.class;
-                break;
-            case 1 : case 2 : case 3 :
-                c = String.class;
-                break;
-            case 4 : case 5 :
-                c = String.class;
-                break;
-            case 10 :
-                c = Boolean.class;
-                break;
-            case 11 :
-                c = String.class;
-                break;
-            default :
-                c = String.class;
-        }
-        return c;
+        return switch (column) {
+            case 0, 6, 7, 8, 9 -> Integer.class;
+            case 4, 5 -> GregorianCalendar.class;
+            case 10 -> Boolean.class;
+            default -> String.class;
+        };
     }
 }

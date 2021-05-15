@@ -3,8 +3,6 @@ package dataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.Country;
-import model.Disaster;
-import model.Region;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

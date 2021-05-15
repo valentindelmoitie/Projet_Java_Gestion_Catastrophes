@@ -127,7 +127,7 @@
 -- Commit de Valentin du 14/05 à 1:45
         - Fix des dates
 
--- Commit de Mathieu du 14/05 1x:xx
+-- Commit de Mathieu du 14/05 16:30
         - Ergonomie modification
             Renvoie une JOption pane confirmant la maj ou non
         - Filtre date recherche 1
@@ -135,3 +135,9 @@
 
 -- Commit de Valentin du 14/05 à 22:00
    - Recherche 2 finie
+
+-- Commit de Mathieu du 16/05 à 11:40
+  - Ajouts test unitaires
+
+-- Commit de Mathieu du 16/05 à 15:15
+    - Clean code, misc

@@ -1,6 +1,5 @@
 package view.panels;
 
-import exception.SelectionException;
 import model.Disaster;
 
 import javax.swing.*;
@@ -9,10 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ModifyPanel extends JPanel {
-    private JLabel title;
     private ListingPanel listingPanel;
-    private JButton modifyBtn;
-    private FormPanel formPanel;
 
     public ModifyPanel() {
         this.setLayout(new BorderLayout());
@@ -23,7 +19,7 @@ public class ModifyPanel extends JPanel {
     }
 
     private void titleCreation() {
-        title = new JLabel("<html><h3>Modifier les données d'une catastrophe</h3></html>");
+        JLabel title = new JLabel("<html><h3>Modifier les données d'une catastrophe</h3></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(title, BorderLayout.NORTH);
     }
@@ -34,7 +30,7 @@ public class ModifyPanel extends JPanel {
     }
 
     private void buttonsCreation() {
-        modifyBtn = new JButton("Modifier");
+        JButton modifyBtn = new JButton("Modifier");
         modifyBtn.addActionListener(new ButtonListener());
         this.add(modifyBtn, BorderLayout.SOUTH);
     }
@@ -44,7 +40,7 @@ public class ModifyPanel extends JPanel {
             try {
                 Disaster disaster = listingPanel.getSelectedDisaster();
                 removeAll();
-                formPanel = new FormPanel(disaster);
+                FormPanel formPanel = new FormPanel(disaster);
                 add(formPanel);
                 repaint();
                 validate();
@@ -54,6 +50,4 @@ public class ModifyPanel extends JPanel {
 
         }
     }
-
-
 }

@@ -64,8 +64,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     allDisasters.get(allDisasters.size() - 1).addRegion(new Region(data.getString("region")));
                 }
 
-
-
                 if (disaster != null)
                     allDisasters.add(disaster);
             }
@@ -96,7 +94,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             preparedStatement.setInt(5,disaster.getDirectCasualties());
             preparedStatement.setInt(6,disaster.getIndirectCasualties());
             preparedStatement.setBoolean(7, disaster.getNatural());
-            //preparedStatement.setInt(8, disaster.getId());
             int nbInsert = preparedStatement.executeUpdate();
 
             String getIdSt = "select id from disaster where description = ?";
@@ -240,8 +237,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
                     if (!data.wasNull()) {
                         disaster.setIntensity(intensity);
                     }
-
-                    //disaster.addRegion(new Region(data.getString("region")));
                 } else {
                     disasters.get(disasters.size() - 1).addRegion(new Region(data.getString("region")));
                 }
@@ -256,7 +251,7 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         return disasters;
     }
 
-    public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException{
+    public ArrayList<DisasterOnDangerousSite> getDangerousSitesByDisaster(DangerousSite dangerousSite) throws CommunicationException, ReadingException{
         ArrayList<DisasterOnDangerousSite> disasters;
 
         Connection connection = SingletonConnection.getInstance();
@@ -307,7 +302,6 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
 
-            //System.out.println(disaster.getType());
             preparedStatement.setString(1, disaster.getType());
             preparedStatement.setString(2, disaster.getDescription());
 

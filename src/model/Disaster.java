@@ -21,8 +21,7 @@ public class Disaster {
     private GregorianCalendar endDate;
     private Boolean isNatural;
     private ArrayList<Region> regions;
-    private static final List<String> allowedTypes = Collections.unmodifiableList(Arrays.asList("Humanitaire",
-            "Incendie","Industriel", "Naufrage","Nucléaire","Ouragan","Tremblement de terre", "Tsunami"));
+    private static final List<String> allowedTypes = List.of("Humanitaire", "Incendie", "Industriel", "Naufrage", "Nucléaire", "Ouragan", "Tremblement de terre", "Tsunami");
 
     public Disaster(Integer id) throws DisasterMiscException{
         setId(id);
@@ -67,7 +66,7 @@ public class Disaster {
         setRegions(regions);
     }
 
-    public void setId(Integer id) throws DisasterMiscException{
+    public void setId(Integer id) throws DisasterMiscException{ // Plus neccesaire ?
         if(id < 0 ) throw new DisasterMiscException(id);
         this.id = id;
     }
@@ -123,7 +122,7 @@ public class Disaster {
     }
 
     public void setRegions(ArrayList<Region> regions) throws DisasterMiscException{
-        if(regions.isEmpty()) throw new DisasterMiscException(regions);  // Quand le listing sera fix + Cette condition ne semble plus fonctionner ????
+        if(regions.isEmpty()) throw new DisasterMiscException(regions);
             this.regions = regions;
     }
 
@@ -189,11 +188,4 @@ public class Disaster {
     public void addRegion(Region region) {
         this.regions.add(region);
     }
-
-   /* public void correctDateForDisplay(){
-        date.add(MONTH,1);
-        if(endDate != null)
-            endDate.add(MONTH,1);
-    }
-   */
 }

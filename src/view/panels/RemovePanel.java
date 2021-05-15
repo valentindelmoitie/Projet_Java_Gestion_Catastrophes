@@ -1,8 +1,6 @@
 package view.panels;
 
 import controller.ApplicationController;
-import exception.CommunicationException;
-import exception.DeleteDisasterException;
 import exception.SelectionException;
 
 import javax.swing.*;
@@ -13,9 +11,7 @@ import java.util.ArrayList;
 
 public class RemovePanel extends JPanel {
     private ApplicationController controler;
-    private JLabel title;
     private ListingPanel listingPanel;
-    private JButton deleteBtn;
 
     public RemovePanel() {
         controler = new ApplicationController();
@@ -27,7 +23,7 @@ public class RemovePanel extends JPanel {
     }
 
     public void titleCreation() {
-        title =  new JLabel("<html><h3>Supprimer une / des catastrophe(s)</h3></html>");
+        JLabel title = new JLabel("<html><h3>Supprimer une / des catastrophe(s)</h3></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(title, BorderLayout.NORTH);
     }
@@ -38,7 +34,7 @@ public class RemovePanel extends JPanel {
     }
 
     public void buttonsCreation() {
-        deleteBtn = new JButton("Supprimer");
+        JButton deleteBtn = new JButton("Supprimer");
         deleteBtn.addActionListener(new ButtonListener());
         this.add(deleteBtn, BorderLayout.SOUTH);
     }
@@ -60,7 +56,7 @@ public class RemovePanel extends JPanel {
             } catch (SelectionException exception) {
                 System.out.println(exception.getMessage()); // Message à l'intention d'un développeur, et non d'un utilisateur.
             } catch (Exception exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);;
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

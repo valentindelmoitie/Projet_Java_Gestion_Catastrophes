@@ -8,5 +8,5 @@ import java.util.ArrayList;
 
 public interface DangerousSiteDataAccess {
 
-    public ArrayList<DangerousSite> getAllDangerousSites() throws CommunicationException, ReadingException;
+    ArrayList<DangerousSite> getAllDangerousSites() throws CommunicationException, ReadingException;
 }

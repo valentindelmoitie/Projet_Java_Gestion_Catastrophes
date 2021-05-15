@@ -44,7 +44,7 @@ public class ApplicationController {
         return countryManager.getAllCountries();
     }
 
-    public ArrayList<Country> getCountriesImpactedBy(int disasterId) throws CommunicationException, ReadingException {
+    public ArrayList<Country> getCountriesImpactedBy(int disasterId) throws CommunicationException, ReadingException { //Méthode pas utilisée ????
         return countryManager.getCountriesImpactedBy(disasterId);
     }
 
@@ -64,8 +64,8 @@ public class ApplicationController {
         return dangerousSiteManager.getAllDangerousSites();
     }
 
-    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
-        return businessTaskManager.getPourcOfPopulationOfRegionImpactedByType(search);
+    public Double getPercentageOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
+        return businessTaskManager.getPercentageOfPopulationOfRegionImpactedByType(search);
     }
 
     public ArrayList<Region> getRegionsImpactedBy (int disasterId) throws CommunicationException, ReadingException {

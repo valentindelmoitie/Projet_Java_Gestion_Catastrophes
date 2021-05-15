@@ -75,7 +75,6 @@ public class BusinessTaskPanel extends JPanel {
         this.add(resultPanel,BorderLayout.SOUTH);
     }
 
-
     public void setController(ApplicationController controller) {
         this.controller = controller;
     }
@@ -84,11 +83,10 @@ public class BusinessTaskPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             try {
                 SearchByRegionAndType search = new SearchByRegionAndType(regionComboBox.getSelectedItem().toString(), typeComboBox.getSelectedItem().toString());
-                Double pourc = controller.getPourcOfPopulationOfRegionImpactedByType(search);
+                Double pourc = controller.getPercentageOfPopulationOfRegionImpactedByType(search);
                 DecimalFormat df = new DecimalFormat();
                 df.setMaximumFractionDigits(2);
                 resultLbl.setText("Le pourcentage de la population impacté par des catastrophes de type " + search.getType() + " en " + search.getRegionName() + " est de " +  df.format(pourc) + '%');
-
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }

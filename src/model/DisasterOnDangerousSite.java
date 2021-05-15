@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import static java.util.Calendar.MONTH;
@@ -75,6 +74,7 @@ public class DisasterOnDangerousSite {
     public String getDateString() {
         return date.get(GregorianCalendar.DAY_OF_MONTH) + "/" + date.get(MONTH) + "/" +date.get(GregorianCalendar.YEAR);
     }
+
     public void correctDateForDisplay() {
         date.add(MONTH, 1);
     }

@@ -1,15 +1,15 @@
-package view;
+package view.tableModel;
 
 import model.Region;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class Search2Model extends AbstractTableModel {
+public class DisastersSearch2Model extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<Region> contents;
 
-    public Search2Model(ArrayList<Region> regions) {
+    public DisastersSearch2Model(ArrayList<Region> regions) {
         columnNames = new ArrayList<>();
         columnNames.add("Region");
         columnNames.add("Population");
@@ -38,37 +38,21 @@ public class Search2Model extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         Region region = contents.get(row);
 
-        switch (column) {
-            case 0 :
-                return region.getName();
-            case 1 :
-                return region.getPopulation();
-            case 2 :
-                return region.getWarZone();
-            case 3 :
-                return region.getCountry().getName();
-            default :
-                return null;
-        }
+        return switch (column) {
+            case 0 -> region.getName();
+            case 1 -> region.getPopulation();
+            case 2 -> region.getWarZone();
+            case 3 -> region.getCountry().getName();
+            default -> null;
+        };
     }
 
     public Class getColumnClass(int column) {
-        Class c;
 
-        switch (column) {
-            case 0 : case 3 :
-                c = String.class;
-                break;
-            case 1 :
-                c = Integer.class;
-                break;
-            case 2 :
-                c = Boolean.class;
-                break;
-            default :
-                c = null;
-        }
-
-        return c;
+        return switch (column) {
+            case 1 -> Integer.class;
+            case 2 -> Boolean.class;
+            default -> String.class;
+        };
     }
 }

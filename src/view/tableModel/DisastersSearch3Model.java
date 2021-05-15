@@ -1,6 +1,5 @@
-package view;
+package view.tableModel;
 
-import model.Disaster;
 import model.DisasterOnDangerousSite;
 
 import javax.swing.table.AbstractTableModel;
@@ -44,48 +43,26 @@ public class DisastersSearch3Model extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         DisasterOnDangerousSite disaster = contents.get(row);
 
-        switch (column) {
-            case 0:
-                return disaster.getId();
-            case 1:
-                return disaster.getType();
-            case 2:
-                return disaster.getDateString();
-            case 3:
-                return disaster.getIntensity();
-            case 4:
-                return disaster.getImpactedPeople();
-            case 5:
-                return disaster.getDirectCasualties();
-            case 6:
-                return disaster.getIndirectCasualties();
-            case 7:
-                return disaster.getNatural();
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 0 -> disaster.getId();
+            case 1 -> disaster.getType();
+            case 2 -> disaster.getDateString();
+            case 3 -> disaster.getIntensity();
+            case 4 -> disaster.getImpactedPeople();
+            case 5 -> disaster.getDirectCasualties();
+            case 6 -> disaster.getIndirectCasualties();
+            case 7 -> disaster.getNatural();
+            default -> null;
+        };
     }
 
     public Class getColumnClass(int column) {
-        Class c;
 
-        switch (column) {
-            case 0 : case 3 : case 4 : case 5 :  case 6 :
-                c = Integer.class;
-                break;
-            case 1 :
-                c = String.class;
-                break;
-            case 2 :
-                c = GregorianCalendar.class;
-                break;
-            case 7 :
-                c = Boolean.class;
-                break;
-            default :
-                c = String.class;
-        }
-        return c;
+        return switch (column) {
+            case 0, 3, 4, 5, 6 -> Integer.class;
+            case 2 -> GregorianCalendar.class;
+            case 7 -> Boolean.class;
+            default -> String.class;
+        };
     }
-
 }

@@ -1,7 +1,6 @@
-package view;
+package view.tableModel;
 
 import model.Disaster;
-import model.Region;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -42,45 +41,23 @@ public class DisastersSearch1Model extends AbstractTableModel {
 
     public Object getValueAt(int row, int column) {
         Disaster disaster = contents.get(row);
-
-        switch (column) {
-            case 0 :
-                return disaster.getId();
-            case 1 :
-                return disaster.getType();
-            case 2 :
-                return disaster.getDateString();
-            case 3 :
-                return disaster.getIntensity();
-            case 4 :
-                return disaster.getImpactedPeople();
-            case 5 :
-                return disaster.getNatural();
-            default :
-                return null;
-        }
+        return switch (column) {
+            case 0 -> disaster.getId();
+            case 1 -> disaster.getType();
+            case 2 -> disaster.getDateString();
+            case 3 -> disaster.getIntensity();
+            case 4 -> disaster.getImpactedPeople();
+            case 5 -> disaster.getNatural();
+            default -> null;
+        };
     }
 
     public Class getColumnClass(int column) {
-        Class c;
-
-        switch (column) {
-            case 0 : case 3 : case 4 :
-                c = Integer.class;
-                break;
-            case 1 :
-                c = String.class;
-                break;
-            case 2 :
-                c = GregorianCalendar.class;
-                break;
-            case 5 :
-                c = Boolean.class;
-                break;
-            default :
-                c = String.class;
-        }
-        return c;
+        return switch (column) {
+            case 0, 3, 4 -> Integer.class;
+            case 2 -> GregorianCalendar.class;
+            case 5 -> Boolean.class;
+            default -> String.class;
+        };
     }
-
 }

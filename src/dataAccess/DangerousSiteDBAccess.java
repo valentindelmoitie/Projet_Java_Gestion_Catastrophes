@@ -3,9 +3,7 @@ package dataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.DangerousSite;
-import model.Disaster;
 
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

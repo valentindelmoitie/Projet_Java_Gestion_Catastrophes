@@ -5,7 +5,6 @@ import dataAccess.CountryDataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.Country;
-import model.Disaster;
 
 import java.util.ArrayList;
 

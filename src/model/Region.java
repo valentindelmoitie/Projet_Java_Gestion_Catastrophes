@@ -33,7 +33,6 @@ public class Region {
     }
 
     public void setPopulation(Integer population) {
-        //if(population < 0) throw new NumberOfPeopleException(population);
         this.population = population;
     }
 

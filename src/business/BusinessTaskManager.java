@@ -14,13 +14,12 @@ public class BusinessTaskManager {
         setDao(new RegionDBAccess());
     }
 
-    public Double getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
-        PopulationData data =  dao.getPourcOfPopulationOfRegionImpactedByType(search);
-        Double pourc = calculatePourc(data.getTotalPopulation(), data.getImpactedPeople());
-        return pourc;
+    public Double getPercentageOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
+        PopulationData data =  dao.getPercentageOfPopulationOfRegionImpactedByType(search);
+        return calculatePercentage(data.getTotalPopulation(), data.getImpactedPeople());
     }
 
-    public Double calculatePourc(int totalPopulation, int concernedPopulation){
+    public Double calculatePercentage(int totalPopulation, int concernedPopulation){
         if(totalPopulation == 0) return 0.0;
         return ((double)concernedPopulation / totalPopulation) * 100;
     }

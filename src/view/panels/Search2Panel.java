@@ -1,11 +1,9 @@
 package view.panels;
 
 import controller.ApplicationController;
-import exception.*;
-import model.Country;
 import model.Disaster;
 import model.Region;
-import view.Search2Model;
+import view.tableModel.DisastersSearch2Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +20,7 @@ public class Search2Panel extends JPanel {
     private ApplicationController controler;
     private JTable resultTable;
     private JScrollPane resultScrollPane;
-    private Search2Model resultModel;
+    private DisastersSearch2Model resultModel;
 
     public Search2Panel() {
         this.setLayout(new BorderLayout());
@@ -81,7 +79,7 @@ public class Search2Panel extends JPanel {
         resultPanel = new JPanel();
         resultPanel.setLayout(new BorderLayout());
 
-        resultModel = new Search2Model(new ArrayList<>());
+        resultModel = new DisastersSearch2Model(new ArrayList<>());
         resultTable = new JTable(resultModel);
         resultScrollPane = new JScrollPane(resultTable);
         resultScrollPane.setPreferredSize(new Dimension(1300, 400));
@@ -97,7 +95,7 @@ public class Search2Panel extends JPanel {
             try {
                 ArrayList<Region> regions = controler.getRegionsImpactedBy(selectedId);
 
-                resultModel  = new Search2Model(regions);
+                resultModel  = new DisastersSearch2Model(regions);
                 resultTable.setModel(resultModel);
 
                 repaint();

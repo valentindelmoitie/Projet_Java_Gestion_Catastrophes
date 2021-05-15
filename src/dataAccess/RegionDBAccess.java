@@ -40,7 +40,7 @@ public class RegionDBAccess implements RegionDataAccess {
         return regions;
     }
 
-    public PopulationData getPourcOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
+    public PopulationData getPercentageOfPopulationOfRegionImpactedByType(SearchByRegionAndType search) throws CommunicationException, ReadingException {
         PopulationData popData = null;
         Connection connection = SingletonConnection.getInstance();
 

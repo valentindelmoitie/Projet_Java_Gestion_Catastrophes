@@ -1,17 +1,14 @@
 package view.panels;
 
 import controller.ApplicationController;
-import exception.*;
+import exception.DisasterMiscException;
+import exception.SelectionException;
 import model.Disaster;
-import view.AllDisastersModel;
+import view.tableModel.AllDisastersModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,11 +18,8 @@ import java.util.GregorianCalendar;
 public class ListingPanel extends JPanel {
     private int selectionType;
     private AllDisastersModel model;
-    private JScrollPane scrollPane;
     private JTable disasterTable;
     private ApplicationController controller;
-    private JPanel buttonsFrame;
-    private JButton modifyButton, deleteButton;
     ListSelectionModel listSelect;
 
     public ListingPanel(int selectionType) {
@@ -36,9 +30,6 @@ public class ListingPanel extends JPanel {
 
         try {
             ArrayList<Disaster> disasters = controller.getAllDisaster();
-            for(Disaster disaster : disasters){
-                System.out.println(disaster.getDate().get(Calendar.MONTH));
-            }
             model = new AllDisastersModel(disasters);
         } catch (Exception exception){
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
@@ -53,7 +44,7 @@ public class ListingPanel extends JPanel {
 
         listSelect = disasterTable.getSelectionModel();
 
-        scrollPane = new JScrollPane(disasterTable);
+        JScrollPane scrollPane = new JScrollPane(disasterTable);
         scrollPane.setPreferredSize(new Dimension(1490, 400));
 
         disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -68,13 +59,13 @@ public class ListingPanel extends JPanel {
         this.controller = controller;
     }
 
-    public ArrayList<Disaster> getSelectedDisasters() throws SelectionException, DisasterMiscException { // Il faut ajouter une esception si aucune ligne n'est sélectionnée.
+    public ArrayList<Disaster> getSelectedDisasters() throws SelectionException, DisasterMiscException {
         if (selectionType != ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
             throw new SelectionException(selectionType);
 
         ArrayList<Disaster> disasters = new ArrayList<>();
 
-        int selectedRows[] = listSelect.getSelectedIndices();
+        int[] selectedRows = listSelect.getSelectedIndices();
         for (int i : selectedRows) {
             int id = (Integer) disasterTable.getModel().getValueAt(i, 0);
             disasters.add(new Disaster(id));
@@ -128,37 +119,4 @@ public class ListingPanel extends JPanel {
 
         return null;
     }
-
-/*    private class ButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) { // IL faudrait rajouter une exception si aucune ligne n'est sélectionnée mais je le ferai quand ce ne sera plus au stade expérimental
-            int iSelectedRow = listSelect.getMinSelectionIndex();
-
-            Integer id = (Integer) disasterTable.getModel().getValueAt(iSelectedRow, 0);
-            String name = (String) disasterTable.getModel().getValueAt(iSelectedRow, 1);
-            String type = (String) disasterTable.getModel().getValueAt(iSelectedRow, 2);
-            String description = (String) disasterTable.getModel().getValueAt(iSelectedRow, 3);
-            String dateString = (String) disasterTable.getModel().getValueAt(iSelectedRow, 4);
-            String endDateString = (String) disasterTable.getModel().getValueAt(iSelectedRow, 5);
-            Integer intensity = (Integer) disasterTable.getModel().getValueAt(iSelectedRow, 6);
-            Integer impactedPeople = (Integer) disasterTable.getModel().getValueAt(iSelectedRow, 7);
-            Integer directCasualties = (Integer) disasterTable.getModel().getValueAt(iSelectedRow, 8);
-            Integer indirectCasualties = (Integer) disasterTable.getModel().getValueAt(iSelectedRow, 9);
-            Boolean isNatural = (Boolean)  disasterTable.getModel().getValueAt(iSelectedRow, 10);
-
-            try {
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date dt = df.parse(dateString);
-                GregorianCalendar date = new GregorianCalendar();
-                date.setTime(dt);
-
-                Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties,
-                        type, description, date, isNatural, new ArrayList<>());
-            } catch (ParseException e) { // A modifier
-                e.printStackTrace();
-            }
-
-        }
-    }
-*/
-
 }
