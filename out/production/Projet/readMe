@@ -132,3 +132,6 @@
             Renvoie une JOption pane confirmant la maj ou non
         - Filtre date recherche 1
         - Modification critères de recherche 3
+
+-- Commit de Valentin du 14/05 à 22:00
+   - Recherche 2 finie

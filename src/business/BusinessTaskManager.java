@@ -20,10 +20,7 @@ public class BusinessTaskManager {
         return pourc;
     }
 
-    private Double calculatePourc(int totalPopulation, int concernedPopulation){
-        System.out.println("population " + totalPopulation);
-        System.out.println("concerned population " + concernedPopulation);
-
+    public Double calculatePourc(int totalPopulation, int concernedPopulation){
         if(totalPopulation == 0) return 0.0;
         return ((double)concernedPopulation / totalPopulation) * 100;
     }
