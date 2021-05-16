@@ -1,13 +1,12 @@
------------------------------------------NOTES---------------------------------------
-    - Il faudra être cohérent avec l'ID -- FIXED
-      (On autorise l'utilisateur à choisir et alors pas d'increment dans la bdd, ou inverse)
-
-
 -----------------------------------------BUG---------------------------------------
     - Bug insertion
              - Inserer une catastrophe avec un nom
              - Inserer une autre catastrophe avec le même nom
              - Erreur remontée mais seconde catastrophe ajoutée avec un nom à null
+
+-----------------------------------------QUESTION MARDI ------------------------------
+    - JSpinner pour rechercher obligatoire ?
+    - Interfaces DAO ? 
 
 --------------------------------------------------------------------------------------
 
