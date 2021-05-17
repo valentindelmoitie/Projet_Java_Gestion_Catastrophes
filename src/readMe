@@ -4,8 +4,6 @@
              - Inserer une autre catastrophe avec le même nom
              - Erreur remontée mais seconde catastrophe ajoutée avec un nom à null
 
-    - Impossible de modifier les régions dans la modification
-
 -----------------------------------------QUESTION MARDI ------------------------------
     - JSpinner pour recherches obligatoire ?
     - Interfaces DAO ?
@@ -142,3 +140,6 @@
 
 -- Commit de Mathieu du 16/05 à 15:15
     - Clean code, misc
+
+-- Commit de Valentin du 17/05 à 15:42
+    - Fix ajout des régions dans les modifications

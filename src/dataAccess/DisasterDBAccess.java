@@ -295,12 +295,12 @@ public class DisasterDBAccess implements  DisasterDataAccess {
         try {
             Connection connection = SingletonConnection.getInstance();
 
-            String sqlInstructionImpactLocation =
+            String sqlInstruction =
                     "update disaster" +
                     " set type = ?, description = ?, date = ?, impacted_people = ?, direct_casualties = ?, indirect_casualties = ?, is_natural = ?" +
                     " where id = ?";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
 
             preparedStatement.setString(1, disaster.getType());
             preparedStatement.setString(2, disaster.getDescription());
@@ -317,8 +317,22 @@ public class DisasterDBAccess implements  DisasterDataAccess {
 
             int nbModifiedRow = preparedStatement.executeUpdate();
 
-            sqlInstructionImpactLocation = "update disaster set name = ? where id = ?";
-            preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
+            sqlInstruction = "delete from impact_location where disaster = ?";
+            preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, disaster.getId());
+            preparedStatement.executeUpdate();
+
+            sqlInstruction = "insert into impact_location (disaster, region) values(?, ?)";
+            preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, disaster.getId());
+
+            for (Region region : disaster.getRegions()) {
+                preparedStatement.setString(2, region.getName());
+                preparedStatement.executeUpdate();
+            }
+
+            sqlInstruction = "update disaster set name = ? where id = ?";
+            preparedStatement = connection.prepareStatement(sqlInstruction);
 
             if (disaster.getName() == "" || disaster.getName() == null)
                 preparedStatement.setNull(1, Types.VARCHAR);
@@ -328,8 +342,8 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             preparedStatement.setInt(2, disaster.getId());
             preparedStatement.executeUpdate();
 
-            sqlInstructionImpactLocation = "update disaster set intensity = ? where id = ?";
-            preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
+            sqlInstruction = "update disaster set intensity = ? where id = ?";
+            preparedStatement = connection.prepareStatement(sqlInstruction);
 
             if (disaster.getIntensity() == null || disaster.getIntensity() == 0)
                 preparedStatement.setNull(1, Types.INTEGER);
@@ -339,8 +353,8 @@ public class DisasterDBAccess implements  DisasterDataAccess {
             preparedStatement.setInt(2, disaster.getId());
             preparedStatement.executeUpdate();
 
-            sqlInstructionImpactLocation = "update disaster set end_date = ? where id = ?";
-            preparedStatement = connection.prepareStatement(sqlInstructionImpactLocation);
+            sqlInstruction = "update disaster set end_date = ? where id = ?";
+            preparedStatement = connection.prepareStatement(sqlInstruction);
 
             if (disaster.getEndDate() == null)
                 preparedStatement.setNull(1, Types.DATE);
