@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 public class MainWindow extends JFrame {
     private Container container;
     private JMenuBar menuBar;
-    private JMenu disasterMenu;
+    private JMenu disasterMenu, taskMenu;
 
     public MainWindow() {
         super("Gestion de catastrophes");
@@ -36,6 +36,8 @@ public class MainWindow extends JFrame {
         menuBar = new JMenuBar();
 
         disasterMenuCreation();
+        searchMenuCreation();
+        taskMenuCreation();
 
         this.setJMenuBar(menuBar);
     }
@@ -64,35 +66,38 @@ public class MainWindow extends JFrame {
         listingMenuItem.addActionListener(new MenuListener());
         disasterMenu.add(listingMenuItem);
 
-        searchMenuCreation();
-
-        JMenuItem taskMenuItem = new JMenuItem("Tâche métier");
-        taskMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
-        taskMenuItem.addActionListener(new MenuListener());
-        disasterMenu.add(taskMenuItem);
-
         menuBar.add(disasterMenu);
     }
 
     private void searchMenuCreation() {
         JMenu searchMenu = new JMenu("Recherches");
         searchMenu.setMnemonic('R');
-        disasterMenu.add(searchMenu);
+        menuBar.add(searchMenu);
 
-        JMenuItem search1MenuItem = new JMenuItem("Recherche 1");
+        JMenuItem search1MenuItem = new JMenuItem("Rechercher catastrophe dans un pays entre deux dates");
         search1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_DOWN_MASK));
         search1MenuItem.addActionListener(new MenuListener());
         searchMenu.add(search1MenuItem);
 
-        JMenuItem search2MenuItem = new JMenuItem("Recherche 2");
+        JMenuItem search2MenuItem = new JMenuItem("Rechercher régions et pays touchés par une catastrophe");
         search2MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_DOWN_MASK));
         search2MenuItem.addActionListener(new MenuListener());
         searchMenu.add(search2MenuItem);
 
-        JMenuItem search3MenuItem = new JMenuItem("Recherche 3");
+        JMenuItem search3MenuItem = new JMenuItem("Rechercher catastrophes ayant touché un site dangereux");
         search3MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_DOWN_MASK));
         search3MenuItem.addActionListener(new MenuListener());
         searchMenu.add(search3MenuItem);
+    }
+
+    private void taskMenuCreation() {
+        taskMenu = new JMenu("Tâche métier");
+        menuBar.add(taskMenu);
+
+        JMenuItem taskMenuItem = new JMenuItem("Afficher un % de population affecté par un type de catastrophe au sein d'une région");
+        taskMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
+        taskMenuItem.addActionListener(new MenuListener());
+        taskMenu.add(taskMenuItem);
     }
 
     private class MenuListener implements ActionListener {
@@ -102,11 +107,11 @@ public class MainWindow extends JFrame {
                 case "Ajout" -> container.add(new AddPanel());
                 case "Suppression" -> container.add(new RemovePanel());
                 case "Modification" -> container.add(new ModifyPanel());
-                case "Recherche 1" -> container.add(new Search1Panel());
                 case "Listing" -> container.add(new ListingPanel(ListSelectionModel.SINGLE_SELECTION));
-                case "Recherche 2" -> container.add(new Search2Panel());
-                case "Recherche 3" -> container.add(new Search3Panel());
-                case "Tâche métier" -> container.add(new BusinessTaskPanel());
+                case "Rechercher catastrophe dans un pays entre deux dates" -> container.add(new Search1Panel());
+                case "Rechercher régions et pays touchés par une catastrophe" -> container.add(new Search2Panel());
+                case "Rechercher catastrophes ayant touché un site dangereux" -> container.add(new Search3Panel());
+                case "Afficher un % de population affecté par un type de catastrophe au sein d'une région" -> container.add(new BusinessTaskPanel());
                 default -> JOptionPane.showMessageDialog(null, "Valeur inattendue : " + event.getActionCommand(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }
             container.repaint();
