@@ -1,4 +1,4 @@
-package dataAccess;
+package dataAccess.dbAccess;
 
 import exception.CommunicationException;
 

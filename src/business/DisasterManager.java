@@ -1,7 +1,7 @@
 package business;
 
-import dataAccess.DisasterDBAccess;
-import dataAccess.DisasterDataAccess;
+import dataAccess.dbAccess.DisasterDBAccess;
+import dataAccess.dataAccessInterfaces.DisasterDataAccess;
 import exception.*;
 import model.Disaster;
 

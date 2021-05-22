@@ -1,4 +1,4 @@
-package dataAccess;
+package dataAccess.dataAccessInterfaces;
 
 import exception.*;
 import model.DangerousSite;

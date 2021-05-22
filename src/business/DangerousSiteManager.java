@@ -1,7 +1,7 @@
 package business;
 
-import dataAccess.DangerousSiteDBAccess;
-import dataAccess.DangerousSiteDataAccess;
+import dataAccess.dbAccess.DangerousSiteDBAccess;
+import dataAccess.dataAccessInterfaces.DangerousSiteDataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.DangerousSite;

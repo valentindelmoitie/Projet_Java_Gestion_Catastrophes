@@ -1,5 +1,6 @@
-package dataAccess;
+package dataAccess.dbAccess;
 
+import dataAccess.dataAccessInterfaces.DisasterDataAccess;
 import exception.*;
 import model.*;
 
@@ -7,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class DisasterDBAccess implements  DisasterDataAccess {
+public class DisasterDBAccess implements DisasterDataAccess {
     public ArrayList<Disaster> getAllDisasters() throws CommunicationException, ReadingException, DisasterMiscException, EndDateException, StartDateException {
         ArrayList<Disaster> allDisasters;
 

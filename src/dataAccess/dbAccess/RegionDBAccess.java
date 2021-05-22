@@ -1,5 +1,6 @@
-package dataAccess;
+package dataAccess.dbAccess;
 
+import dataAccess.dataAccessInterfaces.RegionDataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.Country;

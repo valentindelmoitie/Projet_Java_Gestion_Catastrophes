@@ -1,5 +1,6 @@
-package dataAccess;
+package dataAccess.dbAccess;
 
+import dataAccess.dataAccessInterfaces.DangerousSiteDataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.DangerousSite;
@@ -10,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DangerousSiteDBAccess implements DangerousSiteDataAccess{
+public class DangerousSiteDBAccess implements DangerousSiteDataAccess {
 
     public ArrayList<DangerousSite> getAllDangerousSites() throws CommunicationException, ReadingException {
         ArrayList<DangerousSite> allDangerousSites;

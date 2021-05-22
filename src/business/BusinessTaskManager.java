@@ -1,7 +1,7 @@
 package business;
 
-import dataAccess.RegionDBAccess;
-import dataAccess.RegionDataAccess;
+import dataAccess.dbAccess.RegionDBAccess;
+import dataAccess.dataAccessInterfaces.RegionDataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.PopulationData;

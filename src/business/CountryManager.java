@@ -1,7 +1,7 @@
 package business;
 
-import dataAccess.CountryDBAccess;
-import dataAccess.CountryDataAccess;
+import dataAccess.dbAccess.CountryDBAccess;
+import dataAccess.dataAccessInterfaces.CountryDataAccess;
 import exception.CommunicationException;
 import exception.ReadingException;
 import model.Country;
