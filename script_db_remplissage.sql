@@ -140,7 +140,7 @@ insert into `help` (disaster, hospital) values(5, 5);
 insert into `help` (disaster, hospital) values(5, 7);
 
 insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
-values('Pandémie de Covid-19 en Suisse','Humanitaire','Crise sanitaire',str_to_date ('01-mar-2020','%e-%b-%Y'),null, null,35000000,10563,0,true);
+values('Pandémie de Covid-19 en Suisse','Humanitaire','Crise sanitaire',str_to_date ('01-mar-2020','%e-%b-%Y'),null, null,1500000,8563,0,true);
 insert into impact_location (disaster, region) values (6,'Zurich');
 insert into impact_location (disaster, region) values (6,'Suisse orientale');
 insert into impact_location (disaster, region) values (6,'Espace Mittelland');
@@ -198,5 +198,31 @@ insert into danger(dangerous_site,disaster) values (10,12);
 insert into impact_location (disaster, region) values (12,'Zurich');
 insert into impact_location (disaster, region) values (12,'Espace Mittelland');
 insert into `help` (disaster, hospital) values(12, 27);
+
+insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
+values('Tremblement de terre 2006 - FR/SW','Tremblement de terre','Catastrophe fictive sur la Suisse (sans la suisse orientale) et la France',str_to_date ('27-jan-2006','%e-%b-%Y'),null,null,6000,4,12,true);
+insert into impact_location (disaster, region) values (13,'Zurich');
+insert into impact_location (disaster, region) values (13,'Espace Mittelland');
+insert into impact_location (disaster, region) values (13,'Haut de france');
+insert into impact_location (disaster, region) values (13,'Bretagne');
+insert into impact_location (disaster, region) values (13,'Ile de france');
+insert into danger(dangerous_site,disaster) values (9,13);
+insert into danger(dangerous_site,disaster) values (10,13);
+insert into danger(dangerous_site,disaster) values(4,13);
+
+
+
+insert into disaster (`name`,`type`,`description`,`date`,end_date,intensity,impacted_people,direct_casualties,indirect_casualties,is_natural)
+values('Ouragan 2008 - PL/BE','Ouragan','Catastrophe fictive sur la Silésie (Pologne) et la Belgique',str_to_date ('14-mar-2008','%e-%b-%Y'),null,null,7500,156,12,true);
+insert into impact_location (disaster, region) values (14,'Flandre');
+insert into impact_location (disaster, region) values (14,'Bruxelles');
+insert into impact_location (disaster, region) values (14,'Wallonie');
+insert into impact_location (disaster, region) values (14,'Silésie');
+insert into danger(dangerous_site,disaster) values (2,14);
+insert into danger(dangerous_site,disaster) values (5,14);
+insert into danger(dangerous_site,disaster) values (6,14);
+insert into danger(dangerous_site,disaster) values (7,14);
+insert into danger(dangerous_site,disaster) values (8,14);
+
 
 commit;

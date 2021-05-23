@@ -4,18 +4,16 @@
              - Inserer une autre catastrophe avec le même nom
              - Erreur remontée mais seconde catastrophe ajoutée avec un nom à null
 
------------------------------------------QUESTION MARDI ------------------------------
-    - JSpinner pour recherches obligatoire ?
-    - Interfaces DAO ?
-    - Vérifications dans view
 
 ----------------------------------------- A FINIR ------------------------------
-    - Faire gaffe à ce que les exceptions s'affichent bien
+    - Faire gaffe à ce que les exceptions s'affichent bien                      -- OK
     - Rendre les exceptions plus précises
     - Afficher les régions dans le formulaire de modifications
     - Essayer de rendre la mise en page meilleure (si possible - déjà entamé pour les recherches)
-    - Maximum pour les personnes impactées
-    - Dire que choisir dans la tâche métier et les mettre dans le dossier
+    - Maximum pour les personnes impactées                           -- Compliqué de l'implémenter ?
+    - Dire que choisir dans la tâche métier et les mettre dans le dossier       -- Ok
+    - Fix DAO                                                                   -- OK
+    - Garnir BDD                                                                -- J'ai rajouté 2 catastrophes sur plusieurs pays, ça me parait bon, à confirmer
 --------------------------------------------------------------------------------
 
 -- Commit de Valentin du 8/05 à 14:30
