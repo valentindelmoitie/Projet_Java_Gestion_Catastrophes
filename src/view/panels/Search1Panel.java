@@ -28,7 +28,6 @@ public class Search1Panel extends JPanel {
     private DisastersSearch1Model model;
 
     public Search1Panel() {
-
             this.setLayout(new BorderLayout());
             setController(new ApplicationController());
             titlePanelCreation();
@@ -58,17 +57,20 @@ public class Search1Panel extends JPanel {
             formPanel.setLayout(new GridLayout(3, 2, 5, 5));
 
             JLabel countryLabel = new JLabel("Pays : ");
+            countryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             formPanel.add(countryLabel);
 
             countryComboBox = new JComboBox(countries);
             formPanel.add(countryComboBox);
 
             JLabel dateLbl = new JLabel("Date minimum (dd/mm/yyyy)* : ");
+            dateLbl.setHorizontalAlignment(SwingConstants.RIGHT);
             startDateTF = new JTextField();
             formPanel.add(dateLbl);
             formPanel.add(startDateTF);
 
             JLabel endDateLbl = new JLabel("Date maximum (dd/mm/yyyy)*: ");
+            endDateLbl.setHorizontalAlignment(SwingConstants.RIGHT);
             endDateTF = new JTextField();
             formPanel.add(endDateLbl);
             formPanel.add(endDateTF);
@@ -98,7 +100,7 @@ public class Search1Panel extends JPanel {
 
             disasterTable = new JTable(model);
             JScrollPane scrollPane = new JScrollPane(disasterTable);
-            scrollPane.setPreferredSize(new Dimension(650, 400));
+            scrollPane.setPreferredSize(new Dimension(1900, 700));
 
             disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
             disasterTable.getColumnModel().getColumn(5).setPreferredWidth(10);

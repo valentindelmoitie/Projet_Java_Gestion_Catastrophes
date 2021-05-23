@@ -2,12 +2,14 @@ package view.panels;
 
 import controller.ApplicationController;
 import exception.SelectionException;
+import model.Disaster;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RemovePanel extends JPanel {
     private ApplicationController controler;
@@ -45,17 +47,19 @@ public class RemovePanel extends JPanel {
 
                 ArrayList disasters = listingPanel.getSelectedDisasters();
 
-                controler.deleteDisasters(disasters);
+                int validation = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir supprimer la/les catastrophe(s) sélectionnée(s) ?", "Validation", JOptionPane.YES_NO_OPTION);
 
-                remove(listingPanel);
-                listingPanel = new ListingPanel(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-                add(listingPanel);
-                repaint();
-                validate();
+                if (validation == 0) {
+                    controler.deleteDisasters(disasters);
 
-            } catch (SelectionException exception) {
-                System.out.println(exception.getMessage()); // Message à l'intention d'un développeur, et non d'un utilisateur.
-            } catch (Exception exception) {
+                    remove(listingPanel);
+                    listingPanel = new ListingPanel(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                    add(listingPanel);
+                    repaint();
+                    validate();
+                }
+            }
+            catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }
         }

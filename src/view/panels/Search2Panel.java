@@ -65,9 +65,11 @@ public class Search2Panel extends JPanel {
             choices.add( disaster.getId() + " " + (disaster.getDescription() == null ? "" : (disaster.getName()) + " ") + disaster.getType() + " " + disaster.getDateString() );
         }
         choiceCB = new JComboBox(choices.toArray());
+        choiceCB.setPreferredSize(new Dimension(400, 50));
 
         choiceBtn = new JButton("Rechercher");
         choiceBtn.addActionListener(new SearchButtonListener());
+        choiceBtn.setPreferredSize(new Dimension(100, 25));
 
         choicePanel.add(choiceCB);
         choicePanel.add(choiceBtn);
@@ -82,7 +84,7 @@ public class Search2Panel extends JPanel {
         resultModel = new DisastersSearch2Model(new ArrayList<>());
         resultTable = new JTable(resultModel);
         resultScrollPane = new JScrollPane(resultTable);
-        resultScrollPane.setPreferredSize(new Dimension(1300, 400));
+        resultScrollPane.setPreferredSize(new Dimension(1900, 700));
 
         centerPanel.add(resultScrollPane, BorderLayout.CENTER);
     }

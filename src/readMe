@@ -9,7 +9,14 @@
     - Interfaces DAO ?
     - Vérifications dans view
 
---------------------------------------------------------------------------------------
+----------------------------------------- A FINIR ------------------------------
+    - Faire gaffe à ce que les exceptions s'affichent bien
+    - Rendre les exceptions plus précises
+    - Afficher les régions dans le formulaire de modifications
+    - Essayer de rendre la mise en page meilleure (si possible - déjà entamé pour les recherches)
+    - Maximum pour les personnes impactées
+    - Dire que choisir dans la tâche métier et les mettre dans le dossier
+--------------------------------------------------------------------------------
 
 -- Commit de Valentin du 8/05 à 14:30
     - Création de l'interface DisasterDataAccess.
@@ -146,3 +153,14 @@
 
 -- Commit de Valentin du 22/05 à 1:40
     - Fix des menus selon les critères de la prof
+
+-- Commit de Valentin du 23/05 à 3H30
+  - Fix taille du listing
+  - Fix taille des table dans les recherches
+  - Ajout d'un message d'erreur si l'utilisateur de sélectionne pas de ligne dans la modif ou la suppress
+  - Ajout d'une validations avant suppression
+  - Ajout d'une mention indiquant que les champs avec une * sont obligatoires dans les formulaires
+  - Réglage de l'affichage dans la recherche 3
+  - Changement taille CB Recherche 2
+  - Tentative remise en forme Recherche 1, mais j'ai pas eu le temps de le finir donc je le finirai dimanche soir / lundi
+

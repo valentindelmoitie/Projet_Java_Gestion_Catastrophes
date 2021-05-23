@@ -45,7 +45,7 @@ public class ListingPanel extends JPanel {
         listSelect = disasterTable.getSelectionModel();
 
         JScrollPane scrollPane = new JScrollPane(disasterTable);
-        scrollPane.setPreferredSize(new Dimension(1490, 400));
+        scrollPane.setPreferredSize(new Dimension(1900, 700));
 
         disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
         disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -66,10 +66,17 @@ public class ListingPanel extends JPanel {
         ArrayList<Disaster> disasters = new ArrayList<>();
 
         int[] selectedRows = listSelect.getSelectedIndices();
-        for (int i : selectedRows) {
-            int id = (Integer) disasterTable.getModel().getValueAt(i, 0);
-            disasters.add(new Disaster(id));
+
+        if (selectedRows.length != 0) {
+            for (int i : selectedRows) {
+                int id = (Integer) disasterTable.getModel().getValueAt(i, 0);
+                disasters.add(new Disaster(id));
+            }
+        } else
+        {
+            throw new SelectionException("Vous n'avez pas sélectionné de ligne");
         }
+
         return disasters;
     }
 
@@ -79,42 +86,46 @@ public class ListingPanel extends JPanel {
 
         int selectedRow = listSelect.getMinSelectionIndex();
 
-        Integer id = (Integer) disasterTable.getModel().getValueAt(selectedRow, 0);
-        String name = (String) disasterTable.getModel().getValueAt(selectedRow, 1);
-        String type = (String) disasterTable.getModel().getValueAt(selectedRow, 2);
-        String description = (String) disasterTable.getModel().getValueAt(selectedRow, 3);
-        String dateString = (String) disasterTable.getModel().getValueAt(selectedRow, 4);
-        String endDateString = (String) disasterTable.getModel().getValueAt(selectedRow, 5);
-        Integer intensity = (Integer) disasterTable.getModel().getValueAt(selectedRow, 6);
-        Integer impactedPeople = (Integer) disasterTable.getModel().getValueAt(selectedRow, 7);
-        Integer directCasualties = (Integer) disasterTable.getModel().getValueAt(selectedRow, 8);
-        Integer indirectCasualties = (Integer) disasterTable.getModel().getValueAt(selectedRow, 9);
-        Boolean isNatural = (Boolean)  disasterTable.getModel().getValueAt(selectedRow, 10);
+        if (selectedRow != -1) {
+            Integer id = (Integer) disasterTable.getModel().getValueAt(selectedRow, 0);
+            String name = (String) disasterTable.getModel().getValueAt(selectedRow, 1);
+            String type = (String) disasterTable.getModel().getValueAt(selectedRow, 2);
+            String description = (String) disasterTable.getModel().getValueAt(selectedRow, 3);
+            String dateString = (String) disasterTable.getModel().getValueAt(selectedRow, 4);
+            String endDateString = (String) disasterTable.getModel().getValueAt(selectedRow, 5);
+            Integer intensity = (Integer) disasterTable.getModel().getValueAt(selectedRow, 6);
+            Integer impactedPeople = (Integer) disasterTable.getModel().getValueAt(selectedRow, 7);
+            Integer directCasualties = (Integer) disasterTable.getModel().getValueAt(selectedRow, 8);
+            Integer indirectCasualties = (Integer) disasterTable.getModel().getValueAt(selectedRow, 9);
+            Boolean isNatural = (Boolean) disasterTable.getModel().getValueAt(selectedRow, 10);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateFormat.setLenient(false);
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false);
 
-        try {
-            Date date = dateFormat.parse(dateString);
-            GregorianCalendar dateGregorian = new GregorianCalendar();
-            dateGregorian.setTime(date);
+            try {
+                Date date = dateFormat.parse(dateString);
+                GregorianCalendar dateGregorian = new GregorianCalendar();
+                dateGregorian.setTime(date);
 
-            GregorianCalendar endDateGregorian = null;
-            if (endDateString != "") {
-                Date endDate = dateFormat.parse(endDateString);
-                endDateGregorian = new GregorianCalendar();
-                endDateGregorian.setTime(endDate);
+                GregorianCalendar endDateGregorian = null;
+                if (endDateString != "") {
+                    Date endDate = dateFormat.parse(endDateString);
+                    endDateGregorian = new GregorianCalendar();
+                    endDateGregorian.setTime(endDate);
+                }
+
+                Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural);
+
+                disaster.setName(name);
+                disaster.setIntensity(intensity);
+                disaster.setEndDate(endDateGregorian);
+
+                return disaster;
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
             }
-
-            Disaster disaster = new Disaster(id, impactedPeople, directCasualties, indirectCasualties, type, description, dateGregorian, isNatural);
-
-            disaster.setName(name);
-            disaster.setIntensity(intensity);
-            disaster.setEndDate(endDateGregorian);
-
-            return  disaster;
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+        } else {
+            throw new SelectionException("Vous n'avez pas sélectionné de ligne");
         }
 
         return null;

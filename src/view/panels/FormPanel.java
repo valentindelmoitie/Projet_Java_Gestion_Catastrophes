@@ -66,15 +66,20 @@ public class FormPanel extends JPanel {
 
     private void titlePanelCreation() {
         JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout());
+        titlePanel.setLayout(new GridLayout(2,1));
 
         JLabel titleLbl = new JLabel();
         if (formType == Type.INSERTION)
-            titleLbl.setText("<html><h3>Ajout d'une catastrophe à la base de données</h3></html>");
+            titleLbl.setText("<html><h3><center>Ajout d'une catastrophe à la base de données</h3></html>");
         else
             titleLbl.setText("<html><h3>Modification d'une catastrophe dans la base de données</h3></html>");
 
+        titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
         titlePanel.add(titleLbl);
+
+        JLabel descriptionLbl = new JLabel("<html><b>Les champs marqués d'une * sont obligatoires.</b></html>");
+        descriptionLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        titlePanel.add(descriptionLbl);
 
         this.add(titlePanel, BorderLayout.NORTH);
     }

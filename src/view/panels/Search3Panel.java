@@ -23,9 +23,7 @@ public class Search3Panel extends JPanel {
         setController(new ApplicationController());
         titlePanelCreation();
         formPanelCreation();
-        buttonPanelCreation();
         tablePanelCreation();
-        regionPanelCreation();
     }
 
     private void titlePanelCreation() {
@@ -36,13 +34,9 @@ public class Search3Panel extends JPanel {
     }
 
     private void formPanelCreation() {
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(1, 2, 5, 5));
+        JPanel formPanel = new JPanel(new FlowLayout());
 
-        JLabel disasterLabel = new JLabel("Catastrophe : ");
-        formPanel.add(disasterLabel);
-
-       try {
+        try {
             ArrayList<String> dangerousSiteArrayList = new ArrayList<>();
             for (DangerousSite dangerousSite : controller.getAllDangerousSites()) {
                 dangerousSiteArrayList.add(dangerousSite.getId().toString() + "-"  + dangerousSite.getType() + "-" + dangerousSite.getRegion());
@@ -52,33 +46,37 @@ public class Search3Panel extends JPanel {
             for(int i = 0; i < disasters.length; i++) {
                 disasters[i] = dangerousSiteArrayList.get(i);
             }
+
             dangerousSiteCb = new JComboBox(disasters);
+            dangerousSiteCb.setPreferredSize(new Dimension(150, 50));
+
+            formPanel.add(dangerousSiteCb);
         }catch (Exception exception){
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
 
-        formPanel.add(dangerousSiteCb);
+        JButton sendButton = new JButton("Rechercher");
+        sendButton.setPreferredSize(new Dimension(100, 25));
+        sendButton.setHorizontalAlignment(JButton.CENTER);
+        sendButton.addActionListener(new SearchButtonListener());
+        formPanel.add(sendButton);
+
         this.add(formPanel, BorderLayout.CENTER);
     }
 
-    private void buttonPanelCreation() {
-        JPanel buttonPanel = new JPanel();
-
-        JButton sendButton = new JButton("Recherche");
-        sendButton.setHorizontalAlignment(JButton.CENTER);
-        sendButton.addActionListener(new SearchButtonListener());
-        buttonPanel.add(sendButton);
-        this.add(buttonPanel, BorderLayout.EAST);
-    }
-
     private void tablePanelCreation(){
-        JPanel tablePanel = new JPanel();
+        JPanel tablePanel = new JPanel(new BorderLayout());
+
+        regionLbl = new JLabel("<html><font size='5'>Informations sur la région du site dangereux</font></html>");
+        regionLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        tablePanel.add(regionLbl, BorderLayout.NORTH);
+
         try {
             model = new DisastersSearch3Model(new ArrayList<>());
 
             disasterTable = new JTable(model);
             JScrollPane scrollPane = new JScrollPane(disasterTable);
-            scrollPane.setPreferredSize(new Dimension(1300, 400));
+            scrollPane.setPreferredSize(new Dimension(1900, 700));
 
             disasterTable.getColumnModel().getColumn(0).setPreferredWidth(5);
             disasterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -90,14 +88,6 @@ public class Search3Panel extends JPanel {
         } catch (Exception exception){
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private void regionPanelCreation(){
-        JPanel regionPanel = new JPanel();
-        regionLbl = new JLabel("Information sur la région du site dangereux ");
-        regionPanel.add(regionLbl);
-        this.add(regionPanel, BorderLayout.WEST);
-
     }
 
     public void setController(ApplicationController controller) {
@@ -122,7 +112,7 @@ public class Search3Panel extends JPanel {
                 }
                 model = new DisastersSearch3Model(disasters);
                 disasterTable.setModel(model);
-                regionLbl.setText("Le site dangereux est situé dans la region : " + disasters.get(0).getRegionOfDangerousSite().getName() + ", ayant une population de " + String.format("%,d",disasters.get(0).getRegionOfDangerousSite().getPopulation()) + " et étant" + (disasters.get(0).getRegionOfDangerousSite().getWarZone() ? " en guerre" : " en paix"));
+                regionLbl.setText("<html><font size='5'>Le site dangereux est situé dans la region : " + disasters.get(0).getRegionOfDangerousSite().getName() + ", ayant une population de " + String.format("%,d",disasters.get(0).getRegionOfDangerousSite().getPopulation()) + " et étant" + (disasters.get(0).getRegionOfDangerousSite().getWarZone() ? " en guerre" : " en paix</font></html>"));
                 repaint();
                 validate();
             } catch (Exception exception) {
