@@ -373,8 +373,8 @@ public class FormPanel extends JPanel {
             ArrayList<String> errorFields = new ArrayList<>();
             Boolean error = false;
 
-            if (intensity <= 0 || intensity > 7) {
-                errorFields.add("L'intensité ne peut être inférieure à 7 ou supérieure à 7");
+            if (intensity < 0 || intensity > 7) {
+                errorFields.add("L'intensité ne peut être inférieure à 0 ou supérieure à 7");
                 error = true;
             }
 
