@@ -23,7 +23,6 @@ public class FormPanel extends JPanel {
         MODIFICATION
     }
 
-    // ajouter constante valeur min spinner + spinner intensity + starting value
     public final int NUM_SPINNER_START_VALUE = 0;
     public final int NUM_SPINNER_MIN_VALUE = 0;
     public final int INTENSITY_SPINNER_MAX_VALUE = 7;
@@ -37,7 +36,6 @@ public class FormPanel extends JPanel {
     private DateFormat dateFormat;
     private JComboBox typeComboBox, isNaturalComboBox;
     private JList regions, chosenRegions;
-    private Calendar startDate, endDate;
 
     public FormPanel(Type formType) {
         this.formType = formType;
@@ -243,7 +241,7 @@ public class FormPanel extends JPanel {
                 }
 
                 Calendar today = new GregorianCalendar();
-                if(startDate.compareTo(today) <= 0) { // Continue si la date n'est pas supérieure à la date du jour
+                if(startDate.compareTo(today) <= 0) {
                     int i = 0;
                     while (i < regionsModel.getSize() && regionsModel.getElementAt(i) != null) {
                         regions.add(new Region((String) regionsModel.getElementAt(i)));

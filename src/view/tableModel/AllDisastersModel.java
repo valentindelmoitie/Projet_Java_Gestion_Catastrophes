@@ -48,7 +48,7 @@ public class AllDisastersModel extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         Disaster disaster = contents.get(row);
 
-        switch (column) {    // A SUPPR : ON peut pas faire comme en bas ici vu qu'on a traitement sur region, clean code d'ailleurs ?
+        switch (column) {
             case 0 :
                 return disaster.getId();
             case 1 :
@@ -58,9 +58,9 @@ public class AllDisastersModel extends AbstractTableModel {
             case 3 :
                 return disaster.getDescription();
             case 4 :
-                return disaster.getDateString(); // À modifier : il faut ajouter du code pour convertir la date.  Je te laisse delete ? C'était ton commentaire donc je suppose que tu n'en a plus besoin
+                return disaster.getDateString();
             case 5 :
-                return disaster.getEndDateString(); // Idem
+                return disaster.getEndDateString();
             case 6 :
                 return disaster.getIntensity();
             case 7 :

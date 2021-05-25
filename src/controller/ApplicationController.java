@@ -44,7 +44,7 @@ public class ApplicationController {
         return countryManager.getAllCountries();
     }
 
-    public ArrayList<Country> getCountriesImpactedBy(int disasterId) throws CommunicationException, ReadingException { //Méthode pas utilisée ????
+    public ArrayList<Country> getCountriesImpactedBy(int disasterId) throws CommunicationException, ReadingException { //Méthode prête à l'usage mais non utilisée dans ce projet
         return countryManager.getCountriesImpactedBy(disasterId);
     }
 

@@ -4,7 +4,10 @@ import exception.DisasterMiscException;
 import exception.EndDateException;
 import exception.StartDateException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import static java.util.Calendar.MONTH;
 
@@ -66,7 +69,7 @@ public class Disaster {
         setRegions(regions);
     }
 
-    public void setId(Integer id) throws DisasterMiscException{ // Plus neccesaire ?
+    public void setId(Integer id) throws DisasterMiscException{
         if(id < 0 ) throw new DisasterMiscException(id);
         this.id = id;
     }

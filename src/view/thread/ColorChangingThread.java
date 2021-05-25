@@ -17,7 +17,7 @@ public class ColorChangingThread extends Thread {
                 Thread.sleep(2000);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //Possibilité de récupérer une possible erreur (message) et de l'afficher à la console, ne nous semble pas pertinent dans le cadre de ce projet/thread
         }
     }
 }

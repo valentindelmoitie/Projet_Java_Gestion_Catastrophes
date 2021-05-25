@@ -1,15 +1,12 @@
 package view.panels;
 
 import controller.ApplicationController;
-import exception.SelectionException;
-import model.Disaster;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class RemovePanel extends JPanel {
     private ApplicationController controler;

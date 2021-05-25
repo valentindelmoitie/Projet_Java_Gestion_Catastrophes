@@ -1,13 +1,13 @@
 package exception;
 
 public class FormException extends Exception {
-    private String error;
+    private String errorMessage;
 
     public FormException(String error) {
-        this.error = error;
+        this.errorMessage = error;
     }
 
     public String getMessage() {
-        return error;
+        return errorMessage;
     }
 }

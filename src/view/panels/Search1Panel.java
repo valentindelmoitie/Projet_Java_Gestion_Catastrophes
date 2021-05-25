@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -134,7 +135,8 @@ public class Search1Panel extends JPanel {
                 disasterTable.setModel(model);
                 repaint();
                 validate();
-
+            }catch(ParseException exception){
+                JOptionPane.showMessageDialog(null, "Le format de date entré ne correspond aux valeurs normalement attendues : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
             }catch (Exception exception){
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Exception levée", JOptionPane.ERROR_MESSAGE);
             }

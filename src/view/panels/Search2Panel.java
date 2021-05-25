@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Search2Panel extends JPanel {
-    private JLabel titleLbl, resultLbl;
+    private JLabel titleLbl;
     private JPanel centerPanel, choicePanel, resultPanel;
     private JComboBox choiceCB;
     private JButton choiceBtn;
