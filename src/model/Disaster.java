@@ -185,6 +185,8 @@ public class Disaster {
         return regions;
     }
 
+    public static List<String> getAllowedTypes() { return allowedTypes; }
+
     public void addRegion(Region region) {
         this.regions.add(region);
     }

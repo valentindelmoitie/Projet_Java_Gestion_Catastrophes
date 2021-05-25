@@ -1,7 +1,6 @@
 package view.panels;
 
 import controller.ApplicationController;
-import exception.DisasterMiscException;
 import model.Disaster;
 import model.Region;
 
@@ -214,72 +213,181 @@ public class FormPanel extends JPanel {
         isNaturalComboBox.setSelectedItem(disasterToModify.getNatural() ? "Oui" : "Non");
     }
 
-    private class InsertButtonListener implements ActionListener{
+    private class InsertButtonListener implements ActionListener {
+        private String description;
+        private String type;
+        private String dateString;
+        private GregorianCalendar startDate;
+        private Integer impactedPeople;
+        private Integer directCasualties;
+        private Integer indirectCasualties;
+        private Boolean isNatural;
+        private ArrayList<Region> regions;
+        private ListModel regionsModel;
+
+        private String name;
+        private String endDateString;
+        private GregorianCalendar endDate;
+        private Integer intensity;
+
         public void actionPerformed(ActionEvent event){
-            Integer impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
-            Integer directCasualties    = (Integer) directCasualtiesSpinner.getValue();
-            Integer indirectCasualties  = (Integer) indirectCasualtiesSpinner.getValue();
-            String type                 = (String) typeComboBox.getSelectedItem();
-            String description          = descriptionTF.getText();
-            String name                 = nameTF.getText();
-            Integer intensity           = (Integer) intensitySpinner.getValue();
-            Boolean isNatural           = (isNaturalComboBox.getSelectedItem() == "Oui");
+            getMandatoryInputs();
+            Boolean error = mandatoryInputsVerification();
 
-            try {
-                Date date = dateFormat.parse(startDateTF.getText());
-                if(!startDateTF.getText().isEmpty()){
-                    startDate = new GregorianCalendar();
-                    startDate.setTime(date);
-                }
-                if(!endDateTF.getText().isEmpty()) {
-                    endDate = new GregorianCalendar();
-                    date = dateFormat.parse(endDateTF.getText());
-                    endDate.setTime(date);
-                }
+            if (!error) {
+                try {
+                    Date date = dateFormat.parse(startDateTF.getText());
+                    if(!startDateTF.getText().isEmpty()){
+                        startDate = new GregorianCalendar();
+                        startDate.setTime(date);
+                    }
 
-                ArrayList<Region> disasterRegions = new ArrayList<>();
-                ListModel model = chosenRegions.getModel();
-                if(model.getSize() == 0) throw new DisasterMiscException(disasterRegions);
-                int i = 0;
-                    while (i < model.getSize() && model.getElementAt(i) != null) {
-                        disasterRegions.add(new Region((String) model.getElementAt(i)));
+                    int i = 0;
+                    while (i < regionsModel.getSize() && regionsModel.getElementAt(i) != null) {
+                        regions.add(new Region((String) regionsModel.getElementAt(i)));
                         i++;
                     }
 
+                    Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
+                            type, description, (GregorianCalendar) startDate, isNatural, regions);
 
-                Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
-                        type, description, (GregorianCalendar) startDate,isNatural,disasterRegions);
+                    getOptionalInputs();
+                    error = optionalInputsVerification();
 
+                    if (!error) {
+                        endDate = new GregorianCalendar();
+                        date = dateFormat.parse(endDateString);
+                        endDate.setTime(date);
 
-                if(!nameTF.getText().isEmpty())
-                    disaster.setName(name);
-                if(intensity > 0)
-                    disaster.setIntensity(intensity);
-
-                if(!endDateTF.getText().isEmpty())
-                    disaster.setEndDate((GregorianCalendar)endDate);
-
-                if (formType == Type.INSERTION) {
-                    int nbInsertedData = controller.addDisaster(disaster);
-                    if(nbInsertedData == 1)
-                        JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
-                    else
-                        JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                        if (formType == Type.INSERTION) {
+                            int nbInsertedData = controller.addDisaster(disaster);
+                            if(nbInsertedData == 1)
+                                JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                            else
+                                JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else {
+                            disaster.setId(disasterToModify.getId());
+                            int nbModifiedData = controller.modifyDisaster(disaster);
+                            if(nbModifiedData == 1)
+                                JOptionPane.showMessageDialog(null, "Catastrophe modifiée", "Modification catastrophe catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                            else
+                                JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de la modification", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }catch(ParseException exception){
+                    JOptionPane.showMessageDialog(null, "Le format de date entré ne correspond aux valeurs normalement attendues : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+                }catch (Exception exception){
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
                 }
-                else {
-                    disaster.setId(disasterToModify.getId());
-                    int nbModifiedData = controller.modifyDisaster(disaster);
-                    if(nbModifiedData == 1)
-                        JOptionPane.showMessageDialog(null, "Catastrophe modifiée", "Modification catastrophe catastrophe", JOptionPane.INFORMATION_MESSAGE);
-                    else
-                        JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de la modification", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
-                }
-
-            }catch(ParseException exception){
-                JOptionPane.showMessageDialog(null, "Le format de date entré ne correspond aux valeurs normalement attendues : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
-            }catch (Exception exception){
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
             }
+        }
+
+        private void getMandatoryInputs() {
+            description         = descriptionTF.getText();
+            type                = (String) typeComboBox.getSelectedItem();
+            dateString          = startDateTF.getText();
+            impactedPeople      = (Integer) impactedPeopleSpinner.getValue();
+            directCasualties    = (Integer) directCasualtiesSpinner.getValue();
+            indirectCasualties  = (Integer) indirectCasualtiesSpinner.getValue();
+            isNatural           = (isNaturalComboBox.getSelectedItem() == "Oui");
+            regions             = new ArrayList<>();
+            regionsModel        = chosenRegions.getModel();
+        }
+
+        private Boolean mandatoryInputsVerification() {
+            StringBuilder errorMessage = new StringBuilder("Erreur : ");
+            ArrayList<String> errorFields = new ArrayList<>();
+            Boolean error = false;
+
+            if (description == null || description.equals("")) {
+                errorFields.add("description,");
+                error = true;
+            }
+
+            if (dateString.equals("")) {
+                errorFields.add("date,");
+            }
+
+            if (regionsModel.getSize() == 0) {
+                errorFields.add("région(s) impactée(s)");
+                error = true;
+            }
+
+            if (!error) {
+                if (!Disaster.getAllowedTypes().contains(type)) {
+                    errorFields.add("Le type entré n'est pas repris dans la liste des types");
+                    error = true;
+                }
+
+                if (directCasualties < 0) {
+                    errorFields.add("La nombre de victimes directes ne peut être inférieur à 0");
+                    error = true;
+                }
+
+                if (indirectCasualties < 0) {
+                    errorFields.add("Le nombre de victimes indirectes ne peut être inférieur à 0");
+                    error = true;
+                }
+
+                if (impactedPeople < 0) {
+                    errorFields.add("Le nombre de personnes touchées ne peut être inférieur à 0");
+                    error = true;
+                }
+
+                if (impactedPeople  < directCasualties + indirectCasualties) {
+                    errorFields.add("Le nombre de personnes touchées doit être supérieur au nombre de victimes");
+                    error = true;
+                }
+
+                if (error) {
+                    errorMessage.append("Vous n'avez pas respecté les conditions des champs suivants : \n");
+
+                    for (String errorString : errorFields) {
+                        errorMessage.append("- " + errorString + "\n");
+                    }
+
+                    JOptionPane.showMessageDialog(null, errorMessage.toString(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else {
+                errorMessage.append("Vous n'avez pas remplis tous les champs obligatoires. Voici ceux que vous n'avez pas remplis ; ");
+
+                for (String string : errorFields)
+                    errorMessage.append(string + " ");
+
+                JOptionPane.showMessageDialog(null, errorMessage.toString(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return error;
+        }
+
+        private void getOptionalInputs() {
+            name = nameTF.getText();
+            endDateString = endDateTF.getText();
+            intensity = (Integer) intensitySpinner.getValue();
+        }
+
+        private Boolean optionalInputsVerification() {
+            StringBuilder errorMessage = new StringBuilder("Erreur : ");
+            ArrayList<String> errorFields = new ArrayList<>();
+            Boolean error = false;
+
+            if (intensity <= 0 || intensity > 7) {
+                errorFields.add("L'intensité ne peut être inférieure à 7 ou supérieure à 7");
+                error = true;
+            }
+
+            if (error) {
+                errorMessage.append("Un ou plusieurs paramètre facultatif est incorrect :\n");
+                for (String errorString : errorFields) {
+                    errorMessage.append("- " + errorString + "\n");
+                }
+
+                JOptionPane.showMessageDialog(null, errorMessage.toString(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+            }
+
+            return error;
         }
     }
 
