@@ -324,6 +324,7 @@ public class FormPanel extends JPanel {
 
             if (dateString.equals("")) {
                 errorFields.add("date,");
+                error = true;
             }
 
             if (regionsModel.getSize() == 0) {
