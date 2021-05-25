@@ -281,7 +281,7 @@ public class FormPanel extends JPanel {
                         if(nbInsertedData == 1)
                             JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
                         else
-                            JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
                     }
                     else {
                         disaster.setId(disasterToModify.getId());
