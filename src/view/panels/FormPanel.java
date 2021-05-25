@@ -242,39 +242,56 @@ public class FormPanel extends JPanel {
                         startDate.setTime(date);
                     }
 
-                    int i = 0;
-                    while (i < regionsModel.getSize() && regionsModel.getElementAt(i) != null) {
-                        regions.add(new Region((String) regionsModel.getElementAt(i)));
-                        i++;
-                    }
-
-                    Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
-                            type, description, (GregorianCalendar) startDate, isNatural, regions);
-
-                    getOptionalInputs();
-                    error = optionalInputsVerification();
-
-                    if (!error) {
-                        endDate = new GregorianCalendar();
-                        date = dateFormat.parse(endDateString);
-                        endDate.setTime(date);
-
-                        if (formType == Type.INSERTION) {
-                            int nbInsertedData = controller.addDisaster(disaster);
-                            if(nbInsertedData == 1)
-                                JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
-                            else
-                                JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                    Calendar today = new GregorianCalendar();
+                    if(startDate.compareTo(today) <= 0) {
+                        int i = 0;
+                        while (i < regionsModel.getSize() && regionsModel.getElementAt(i) != null) {
+                            regions.add(new Region((String) regionsModel.getElementAt(i)));
+                            i++;
                         }
-                        else {
-                            disaster.setId(disasterToModify.getId());
-                            int nbModifiedData = controller.modifyDisaster(disaster);
-                            if(nbModifiedData == 1)
-                                JOptionPane.showMessageDialog(null, "Catastrophe modifiée", "Modification catastrophe catastrophe", JOptionPane.INFORMATION_MESSAGE);
-                            else
-                                JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de la modification", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+
+                        Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
+                                type, description, (GregorianCalendar) startDate, isNatural, regions);
+
+                        getOptionalInputs();
+                        error = optionalInputsVerification();
+
+                        if (!error) {
+                            if (!name.equals("")) {
+                                disaster.setName(name);
+                            }
+
+                            if (!endDateString.equals("")) {
+                                endDate = new GregorianCalendar();
+                                date = dateFormat.parse(endDateString);
+                                endDate.setTime(date);
+                                disaster.setEndDate(endDate);
+                            }
+
+                            if (intensity != 0) {
+                                disaster.setIntensity(intensity);
+                            }
+
+                            if (formType == Type.INSERTION) {
+                                int nbInsertedData = controller.addDisaster(disaster);
+                                if(nbInsertedData == 1)
+                                    JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                                else
+                                    JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                            }
+                            else {
+                                disaster.setId(disasterToModify.getId());
+                                int nbModifiedData = controller.modifyDisaster(disaster);
+                                if(nbModifiedData == 1)
+                                    JOptionPane.showMessageDialog(null, "Catastrophe modifiée", "Modification catastrophe catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                                else
+                                    JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de la modification", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
+                    else
+                        JOptionPane.showMessageDialog(null, "La date entrée ne peut être supérieure à la date du jour.", "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+
                 }catch(ParseException exception){
                     JOptionPane.showMessageDialog(null, "Le format de date entré ne correspond aux valeurs normalement attendues : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
                 }catch (Exception exception){
