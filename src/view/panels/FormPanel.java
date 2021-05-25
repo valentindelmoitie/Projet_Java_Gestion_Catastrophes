@@ -264,7 +264,12 @@ public class FormPanel extends JPanel {
                         endDate = new GregorianCalendar();
                         date = dateFormat.parse(endDateString);
                         endDate.setTime(date);
-                        disaster.setEndDate(endDate);
+                        if (endDate.compareTo(startDate) <= 0) {
+                            disaster.setEndDate(endDate);
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Erreur : La date de fin ne peut pas être supérieure à la date de début. La date de fin n'a donc pas été appliquée. Veuillez modifier le désastre ultérieurement pour ajouter une date de fin.", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
 
                     if (intensity != 0) {
