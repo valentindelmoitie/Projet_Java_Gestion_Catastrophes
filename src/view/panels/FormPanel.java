@@ -1,6 +1,7 @@
 package view.panels;
 
 import controller.ApplicationController;
+import exception.FormException;
 import model.Disaster;
 import model.Region;
 
@@ -231,72 +232,68 @@ public class FormPanel extends JPanel {
         private Integer intensity;
 
         public void actionPerformed(ActionEvent event){
-            getMandatoryInputs();
-            Boolean error = mandatoryInputsVerification();
+            try {
+                getMandatoryInputs();
+                mandatoryInputsVerification();
 
-            if (!error) {
-                try {
-                    Date date = dateFormat.parse(startDateTF.getText());
-                    if(!startDateTF.getText().isEmpty()){
-                        startDate = new GregorianCalendar();
-                        startDate.setTime(date);
-                    }
-
-                    Calendar today = new GregorianCalendar();
-                    if(startDate.compareTo(today) <= 0) {
-                        int i = 0;
-                        while (i < regionsModel.getSize() && regionsModel.getElementAt(i) != null) {
-                            regions.add(new Region((String) regionsModel.getElementAt(i)));
-                            i++;
-                        }
-
-                        Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
-                                type, description, (GregorianCalendar) startDate, isNatural, regions);
-
-                        getOptionalInputs();
-                        error = optionalInputsVerification();
-
-                        if (!error) {
-                            if (!name.equals("")) {
-                                disaster.setName(name);
-                            }
-
-                            if (!endDateString.equals("")) {
-                                endDate = new GregorianCalendar();
-                                date = dateFormat.parse(endDateString);
-                                endDate.setTime(date);
-                                disaster.setEndDate(endDate);
-                            }
-
-                            if (intensity != 0) {
-                                disaster.setIntensity(intensity);
-                            }
-
-                            if (formType == Type.INSERTION) {
-                                int nbInsertedData = controller.addDisaster(disaster);
-                                if(nbInsertedData == 1)
-                                    JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
-                                else
-                                    JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
-                            }
-                            else {
-                                disaster.setId(disasterToModify.getId());
-                                int nbModifiedData = controller.modifyDisaster(disaster);
-                                if(nbModifiedData == 1)
-                                    JOptionPane.showMessageDialog(null, "Catastrophe modifiée", "Modification catastrophe catastrophe", JOptionPane.INFORMATION_MESSAGE);
-                                else
-                                    JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de la modification", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                    }
-                    else
-                        JOptionPane.showMessageDialog(null, "La date entrée ne peut être supérieure à la date du jour.", "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
-
-                }catch(ParseException exception){
-                    JOptionPane.showMessageDialog(null, "Le format de date entré ne correspond aux valeurs normalement attendues : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
-                }catch (Exception exception){
-                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+                Date date = dateFormat.parse(startDateTF.getText());
+                if(!startDateTF.getText().isEmpty()){
+                    startDate = new GregorianCalendar();
+                    startDate.setTime(date);
                 }
+
+                Calendar today = new GregorianCalendar();
+                if(startDate.compareTo(today) <= 0) { // Continue si la date n'est pas supérieure à la date du jour
+                    int i = 0;
+                    while (i < regionsModel.getSize() && regionsModel.getElementAt(i) != null) {
+                        regions.add(new Region((String) regionsModel.getElementAt(i)));
+                        i++;
+                    }
+
+                    Disaster disaster = new Disaster(impactedPeople,directCasualties,indirectCasualties,
+                            type, description, (GregorianCalendar) startDate, isNatural, regions);
+
+                    getOptionalInputs();
+                    optionalInputsVerification();
+
+                    if (!name.equals("")) {
+                        disaster.setName(name);
+                    }
+
+                    if (!endDateString.equals("")) {
+                        endDate = new GregorianCalendar();
+                        date = dateFormat.parse(endDateString);
+                        endDate.setTime(date);
+                        disaster.setEndDate(endDate);
+                    }
+
+                    if (intensity != 0) {
+                        disaster.setIntensity(intensity);
+                    }
+
+                    if (formType == Type.INSERTION) {
+                        int nbInsertedData = controller.addDisaster(disaster);
+                        if(nbInsertedData == 1)
+                            JOptionPane.showMessageDialog(null, "Catastrophe ajoutée", "Ajout catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                        else
+                            JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de l'ajout", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
+                        disaster.setId(disasterToModify.getId());
+                        int nbModifiedData = controller.modifyDisaster(disaster);
+                        if(nbModifiedData == 1)
+                            JOptionPane.showMessageDialog(null, "Catastrophe modifiée", "Modification catastrophe catastrophe", JOptionPane.INFORMATION_MESSAGE);
+                        else
+                            JOptionPane.showMessageDialog(null, "Erreur (non gérée) lors de la modification", "Erreur ajout", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "La date entrée ne peut être supérieure à la date du jour.", "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+
+            }catch(ParseException exception){
+                JOptionPane.showMessageDialog(null, "Le format de date entré ne correspond aux valeurs normalement attendues : " + exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+            }catch (Exception exception){
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -312,60 +309,46 @@ public class FormPanel extends JPanel {
             regionsModel        = chosenRegions.getModel();
         }
 
-        private Boolean mandatoryInputsVerification() {
+        private void mandatoryInputsVerification() throws FormException {
             StringBuilder errorMessage = new StringBuilder("Erreur : ");
             ArrayList<String> errorFields = new ArrayList<>();
-            Boolean error = false;
 
-            if (description == null || description.equals("")) {
+            if (description == null || description.equals(""))
                 errorFields.add("description,");
-                error = true;
-            }
 
-            if (dateString.equals("")) {
+            if (dateString.equals(""))
                 errorFields.add("date,");
-                error = true;
-            }
 
-            if (regionsModel.getSize() == 0) {
+            if (regionsModel.getSize() == 0)
                 errorFields.add("région(s) impactée(s)");
-                error = true;
-            }
 
-            if (!error) {
-                if (!Disaster.getAllowedTypes().contains(type)) {
+            if (errorFields.size() == 0) {
+                if (!Disaster.getAllowedTypes().contains(type))
                     errorFields.add("Le type entré n'est pas repris dans la liste des types");
-                    error = true;
-                }
 
-                if (directCasualties < 0) {
+                if (directCasualties < 0)
                     errorFields.add("La nombre de victimes directes ne peut être inférieur à 0");
-                    error = true;
-                }
 
-                if (indirectCasualties < 0) {
+
+                if (indirectCasualties < 0)
                     errorFields.add("Le nombre de victimes indirectes ne peut être inférieur à 0");
-                    error = true;
-                }
 
-                if (impactedPeople < 0) {
+
+                if (impactedPeople < 0)
                     errorFields.add("Le nombre de personnes touchées ne peut être inférieur à 0");
-                    error = true;
-                }
 
-                if (impactedPeople  < directCasualties + indirectCasualties) {
+                if (impactedPeople  < directCasualties + indirectCasualties)
                     errorFields.add("Le nombre de personnes touchées doit être supérieur au nombre de victimes");
-                    error = true;
-                }
 
-                if (error) {
+
+                if (errorFields.size() != 0) {
                     errorMessage.append("Vous n'avez pas respecté les conditions des champs suivants : \n");
 
                     for (String errorString : errorFields) {
                         errorMessage.append("- " + errorString + "\n");
                     }
 
-                    JOptionPane.showMessageDialog(null, errorMessage.toString(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+                    throw new FormException(errorMessage.toString());
                 }
             }
             else {
@@ -374,10 +357,8 @@ public class FormPanel extends JPanel {
                 for (String string : errorFields)
                     errorMessage.append(string + " ");
 
-                JOptionPane.showMessageDialog(null, errorMessage.toString(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+                throw new FormException(errorMessage.toString());
             }
-
-            return error;
         }
 
         private void getOptionalInputs() {
@@ -386,26 +367,20 @@ public class FormPanel extends JPanel {
             intensity = (Integer) intensitySpinner.getValue();
         }
 
-        private Boolean optionalInputsVerification() {
+        private void optionalInputsVerification() throws FormException {
             StringBuilder errorMessage = new StringBuilder("Erreur : ");
             ArrayList<String> errorFields = new ArrayList<>();
-            Boolean error = false;
 
-            if (intensity < 0 || intensity > 7) {
+            if (intensity < 0 || intensity > 7)
                 errorFields.add("L'intensité ne peut être inférieure à 0 ou supérieure à 7");
-                error = true;
-            }
 
-            if (error) {
+            if (errorFields.size() != 0) {
                 errorMessage.append("Un ou plusieurs paramètre facultatif est incorrect :\n");
                 for (String errorString : errorFields) {
                     errorMessage.append("- " + errorString + "\n");
                 }
-
-                JOptionPane.showMessageDialog(null, errorMessage.toString(), "Erreur formulaire", JOptionPane.ERROR_MESSAGE);
+                throw new FormException(errorMessage.toString());
             }
-
-            return error;
         }
     }
 
